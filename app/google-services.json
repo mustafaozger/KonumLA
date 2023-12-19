@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "112672158546",
+    "project_id": "mevlut-dd669",
+    "storage_bucket": "mevlut-dd669.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112672158546:android:037c1bb3afaf952cc0c08b",
+        "android_client_info": {
+          "package_name": "com.example.mevltbul"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA72LG4pw8lULLmwYAHGygNVpnDXAv5Vgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
