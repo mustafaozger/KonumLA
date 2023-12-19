@@ -1,8 +1,16 @@
 package com.example.mevltbul.Classes
 
-data class Marker(var marker_id:String,
-                  var marker_latitude:String,
-                  var marker_longtitude: String,
-                  var marker_detail:String,
+import com.google.firebase.firestore.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+data class Marker(var marker_id:String?=null,
+                  var marker_latitude:String?=null,
+                  var marker_longtitude: String?=null,
+                  var marker_detail:String?=null,
+                  var photo1:String?=null,
+                  var photo2: String?=null,
+                  var photo3:String?=null,
+                  var photo4:String?=null
+
     ) {
 }

@@ -3,4 +3,5 @@
     <string name="google_map_api">AIzaSyC_W4kjEvhw-UmYV03nOfGVS28bZb8hqoE</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="firestore_image_collection_name">images</string>
 </resources>

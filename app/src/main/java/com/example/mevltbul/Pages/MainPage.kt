@@ -67,8 +67,11 @@ class MainPage : Fragment() ,OnMapReadyCallback{
     fun addMarkers(){
         list.observe(viewLifecycleOwner){markList->
             for (marker in markList){
-                val location=LatLng(marker.marker_latitude.toDouble(),marker.marker_longtitude.toDouble())
-                mMap?.addMarker(MarkerOptions().position(location))
+                val location= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
+                    LatLng(it.toDouble(),
+                        it1.toDouble())
+                } }
+                location?.let { MarkerOptions().position(it) }?.let { mMap?.addMarker(it) }
             }
         }
     }

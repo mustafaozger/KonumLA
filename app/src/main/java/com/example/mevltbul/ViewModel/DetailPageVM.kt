@@ -1,4 +1,6 @@
 package com.example.mevltbul.ViewModel
 
-class DetailPageVM {
+import androidx.lifecycle.ViewModel
+
+class DetailPageVM: ViewModel() {
 }
