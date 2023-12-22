@@ -9,7 +9,7 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="match_parent"
           android:orientation="vertical"
           tools:context=".Pages.AddDetailPage">
 
@@ -39,8 +39,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal">
 
@@ -141,14 +141,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="65dp"
                 android:layout_marginRight="20dp"
                 android:backgroundTint="@color/brown"
-                android:text="Paylaş"
                 android:padding="10sp"
-                android:textSize="20sp"
+                android:text="Paylaş"
+                android:textColor="@color/cream"
 
-                android:textColor="@color/cream" />
+                android:textSize="20sp" />
 
       </LinearLayout>
 </layout>
