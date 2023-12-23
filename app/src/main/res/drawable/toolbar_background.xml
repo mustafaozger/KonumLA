@@ -4,14 +4,17 @@
     <!-- Background Shape -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/brown" /> <!-- Background Color -->
+
+            <solid android:color="@color/red" /> <!-- Background Color -->
+
         </shape>
     </item>
 
     <!-- Bottom Border Line -->
     <item android:bottom="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/cream" /> <!-- Border Color -->
+            <solid android:color="#FFFFFF" /> <!-- Border Color -->
+
         </shape>
     </item>
 

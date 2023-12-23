@@ -1,6 +1,5 @@
 package com.example.mevltbul.Pages
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,41 +11,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.mevltbul.Classes.Marker
+import androidx.fragment.app.viewModels
 import com.example.mevltbul.R
-import com.example.mevltbul.Repository.DetailPageDaoRepository
+import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentAddDetailPageBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.github.dhaval2404.imagepicker.ImagePickerActivity
-import com.github.dhaval2404.imagepicker.ImagePickerFileProvider
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.LinkedList
 import java.util.Queue
 
+@AndroidEntryPoint
 class AddDetailPage : Fragment()  {
     val imageViewList:Queue<ImageView> = LinkedList()
     lateinit var binding:FragmentAddDetailPageBinding
     private var selectedImageView:ImageView?=null
     val uriList=ArrayList<Uri?>()
+    private lateinit var detailVM: DetailVM
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val temp :DetailVM by viewModels()
+        detailVM=temp
 
+    }
 
-
-//    val launcher=registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){
-//        if (it.resultCode==Activity.RESULT_OK){
-//            if (it.data != null ) {
-//                imageViewList.poll()?.setImageURI(it.data!!.data)
-//                uriList.poll()
-//                uriList.add(it.data!!.data)
-//                if(imageViewList.size!=0){
-//                    imageViewList.peek()?.setImageResource(R.drawable.background_fotograf_ekle3)
-//                }
-////                selectedImageView?.setImageURI(data.data)
-////                data.data?.let { selectedImageView?.let { it1 -> hashMap.put(it1, it) } }
-////
-//        }
-//    }
-//    }
 
 
     override fun onCreateView(
@@ -81,12 +69,16 @@ class AddDetailPage : Fragment()  {
 
 
         binding.btnShare.setOnClickListener {
+         try {
 
-
-            val pr=DetailPageDaoRepository()
-             val result=pr.publishDetail(requireContext(),"mar","321231","2313","dskadasas",uriList)
-
-
+             detailVM.publishDetail(requireContext(),"dsada",
+             "sada",
+             "dsadsadsad",
+             binding.txtDetail.text.toString(),
+             uriList)
+         }catch (e:Exception){
+             Log.e("hatam",e.toString())
+         }
 
         }
 
@@ -127,7 +119,7 @@ class AddDetailPage : Fragment()  {
                 imageViewList.poll()?.setImageURI(data.data)
                 uriList.add(data.data)
                 if(imageViewList.size!=0){
-                    imageViewList.peek()?.setImageResource(R.drawable.background_fotograf_ekle3)
+                    imageViewList.peek()?.setImageResource(R.drawable.add_photo)
                 }
 
 

@@ -32,6 +32,7 @@
             android:layout_height="62dp"
             android:layout_marginStart="76dp"
             android:layout_marginBottom="50dp"
+            android:backgroundTint="@color/red"
             android:text="Paylaş"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

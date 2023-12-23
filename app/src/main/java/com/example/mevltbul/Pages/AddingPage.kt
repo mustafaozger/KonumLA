@@ -99,9 +99,11 @@ class AddingPage : Fragment(),OnMapReadyCallback {
 
     private fun publish(){
         if (selectedPosition!=null){
-            Toast.makeText(requireContext(),"Lütfen bir konum seçin",Toast.LENGTH_LONG).show()
-        }else{
+
             // TODO detay sayfasına gönder
+
+        }else{
+            Toast.makeText(requireContext(),"Lütfen bir konum seçin",Toast.LENGTH_LONG).show()
 
 
         }

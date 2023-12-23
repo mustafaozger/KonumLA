@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/addDetailPage">
-    <fragment
-        android:id="@+id/mainPage2"
-        android:name="com.example.mevltbul.Pages.MainPage"
-        android:label="MainPage" />
+
     <fragment
         android:id="@+id/addingPage"
         android:name="com.example.mevltbul.Pages.AddingPage"
@@ -15,6 +12,5 @@
     <fragment
         android:id="@+id/addDetailPage"
         android:name="com.example.mevltbul.Pages.AddDetailPage"
-        android:label="fragment_add_detail_page"
-        tools:layout="@layout/fragment_add_detail_page" />
+        android:label="AddDetailPage" />
 </navigation>
