@@ -4,94 +4,93 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.mevltbul.Classes.Marker
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.delay
 import java.util.LinkedList
 import java.util.Queue
 
 class DetailPageDaoRepo{
 
-    private lateinit var db:FirebaseFirestore
-    private lateinit var storageRef:StorageReference
-    lateinit var urlLiveData: MutableLiveData<ArrayList<String>?>
+    private  var db:FirebaseFirestore=Firebase.firestore
+    private val storage = FirebaseStorage.getInstance()
+    private val storageReference = storage.reference
+    private val urlQueue:Queue<String> = LinkedList()
 
-    init {
-        db=Firebase.firestore
-        storageRef=FirebaseStorage.getInstance().reference.child("Images")
-        urlLiveData=MutableLiveData<ArrayList<String>?>()
+    fun publishDetail(
+        context: Context,
+        marker_id: String?,
+        marker_latitude: String? = null,
+        marker_longitude: String? = null,
+        marker_detail: String? = null,
+        imageList: ArrayList<Uri?>
+    ) {
+        val totalImages = imageList.size
+        var uploadedImages = 0
 
-    }
 
-    suspend fun publishDetail(contex :Context, marker_id:String?,
-                              marker_latitude:String?=null,
-                              marker_longtitude: String?=null,
-                              marker_detail:String?=null, imageList: ArrayList<Uri?>){
-        withContext(Dispatchers.IO) {
-            uploadImage(imageList)
-        }
-        withContext(Dispatchers.IO){
-            uploadImage(imageList)
-        }
-
-        val urlList= urlLiveData.value
-        Log.d("hatamDetailDaoUrlList","url list: "+urlList.toString())
-        Log.d("hatamDetailDaoUrlList","url liveData: "+urlLiveData.value.toString())
-
-        val marker=Marker(marker_id,marker_latitude,marker_longtitude,marker_detail
-            , urlList?.get(0), urlList?.get(1), urlList?.get(2), urlList?.get(3)
-        )
-        Log.d("hatamDetailDaoPublish2",marker.photo1.toString()+"\n"+marker.photo2.toString())
-        marker.marker_id?.let {
-            db.collection("images").document(it).set(marker).addOnSuccessListener {
-                Toast.makeText(contex,"Paylaşıldı",Toast.LENGTH_LONG).show()
-            }.addOnFailureListener {
-                Toast.makeText(contex,"Hata ${it.localizedMessage}",Toast.LENGTH_LONG).show()
-            }
-        }
-
-    }
-    suspend fun uploadImage(list:ArrayList<Uri?>){
-        val urlList=ArrayList<String?>()
-        Log.d("hatamDetailDaoUplodImg"," list = "+list.toString())
-        storageRef=storageRef.child(System.currentTimeMillis().toString())
-        for (i in 0..<list.size){
-            val temp=list.get(i)
-            if (temp!=null){
-                storageRef.putFile(temp).addOnCompleteListener{task->
-                    if (task.isSuccessful){
-                        storageRef.downloadUrl.addOnSuccessListener {uri->
-                            Log.d("hatamDetailDaoUplodImg"," sa"+uri.toString())
-                            // Mevcut değeri al
-                            val currentList = urlLiveData.value
-
-                            // Yeni URI'yi ekle
-                            currentList?.add(uri.toString())
-
-                            // Güncellenmiş listeyi LiveData'ya ata
-                            urlLiveData.value = currentList
-                        }
-                    }else{
-                        Log.d("hatamDetailDaoUplodImg"," put if ")
-
+        uploadImages(imageList, "images") { imageUrl ->
+            uploadedImages++
+            if (uploadedImages == totalImages) {
+                for ( i in 0..3){
+                    if (urlQueue.size<4){
+                        urlQueue.add(null)
                     }
+                }
+                // All images are uploaded, create Marker object and update Firestore document
+                val marker = Marker(
+                    marker_id,
+                    marker_latitude,
+                    marker_longitude,
+                    marker_detail,
+                    urlQueue.poll(),
+                    urlQueue.poll(),
+                    urlQueue.poll(),
+                    urlQueue.poll()
+                )
 
-                }.addOnFailureListener{
-                    Log.e("hatamDetailDaoUplodImg"," putFİle "+it.message)
-
+                marker.marker_id?.let {
+                    db.collection("images").document(it).set(marker)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Paylaşıldı", Toast.LENGTH_LONG).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Hata ${it.localizedMessage}", Toast.LENGTH_LONG).show()
+                        }
                 }
             }
         }
-        Log.d("hatamDetailDaoPublish","before ret "+ urlLiveData.value.toString())
-
-
-
     }
+
+    private fun uploadImages(imageUris: ArrayList<Uri?>, folderName: String, callback: (String) ->  Unit) {
+        val imageNamePrefix = "image_${System.currentTimeMillis()}"
+        var uploadedCount = 0
+
+        for (imageUri in imageUris) {
+            val imageName = "$imageNamePrefix${uploadedCount++}"
+            val imageRef: StorageReference = storageReference.child("$folderName/$imageName")
+
+            if (imageUri != null) {
+                imageRef.putFile(imageUri)
+                    .addOnSuccessListener { taskSnapshot ->
+                        taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { uri ->
+                            urlQueue.add(uri.toString())
+                            callback(uri.toString())
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        exception.printStackTrace()
+                    }
+            }
+        }
+    }
+
 
 }

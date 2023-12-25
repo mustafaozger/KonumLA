@@ -71,7 +71,7 @@ class AddDetailPage : Fragment()  {
         binding.btnShare.setOnClickListener {
          try {
 
-             detailVM.publishDetail(requireContext(),"dsada",
+             detailVM.publishDetail(requireContext(),"buu",
              "sada",
              "dsadsadsad",
              binding.txtDetail.text.toString(),

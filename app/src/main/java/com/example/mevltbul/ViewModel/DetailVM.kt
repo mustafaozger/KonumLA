@@ -17,9 +17,8 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
                       marker_detail:String?=null, imageList: ArrayList<Uri?>){
 
         viewModelScope.launch {
-
-            detailPageDaoRepo.publishDetail(contex, marker_id, marker_latitude, marker_longtitude, marker_detail, imageList)
         }
+        detailPageDaoRepo.publishDetail(contex, marker_id, marker_latitude, marker_longtitude, marker_detail, imageList)
 
 
     }
