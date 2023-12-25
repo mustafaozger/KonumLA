@@ -3,14 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/addDetailPage">
+    app:startDestination="@id/mainPage">
 
     <fragment
         android:id="@+id/addingPage"
         android:name="com.example.mevltbul.Pages.AddingPage"
-        android:label="AddingPage" />
+        android:label="AddingPage" >
+        <action
+            android:id="@+id/action_addingPage_to_addDetailPage"
+            app:destination="@id/addDetailPage" />
+    </fragment>
     <fragment
         android:id="@+id/addDetailPage"
         android:name="com.example.mevltbul.Pages.AddDetailPage"
-        android:label="AddDetailPage" />
+        android:label="AddDetailPage" >
+        <argument
+            android:name="latitude"
+            app:argType="string" />
+        <argument
+            android:name="longitude"
+            app:argType="string" />
+        <argument android:name="address"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainPage"
+        android:name="com.example.mevltbul.Pages.MainPage"
+        android:label="MainPage" />
 </navigation>

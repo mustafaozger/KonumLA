@@ -25,12 +25,12 @@ class DetailPageDaoRepo{
     private val urlQueue:Queue<String> = LinkedList()
 
     fun publishDetail(
-        context: Context,
         marker_id: String?,
         marker_latitude: String? = null,
         marker_longitude: String? = null,
         marker_detail: String? = null,
-        imageList: ArrayList<Uri?>
+        imageList: ArrayList<Uri?>,
+        callback: (Boolean) -> Unit
     ) {
         val totalImages = imageList.size
         var uploadedImages = 0
@@ -44,7 +44,6 @@ class DetailPageDaoRepo{
                         urlQueue.add(null)
                     }
                 }
-                // All images are uploaded, create Marker object and update Firestore document
                 val marker = Marker(
                     marker_id,
                     marker_latitude,
@@ -59,10 +58,10 @@ class DetailPageDaoRepo{
                 marker.marker_id?.let {
                     db.collection("images").document(it).set(marker)
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Paylaşıldı", Toast.LENGTH_LONG).show()
+                            callback(true)
                         }
                         .addOnFailureListener {
-                            Toast.makeText(context, "Hata ${it.localizedMessage}", Toast.LENGTH_LONG).show()
+                            callback(false)
                         }
                 }
             }

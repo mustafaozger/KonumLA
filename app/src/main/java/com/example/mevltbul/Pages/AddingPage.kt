@@ -16,6 +16,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.FragmentAddingPageBinding
@@ -33,6 +35,10 @@ class AddingPage : Fragment(),OnMapReadyCallback {
     private lateinit var locationListener: LocationListener
     private lateinit var locationManager: LocationManager
     private  var selectedPosition:LatLng?=null
+    private var address=""
+
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -66,12 +72,11 @@ class AddingPage : Fragment(),OnMapReadyCallback {
 
     }
 
-    val listener=object:GoogleMap.OnMapLongClickListener{
+    private val listener=object:GoogleMap.OnMapLongClickListener{
         override fun onMapLongClick(p0: LatLng) {
             mMap?.clear()
             val geocoder=Geocoder(requireContext(), Locale.getDefault())
             if(p0!=null){
-                var address=""
                 try {
                     val addressList=geocoder.getFromLocation(p0.latitude,p0.longitude,1)
                     if (addressList != null) {
@@ -99,8 +104,8 @@ class AddingPage : Fragment(),OnMapReadyCallback {
 
     private fun publish(){
         if (selectedPosition!=null){
-
-            // TODO detay sayfasına gönder
+            val transition=AddingPageDirections.actionAddingPageToAddDetailPage(latitude=selectedPosition!!.latitude.toString(),longitude= selectedPosition!!.longitude.toString(),address=this.address)
+            Navigation.findNavController(requireView()).navigate(transition)
 
         }else{
             Toast.makeText(requireContext(),"Lütfen bir konum seçin",Toast.LENGTH_LONG).show()

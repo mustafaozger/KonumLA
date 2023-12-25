@@ -11,14 +11,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): ViewModel() {
-    fun publishDetail(contex : Context, marker_id:String?,
+    fun publishDetail( marker_id:String?,
                       marker_latitude:String?=null,
                       marker_longtitude: String?=null,
-                      marker_detail:String?=null, imageList: ArrayList<Uri?>){
+                      marker_detail:String?=null, imageList: ArrayList<Uri?>,
+                       callback:(Boolean) ->Unit){
 
         viewModelScope.launch {
+            detailPageDaoRepo.publishDetail( marker_id, marker_latitude, marker_longtitude, marker_detail, imageList,callback)
+
         }
-        detailPageDaoRepo.publishDetail(contex, marker_id, marker_latitude, marker_longtitude, marker_detail, imageList)
 
 
     }

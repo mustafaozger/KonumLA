@@ -11,8 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentAddDetailPageBinding
@@ -28,11 +30,12 @@ class AddDetailPage : Fragment()  {
     private var selectedImageView:ImageView?=null
     val uriList=ArrayList<Uri?>()
     private lateinit var detailVM: DetailVM
+    val bundle:AddDetailPageArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val temp :DetailVM by viewModels()
         detailVM=temp
-
     }
 
 
@@ -46,6 +49,7 @@ class AddDetailPage : Fragment()  {
         imageViewList.add(binding.addImage2)
         imageViewList.add(binding.addImage3)
         imageViewList.add(binding.addImage4)
+
 
         binding.addImage1.setOnClickListener {
             selectedImageView=binding.addImage1
@@ -65,20 +69,24 @@ class AddDetailPage : Fragment()  {
             showAllert()
         }
 
+        binding.txtLocation.setText(bundle.address)
 
 
 
         binding.btnShare.setOnClickListener {
-         try {
 
-             detailVM.publishDetail(requireContext(),"buu",
-             "sada",
-             "dsadsadsad",
+             detailVM.publishDetail(
+                 System.currentTimeMillis().toString(),
+                 bundle.latitude,
+                 bundle.longitude,
              binding.txtDetail.text.toString(),
-             uriList)
-         }catch (e:Exception){
-             Log.e("hatam",e.toString())
-         }
+             uriList){
+                 if(it){
+                     Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
+                 }else{
+                     Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
+                 }
+             }
 
         }
 
