@@ -29,5 +29,9 @@
     <fragment
         android:id="@+id/mainPage"
         android:name="com.example.mevltbul.Pages.MainPage"
-        android:label="MainPage" />
+        android:label="MainPage" >
+        <action
+            android:id="@+id/action_mainPage_to_addingPage"
+            app:destination="@id/addingPage" />
+    </fragment>
 </navigation>

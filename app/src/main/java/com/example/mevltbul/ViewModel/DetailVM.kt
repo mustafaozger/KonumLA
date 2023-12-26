@@ -3,8 +3,10 @@ package com.example.mevltbul.ViewModel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Repository.DetailPageDaoRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,8 +23,10 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
             detailPageDaoRepo.publishDetail( marker_id, marker_latitude, marker_longtitude, marker_detail, imageList,callback)
 
         }
+    }
 
-
+    fun getEventLists(): MutableLiveData<ArrayList<Marker>> {
+       return detailPageDaoRepo.getEventLists()
     }
 
 }

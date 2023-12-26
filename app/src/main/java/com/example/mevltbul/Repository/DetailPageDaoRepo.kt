@@ -23,6 +23,12 @@ class DetailPageDaoRepo{
     private val storage = FirebaseStorage.getInstance()
     private val storageReference = storage.reference
     private val urlQueue:Queue<String> = LinkedList()
+    private val markerList=MutableLiveData<ArrayList<Marker>>()
+
+    fun getEventLists():MutableLiveData<ArrayList<Marker>>{
+        return getEventListsFromDatabas()
+
+    }
 
     fun publishDetail(
         marker_id: String?,
@@ -36,7 +42,7 @@ class DetailPageDaoRepo{
         var uploadedImages = 0
 
 
-        uploadImages(imageList, "images") { imageUrl ->
+        uploadImages(imageList, "markers") { imageUrl ->
             uploadedImages++
             if (uploadedImages == totalImages) {
                 for ( i in 0..3){
@@ -82,6 +88,7 @@ class DetailPageDaoRepo{
                         taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { uri ->
                             urlQueue.add(uri.toString())
                             callback(uri.toString())
+
                         }
                     }
                     .addOnFailureListener { exception ->
@@ -89,6 +96,42 @@ class DetailPageDaoRepo{
                     }
             }
         }
+    }
+
+
+
+
+   private fun getEventListsFromDatabas():MutableLiveData<ArrayList<Marker>>{
+       var collection= db.collection("images")
+
+        collection.get().addOnSuccessListener {documents->
+            if(!documents.isEmpty){
+                val list=ArrayList<Marker>()
+                for (document in documents){
+                    val data = document.data
+                    val marker=Marker(
+                        data.get("marker_id") as String? ,
+                        data.get("marker_latitude") as String?,
+                        data.get("marker_longtitude") as String?,
+                        data.get("marker_detail") as String?,
+                        data.get("photo1") as String?,
+                        data.get("photo2") as String?,
+                        data.get("photo3") as String?,
+                        data.get("photo4") as String?
+                        )
+                    list.add(marker)
+                }
+                markerList.value=list
+
+            }
+
+        }
+        return markerList
+    }
+
+
+    fun getEventDetail(){
+
     }
 
 
