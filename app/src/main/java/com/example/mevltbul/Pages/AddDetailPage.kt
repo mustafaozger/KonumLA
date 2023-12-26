@@ -1,19 +1,25 @@
 package com.example.mevltbul.Pages
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
@@ -87,7 +93,7 @@ class AddDetailPage : Fragment()  {
                      Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
                  }
              }
-
+            Navigation.findNavController(it).navigate(R.id.action_addDetailPage_to_mainPage)
         }
 
 
@@ -95,31 +101,32 @@ class AddDetailPage : Fragment()  {
     }
 
 
-    fun showAllert(){
-        val builder=AlertDialog.Builder(requireContext())
-        val allertConext=LayoutInflater.from(requireContext()).inflate(R.layout.dialog_box_choose_camera_or_media,null)
-        builder.setView(allertConext)
-        val dialog=builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val btn_camera: ImageView? =allertConext.findViewById(R.id.img_allert_camera)
-        val btn_gallery:ImageView?=allertConext.findViewById(R.id.img_allert_gallery)
 
-        btn_camera?.setOnClickListener {
+fun showAllert(){
+        val dialog=Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.image_upload_bottomsheet)
+        val btn_camera:LinearLayout=dialog.findViewById(R.id.img_camera)
+        val btn_gallery:LinearLayout=dialog.findViewById(R.id.img_gallery)
+
+            btn_camera.setOnClickListener {
             ImagePicker.with(this).cameraOnly().start()
             dialog.dismiss()
         }
-        btn_gallery?.setOnClickListener {
+        btn_gallery.setOnClickListener {
             ImagePicker.with(this).galleryOnly().start()
             dialog.dismiss()
 
         }
         dialog.show()
-
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setWindowAnimations(R.style.DialogAnimation)
+        dialog.window?.setGravity(Gravity.BOTTOM)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("hatamAddDetailPageOnActiv", "work")
 
         if(resultCode==Activity.RESULT_OK && requestCode ==ImagePicker.REQUEST_CODE){
             if (data != null) {

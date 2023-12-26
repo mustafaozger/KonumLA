@@ -25,6 +25,9 @@
             app:argType="string" />
         <argument android:name="address"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addDetailPage_to_mainPage"
+            app:destination="@id/mainPage" />
     </fragment>
     <fragment
         android:id="@+id/mainPage"

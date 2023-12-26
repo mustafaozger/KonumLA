@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentMainPageBinding
@@ -54,9 +56,9 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         mapFragment.getMapAsync(this)
 
         markerList= detailVM.getEventLists()
-        markerList.observe(viewLifecycleOwner){
 
-
+        binding.mainBtn.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_mainPage_to_addingPage)
         }
 
         return binding.root
@@ -112,6 +114,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                             .position(it)
                             .title("Marker Başlığı")
                             .snippet("Marker Açıklaması")
+                            .icon(Constants.getMarker(requireContext()))
                     }
                    val mar=markerOptions?.let { mMap?.addMarker(it) }
                     if (mar != null) {
