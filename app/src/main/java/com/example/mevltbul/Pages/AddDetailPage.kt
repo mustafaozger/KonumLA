@@ -89,11 +89,14 @@ class AddDetailPage : Fragment()  {
              uriList){
                  if(it){
                      Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
+                     Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
+
                  }else{
                      Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
+                     Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
+
                  }
              }
-            Navigation.findNavController(it).navigate(R.id.action_addDetailPage_to_mainPage)
         }
 
 
@@ -103,6 +106,7 @@ class AddDetailPage : Fragment()  {
 
 
 
+@SuppressLint("SuspiciousIndentation")
 fun showAllert(){
         val dialog=Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

@@ -57,9 +57,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
 
         markerList= detailVM.getEventLists()
 
-        binding.mainBtn.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_mainPage_to_addingPage)
-        }
+
 
         return binding.root
     }

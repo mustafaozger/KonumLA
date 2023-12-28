@@ -65,6 +65,7 @@ class DetailPageDaoRepo{
                     db.collection("images").document(it).set(marker)
                         .addOnSuccessListener {
                             callback(true)
+
                         }
                         .addOnFailureListener {
                             callback(false)
