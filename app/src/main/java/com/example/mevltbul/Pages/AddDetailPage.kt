@@ -25,12 +25,13 @@ import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentAddDetailPageBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.LinkedList
 import java.util.Queue
 
 @AndroidEntryPoint
-class AddDetailPage : Fragment()  {
+class AddDetailPage : Fragment()   {
     val imageViewList:Queue<ImageView> = LinkedList()
     lateinit var binding:FragmentAddDetailPageBinding
     private var selectedImageView:ImageView?=null
@@ -102,7 +103,6 @@ class AddDetailPage : Fragment()  {
 
         return binding.root
     }
-
 
 
 

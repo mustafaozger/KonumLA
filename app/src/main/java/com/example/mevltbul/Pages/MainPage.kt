@@ -67,6 +67,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener=LocationListener{location ->
 //            val currentLocation=LatLng(location.latitude,location.longitude)
+
             val currentLocation=LatLng(37.3076287,-122.013545)
 
             if(mMap!=null){
@@ -125,6 +126,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                     val event =markList.get(clickedMarker)
                     if(event!=null){
                         Log.d("hatamMainPageMarkerClick"," mar ${event.marker_id}")
+
                     }
 
                     true

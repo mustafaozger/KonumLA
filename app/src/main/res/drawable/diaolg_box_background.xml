@@ -17,7 +17,7 @@
     <stroke
 
         android:width="2dp"
-        android:color="@color/lavender" />
+        android:color="@color/black" />
 
 
 
