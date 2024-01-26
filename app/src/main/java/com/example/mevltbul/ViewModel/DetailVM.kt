@@ -25,8 +25,8 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
         }
     }
 
-    fun getEventLists(): MutableLiveData<ArrayList<Marker>> {
-       return detailPageDaoRepo.getEventLists()
+    fun getEventLists(latitude:Double,longitude:Double): MutableLiveData<ArrayList<Marker>> {
+       return detailPageDaoRepo.getEventLists(latitude,longitude)
     }
 
 }

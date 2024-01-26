@@ -1,8 +1,11 @@
 package com.example.mevltbul.Pages
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -15,7 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.Navigation
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
@@ -55,26 +57,37 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        markerList= detailVM.getEventLists()
-
-
-
         return binding.root
     }
 
+
+    @SuppressLint("SuspiciousIndentation")
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
         locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        var lastLocation:Location?=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+          if(lastLocation!=null){
+        markerList=detailVM.getEventLists(lastLocation.latitude,lastLocation.longitude)
+          }
+
         locationListener=LocationListener{location ->
-//            val currentLocation=LatLng(location.latitude,location.longitude)
-
-            val currentLocation=LatLng(37.3076287,-122.013545)
-
+            val currentLocation=LatLng(location.latitude,location.longitude)
             if(mMap!=null){
-
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,18f))
             }
         }
+        Log.d("markerList",markerList.value.toString())
 
         if (ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
             !=PackageManager.PERMISSION_GRANTED){
@@ -91,6 +104,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         val geocoder= Geocoder(requireContext(), Locale.getDefault())
 
         try {
+
             markerList.observe(viewLifecycleOwner){list->
                 for ( marker in list){
                     val addressList= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
@@ -139,6 +153,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
             e.printStackTrace()
         }
     }
+
 
 
 

@@ -1,4 +1,4 @@
-package com.example. mevltbul.Repository
+package com.example.mevltbul.Repository
 
 import android.content.Context
 import android.net.Uri
@@ -25,8 +25,8 @@ class DetailPageDaoRepo{
     private val urlQueue:Queue<String> = LinkedList()
     private val markerList=MutableLiveData<ArrayList<Marker>>()
 
-    fun getEventLists():MutableLiveData<ArrayList<Marker>>{
-        return getEventListsFromDatabas()
+    fun getEventLists(latitude: Double, longitude: Double):MutableLiveData<ArrayList<Marker>>{
+        return getEventListsFromDatabas(latitude,longitude)
 
     }
 
@@ -102,10 +102,13 @@ class DetailPageDaoRepo{
 
 
 
-   private fun getEventListsFromDatabas():MutableLiveData<ArrayList<Marker>>{
-       var collection= db.collection("images")
-
-        collection.get().addOnSuccessListener {documents->
+   private fun getEventListsFromDatabas(latitude:Double,longitude:Double):MutableLiveData<ArrayList<Marker>>{
+       val collection= db.collection("images")
+       collection.whereGreaterThan("marker_latitude",(latitude-0.5))
+       collection.whereLessThanOrEqualTo("marker_latitude",(latitude+0.5).toString())
+       collection.whereGreaterThanOrEqualTo("marker_longtitude",(longitude-0.5).toString())
+       collection.whereLessThanOrEqualTo("marker_longtitude",(longitude+0.5).toString())
+       collection.get().addOnSuccessListener {documents->
             if(!documents.isEmpty){
                 val list=ArrayList<Marker>()
                 for (document in documents){
