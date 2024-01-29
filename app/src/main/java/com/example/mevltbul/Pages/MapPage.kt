@@ -1,21 +1,30 @@
 package com.example.mevltbul.Pages
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
@@ -27,6 +36,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -114,12 +125,21 @@ class MapPage : Fragment(),OnMapReadyCallback {
                     }
                     true
                 }
-
-
-
             }
 
+            mMap?.setOnMarkerClickListener { clickedMarker->
 
+            //TODO
+                val event=markList.get(clickedMarker)
+                if(event!=null){
+                    showAllert(event)
+                }
+
+
+
+
+                true
+            }
 
 
 
@@ -127,6 +147,29 @@ class MapPage : Fragment(),OnMapReadyCallback {
             Log.e("hatamMapPageShowMarker",e.toString())
         }
 
+
+    }
+
+
+    private fun showAllert(marker:Marker){
+        val dialog=BottomSheetDialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.detail_event_bottom_sheet)
+        val imageRycler: RecyclerView? =dialog.findViewById(R.id.detailBottomsheetRecyclerView)
+        val txt_eventName:TextView? =dialog.findViewById(R.id.detailBottomsheetEventName)
+        val txt_eventDate: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDate)
+        val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
+        val btn_direction:Chip?=dialog.findViewById(R.id.btn_direction)
+
+        txt_eventDescription?.text=marker.marker_detail
+        Toast.makeText(requireContext(),marker.marker_detail,Toast.LENGTH_LONG).show()
+
+
+        dialog.show()
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setWindowAnimations(R.style.DialogAnimation)
+        dialog.window?.setGravity(Gravity.BOTTOM)
 
     }
 

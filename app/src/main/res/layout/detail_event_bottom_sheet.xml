@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/diaolg_box_background"
+            android:hapticFeedbackEnabled="true"
+
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/materialToolbar3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_background"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:title="Etkinlik"
+                app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
+                app:titleTextColor="@color/red" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detailBottomsheetRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/detailBottomsheetEventName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/detailBottomsheetEventDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:text="10.10.2021 19:30 "
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:text="Hakkında"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/diaolg_box_background">
+
+
+                <TextView
+                    android:id="@+id/detailBottomsheetEventDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="TextViewTextViewTextView"
+
+                    />
+            </FrameLayout>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btn_direction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:text="Yol Tarifi Al"
+                android:textAlignment="center"
+
+                />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>
