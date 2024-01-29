@@ -15,9 +15,10 @@
             android:id="@+id/mapFragment"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="230dp"
             android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
@@ -34,6 +35,18 @@
             app:title="Mevlüt Yerim"
             app:titleCentered="true"
             app:titleTextColor="@color/red" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:text="Haritayı Göster"
+            app:chipIcon="@drawable/baseline_search_24"
+            app:layout_constraintBottom_toBottomOf="@+id/mapFragment"
+            app:layout_constraintEnd_toEndOf="@+id/mapFragment"
+            app:layout_constraintHorizontal_bias="0.917"
+            app:layout_constraintStart_toStartOf="@+id/mapFragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

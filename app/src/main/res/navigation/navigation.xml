@@ -36,5 +36,12 @@
         <action
             android:id="@+id/action_mainPage_to_addingPage"
             app:destination="@id/addingPage" />
+        <action
+            android:id="@+id/action_mainPage_to_mapPage"
+            app:destination="@id/mapPage" />
     </fragment>
+    <fragment
+        android:id="@+id/mapPage"
+        android:name="com.example.mevltbul.Pages.MapPage"
+        android:label="MapPage"/>
 </navigation>

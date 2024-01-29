@@ -1,6 +1,7 @@
 package com.example.mevltbul.Classes
 
 import com.google.firebase.firestore.IgnoreExtraProperties
+import java.io.Serializable
 
 @IgnoreExtraProperties
 data class Marker(var marker_id:String?=null,
@@ -12,5 +13,5 @@ data class Marker(var marker_id:String?=null,
                   var photo3:String?=null,
                   var photo4:String?=null
 
-    ) {
+    ):Serializable{
 }

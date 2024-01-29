@@ -15,9 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
@@ -40,7 +43,6 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         lateinit var locationListener: LocationListener
         var mMap:GoogleMap?=null
         private var markerList=MutableLiveData<ArrayList<Marker>>()
-        private val markList = HashMap<com.google.android.gms.maps.model.Marker, Marker>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,11 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         binding=FragmentMainPageBinding.inflate(layoutInflater)
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+        binding.chip.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_mainPage_to_mapPage)
+        }
 
         return binding.root
     }
@@ -84,7 +91,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         locationListener=LocationListener{location ->
             val currentLocation=LatLng(location.latitude,location.longitude)
             if(mMap!=null){
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,18f))
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
             }
         }
         Log.d("markerList",markerList.value.toString())
@@ -102,22 +109,13 @@ class MainPage: Fragment() ,OnMapReadyCallback{
 
     private fun showMarker(){
         val geocoder= Geocoder(requireContext(), Locale.getDefault())
-
         try {
-
-            markerList.observe(viewLifecycleOwner){list->
-                for ( marker in list){
-                    val addressList= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
+             markerList.observe(viewLifecycleOwner){list->
+                 for ( marker in list){
+                      val addressList= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
                         geocoder.getFromLocation(it.toDouble(),
                             it1.toDouble(),1)
                     } }
-
-                    if (addressList != null) {
-                        if(addressList.size>0){
-                            //normalde cadde ve sokak ismini buradan alıyorum ama
-                        }
-
-                    }
                     val latLng= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
                         LatLng(it.toDouble(),
                             it1.toDouble())
@@ -125,26 +123,14 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                     val markerOptions = latLng?.let {
                         MarkerOptions()
                             .position(it)
-                            .title("Marker Başlığı")
-                            .snippet("Marker Açıklaması")
                             .icon(Constants.getMarker(requireContext()))
                     }
-                   val mar=markerOptions?.let { mMap?.addMarker(it) }
-                    if (mar != null) {
-                        markList.put(mar,marker)
-                    }
+                     markerOptions?.let { mMap?.addMarker(it) }
 
 
-                }
-                mMap?.setOnMarkerClickListener { clickedMarker->
-                    val event =markList.get(clickedMarker)
-                    if(event!=null){
-                        Log.d("hatamMainPageMarkerClick"," mar ${event.marker_id}")
 
-                    }
 
-                    true
-                }
+                 }
 
             }
 

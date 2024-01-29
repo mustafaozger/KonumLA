@@ -25,6 +25,11 @@ class DetailPageDaoRepo{
     private val urlQueue:Queue<String> = LinkedList()
     private val markerList=MutableLiveData<ArrayList<Marker>>()
 
+    fun getEventLists():MutableLiveData<ArrayList<Marker>>{
+        return markerList
+    }
+
+
     fun getEventLists(latitude: Double, longitude: Double):MutableLiveData<ArrayList<Marker>>{
         return getEventListsFromDatabas(latitude,longitude)
 

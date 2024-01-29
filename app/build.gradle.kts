@@ -52,8 +52,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
-    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.firebase:firebase-firestore:24.10.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -65,12 +65,13 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:$2.7.6")
 
     //viewmodel
-    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.7.0")
     implementation("androidx.activity:activity-ktx:1.8.2")
 
     //LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    kapt("androidx.lifecycle:lifecycle-compiler:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt("androidx.lifecycle:lifecycle-compiler:2.7.0")
 
     //Hilt
 

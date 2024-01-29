@@ -104,8 +104,6 @@ class AddDetailPage : Fragment()   {
         return binding.root
     }
 
-
-
 @SuppressLint("SuspiciousIndentation")
 fun showAllert(){
         val dialog=Dialog(requireContext())
@@ -140,8 +138,6 @@ fun showAllert(){
                 if(imageViewList.size!=0){
                     imageViewList.peek()?.setImageResource(R.drawable.add_photo)
                 }
-
-
             }
         }
 

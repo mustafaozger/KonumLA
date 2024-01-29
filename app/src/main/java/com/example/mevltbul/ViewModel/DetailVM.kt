@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): ViewModel() {
+
     fun publishDetail( marker_id:String?,
                       marker_latitude:String?=null,
                       marker_longtitude: String?=null,
@@ -27,6 +28,9 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
 
     fun getEventLists(latitude:Double,longitude:Double): MutableLiveData<ArrayList<Marker>> {
        return detailPageDaoRepo.getEventLists(latitude,longitude)
+    }
+    fun getEventLists():MutableLiveData<ArrayList<Marker>>{
+        return detailPageDaoRepo.getEventLists()
     }
 
 }
