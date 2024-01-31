@@ -113,11 +113,13 @@ fun showAllert(){
         val btn_gallery:LinearLayout=dialog.findViewById(R.id.img_gallery)
 
             btn_camera.setOnClickListener {
-            ImagePicker.with(this).cameraOnly().start()
+                // max size of image 1 MB
+            ImagePicker.with(this).cameraOnly().compress(1024).start()
             dialog.dismiss()
         }
         btn_gallery.setOnClickListener {
-            ImagePicker.with(this).galleryOnly().start()
+            // max size of image 1 MB
+            ImagePicker.with(this).galleryOnly().compress(1024).start()
             dialog.dismiss()
 
         }
