@@ -48,6 +48,24 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         val temp:DetailVM by viewModels()
         detailVM=temp
+        locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        val lastLocation:Location?=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if(lastLocation!=null){
+            markerList=detailVM.getEventLists(lastLocation.latitude,lastLocation.longitude)
+        }
+
     }
 
     override fun onCreateView(
@@ -71,22 +89,8 @@ class MainPage: Fragment() ,OnMapReadyCallback{
     @SuppressLint("SuspiciousIndentation")
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
-        locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        var lastLocation:Location?=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-          if(lastLocation!=null){
-        markerList=detailVM.getEventLists(lastLocation.latitude,lastLocation.longitude)
-          }
+
 
         locationListener=LocationListener{location ->
             val currentLocation=LatLng(location.latitude,location.longitude)
@@ -94,8 +98,6 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
             }
         }
-        Log.d("markerList",markerList.value.toString())
-
         if (ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
             !=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)

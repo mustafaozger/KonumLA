@@ -132,7 +132,6 @@ fun showAllert(){
 
         if(resultCode==Activity.RESULT_OK && requestCode ==ImagePicker.REQUEST_CODE){
             if (data != null) {
-                Log.d("hatamAddDetailPageOnActiv", "data "+ data.data.toString())
                 imageViewList.poll()?.setImageURI(data.data)
                 uriList.add(data.data)
                 if(imageViewList.size!=0){

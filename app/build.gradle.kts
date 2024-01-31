@@ -85,6 +85,10 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
 
+    //ImageSlider
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
+
 }
 
 kapt {
