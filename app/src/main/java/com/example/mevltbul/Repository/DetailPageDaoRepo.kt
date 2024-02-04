@@ -108,33 +108,49 @@ class DetailPageDaoRepo{
 
 
    private fun getEventListsFromDatabas(latitude:Double,longitude:Double):MutableLiveData<ArrayList<Marker>>{
+       //I'm getting events in the area close to the user's location
+
        val collection= db.collection("images")
-       collection.whereGreaterThan("marker_latitude",(latitude-0.1))
-       collection.whereLessThanOrEqualTo("marker_latitude",(latitude+0.1).toString())
-       collection.whereGreaterThanOrEqualTo("marker_longtitude",(longitude-0.15).toString())
-       collection.whereLessThanOrEqualTo("marker_longtitude",(longitude+0.15).toString())
+           .whereGreaterThanOrEqualTo("marker_latitude",(latitude-0.5).toString())
+           .whereLessThanOrEqualTo("marker_latitude",(latitude+0.5 ).toString())
+
+
        collection.get().addOnSuccessListener {documents->
             if(!documents.isEmpty){
                 val list=ArrayList<Marker>()
                 for (document in documents){
                     val data = document.data
-                    val marker=Marker(
-                        data.get("marker_id") as String? ,
-                        data.get("marker_latitude") as String?,
-                        data.get("marker_longtitude") as String?,
-                        data.get("marker_detail") as String?,
-                        data.get("photo1") as String?,
-                        data.get("photo2") as String?,
-                        data.get("photo3") as String?,
-                        data.get("photo4") as String?
+
+                    //Firestore does not directly support disparity filters (like >, <) on multiple fields at once. so that's why I had to use the following if check
+                    val markerLongitude = data.get("marker_longtitude") as? String
+                    if (markerLongitude != null && markerLongitude.toDouble() in (longitude - 0.5)..(longitude + 0.5)) {
+
+                        val marker=Marker(
+                            data.get("marker_id") as String? ,
+                            data.get("marker_latitude") as String?,
+                            data.get("marker_longtitude") as String?,
+                            data.get("marker_detail") as String?,
+                            data.get("photo1") as String?,
+                            data.get("photo2") as String?,
+                            data.get("photo3") as String?,
+                            data.get("photo4") as String?
                         )
-                    list.add(marker)
+                        list.add(marker)
+
+                    }else{
+                        Log.d("hatamGetEventListsFromDatabas","marker longitude is not in range {${markerLongitude}}")
+                    }
+
                 }
                 markerList.value=list
 
+            }else{
+                Log.d("hatamGetEventListsFromDatabas"," documnet empty")
             }
 
-        }
+        }.addOnFailureListener {
+            Log.d("hatamGetEventListsFromDatabas","document failure {${it}}")
+       }
         return markerList
     }
 
