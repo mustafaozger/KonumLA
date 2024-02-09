@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -25,6 +26,7 @@ import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentAddDetailPageBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.LinkedList
@@ -39,6 +41,11 @@ class AddDetailPage : Fragment()   {
     private lateinit var detailVM: DetailVM
     val bundle:AddDetailPageArgs by navArgs()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.GONE
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val temp :DetailVM by viewModels()
@@ -86,6 +93,7 @@ class AddDetailPage : Fragment()   {
                  System.currentTimeMillis().toString(),
                  bundle.latitude,
                  bundle.longitude,
+
              binding.txtDetail.text.toString(),
              uriList){
                  if(it){
@@ -99,9 +107,15 @@ class AddDetailPage : Fragment()   {
                  }
              }
         }
-
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val eventNameList=resources.getStringArray(R.array.event_name_list)
+        val arrayAdapter=ArrayAdapter(requireContext(),R.layout.event_list_dropdown_item,eventNameList)
+        binding.txtEventList.setAdapter(arrayAdapter)
+
     }
 
 @SuppressLint("SuspiciousIndentation")

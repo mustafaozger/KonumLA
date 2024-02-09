@@ -13,16 +13,13 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
                 tools:context=".Pages.AddDetailPage">
 
                   <androidx.appcompat.widget.Toolbar
@@ -40,7 +37,6 @@
                       app:titleTextColor="@color/red" />
 
                   <TextView
-                      android:id="@+id/textView2"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="12dp"
@@ -104,6 +100,35 @@
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="12dp"
                       android:layout_marginTop="15dp"
+                      android:text="Etkinlik Türü"
+                      android:textSize="20sp"
+                      android:textStyle="bold" />
+
+                  <com.google.android.material.textfield.TextInputLayout
+                      style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="12dp"
+                      android:layout_marginTop="15dp"
+                      android:layout_marginRight="12dp">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/txt_eventList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="Etkinlik Turu"
+                            android:inputType="none"
+
+                            />
+
+                  </com.google.android.material.textfield.TextInputLayout>
+
+                  <TextView
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="12dp"
+                      android:layout_marginTop="15dp"
                       android:text="Konum"
                       android:textSize="20sp"
                       android:textStyle="bold" />
@@ -134,7 +159,7 @@
 
                   <FrameLayout
                       android:layout_width="match_parent"
-                      android:layout_height="177dp"
+                      android:layout_height="120dp"
                       android:layout_margin="15dp"
                       android:background="@drawable/background_photo">
 
@@ -143,35 +168,33 @@
                             android:id="@+id/txt_detail"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:background="@android:color/transparent"
                             android:ems="10"
                             android:gravity="start|top"
                             android:hint="Açıklama Yaz..."
-                            android:layout_margin="10dp"
                             android:inputType="textMultiLine"
-                            android:background="@android:color/transparent"
 
                             />
                   </FrameLayout>
 
+                  <Button
+                      android:id="@+id/btn_share"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginStart="50dp"
+
+                      android:layout_marginEnd="50dp"
+
+                      android:backgroundTint="#840032"
+
+                      android:padding="10sp"
+                      android:text="Paylaş"
+                      android:textColor="@color/cream"
+                      android:textSize="20sp" />
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="50dp"
-                android:backgroundTint="#840032"
-
-                android:padding="10sp"
-                android:text="Paylaş"
-                android:textColor="@color/cream"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

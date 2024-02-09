@@ -4,4 +4,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="firestore_image_collection_name">images</string>
+    <string-array name="event_name_list">
+        <item>Konser</item>
+        <item>Toplantı</item>
+        <item>Seminer</item>
+        <item>Yemek</item>
+        <item>Spor</item>
+        <item>Diğer</item>
+
+
+    </string-array>
 </resources>
