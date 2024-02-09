@@ -29,6 +29,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.LinkedList
 import java.util.Queue
 
@@ -88,25 +89,35 @@ class AddDetailPage : Fragment()   {
 
 
         binding.btnShare.setOnClickListener {
+            if (binding.txtEventList.text.toString()!=""){
+                val sdf=SimpleDateFormat("dd/MM/yyyy HH:mm")
+                val currentDAte=sdf.format(System.currentTimeMillis())
+                detailVM.publishDetail(
+                    System.currentTimeMillis().toString(),
+                    bundle.latitude,
+                    bundle.longitude,
+                    binding.txtDetail.text.toString(),
+                    uriList,
+                    binding.txtEventList.text.toString(),currentDAte.toString()){
+                    if(it){
+                        Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
+                        Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
 
-             detailVM.publishDetail(
-                 System.currentTimeMillis().toString(),
-                 bundle.latitude,
-                 bundle.longitude,
+                    }else{
+                        Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
+                        Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
 
-             binding.txtDetail.text.toString(),
-             uriList){
-                 if(it){
-                     Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
-                     Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
+                    }
+                }
+            }else{
+                Toast.makeText(requireContext(),"Etkinlik Türünü Seçin",Toast.LENGTH_LONG).show()
+            }
 
-                 }else{
-                     Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
-                     Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
 
-                 }
-             }
         }
+
+
+
         return binding.root
     }
 

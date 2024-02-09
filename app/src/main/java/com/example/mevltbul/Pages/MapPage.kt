@@ -1,7 +1,5 @@
 package com.example.mevltbul.Pages
 
-import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -19,14 +17,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -44,7 +39,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.asFlow
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -162,11 +156,12 @@ class MapPage : Fragment(),OnMapReadyCallback {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.detail_event_bottom_sheet)
         val imageSlider: ImageSlider? =dialog.findViewById(R.id.image_slider)
-        val txt_eventName:TextView? =dialog.findViewById(R.id.detailBottomsheetEventName)
+        val txt_eventType:TextView? =dialog.findViewById(R.id.detailBottomsheetEventType)
         val txt_eventDate: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDate)
         val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
         val btn_direction:Chip?=dialog.findViewById(R.id.btn_direction)
-
+        txt_eventDate?.text="${marker.event_date}"
+        txt_eventType?.text="Etkinlik Türü : ${marker.event_type}"
 
         txt_eventDescription?.text=marker.marker_detail
         val imageList=ArrayList<SlideModel>()

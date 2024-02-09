@@ -15,13 +15,17 @@ import javax.inject.Inject
 class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): ViewModel() {
 
     fun publishDetail( marker_id:String?,
-                      marker_latitude:String?=null,
-                      marker_longtitude: String?=null,
-                      marker_detail:String?=null, imageList: ArrayList<Uri?>,
-                       callback:(Boolean) ->Unit){
+                         marker_latitude:String?=null,
+                         marker_longtitude: String?=null,
+                         marker_detail:String?=null,
+                         imageList: ArrayList<Uri?>,
+                         event_type:String?=null,
+                         event_date:String?=null,
+                         callback:(Boolean) ->Unit)
+    {
 
         viewModelScope.launch {
-            detailPageDaoRepo.publishDetail( marker_id, marker_latitude, marker_longtitude, marker_detail, imageList,callback)
+            detailPageDaoRepo.publishDetail( marker_id, marker_latitude, marker_longtitude, marker_detail, imageList,event_type,event_date,callback)
 
         }
     }

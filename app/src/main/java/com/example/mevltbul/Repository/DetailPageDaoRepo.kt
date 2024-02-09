@@ -41,6 +41,8 @@ class DetailPageDaoRepo{
         marker_longitude: String? = null,
         marker_detail: String? = null,
         imageList: ArrayList<Uri?>,
+        event_type:String?=null,
+        event_date:String?=null,
         callback: (Boolean) -> Unit
     ) {
         val totalImages = imageList.size
@@ -63,7 +65,9 @@ class DetailPageDaoRepo{
                     urlQueue.poll(),
                     urlQueue.poll(),
                     urlQueue.poll(),
-                    urlQueue.poll()
+                    urlQueue.poll(),
+                    event_type,
+                    event_date
                 )
 
                 marker.marker_id?.let {
@@ -133,7 +137,9 @@ class DetailPageDaoRepo{
                             data.get("photo1") as String?,
                             data.get("photo2") as String?,
                             data.get("photo3") as String?,
-                            data.get("photo4") as String?
+                            data.get("photo4") as String?,
+                            data.get("event_type") as String?,
+                            data.get("event_date") as String?,
                         )
                         list.add(marker)
 
@@ -155,9 +161,7 @@ class DetailPageDaoRepo{
     }
 
 
-    fun getEventDetail(){
 
-    }
 
 
 }
