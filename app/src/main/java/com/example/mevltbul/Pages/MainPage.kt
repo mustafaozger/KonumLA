@@ -21,6 +21,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.mevltbul.Adapter.MainPageExploreRcylerAdapter
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
@@ -87,6 +90,18 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         binding.chip.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_mainPage_to_mapPage)
         }
+        markerList.observe(viewLifecycleOwner){list->
+            if(list.size>0){
+                val adapter= MainPageExploreRcylerAdapter(requireContext(),list)
+                binding.mainPageExploreRycler.adapter=adapter
+                binding.mainPageExploreRycler.layoutManager=
+                    StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+
+            }
+
+        }
+
+
 
         return binding.root
     }

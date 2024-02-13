@@ -15,7 +15,7 @@
             android:id="@+id/mapFragment"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="180dp"
             android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -47,6 +47,34 @@
             app:layout_constraintEnd_toEndOf="@+id/mapFragment"
             app:layout_constraintHorizontal_bias="0.917"
             app:layout_constraintStart_toStartOf="@+id/mapFragment" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainPage_explore_rycler"
+            android:layout_width="395dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="35dp"
+            android:text="Yakındaki Etkinlikler"
+            android:textColor="#130000"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapFragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

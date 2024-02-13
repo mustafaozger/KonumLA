@@ -107,8 +107,6 @@ class MapPage : Fragment(),OnMapReadyCallback {
                     val markerOptions = latLang?.let {
                         MarkerOptions()
                             .position(it)
-//                            .title("Marker Başlığı")
-//                            .snippet("Marker Açıklaması")
                             .icon(Constants.getMarker(requireContext()))
                     }
                     val mar=markerOptions?.let { mMap?.addMarker(it) }
@@ -128,27 +126,17 @@ class MapPage : Fragment(),OnMapReadyCallback {
             }
 
             mMap?.setOnMarkerClickListener { clickedMarker->
-
-            //TODO
                 val event=markList.get(clickedMarker)
                 if(event!=null){
                     showAllert(event)
                 }
-
-
-
-
                 true
             }
-
-
-
         }catch (e:Exception){
             Log.e("hatamMapPageShowMarker",e.toString())
         }
-
-
     }
+
 
 
     private fun showAllert(marker:Marker){
@@ -160,10 +148,17 @@ class MapPage : Fragment(),OnMapReadyCallback {
         val txt_eventDate: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDate)
         val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
         val btn_direction:Chip?=dialog.findViewById(R.id.btn_direction)
-        txt_eventDate?.text="${marker.event_date}"
-        txt_eventType?.text="Etkinlik Türü : ${marker.event_type}"
+
+        if (marker.event_date!=null){
+            txt_eventDate?.text="${marker.event_date}"
+        }
+        if (marker.event_type!=null){
+            txt_eventType?.text="Etkinlik Türü : ${marker.event_type}"
+        }
+
 
         txt_eventDescription?.text=marker.marker_detail
+
         val imageList=ArrayList<SlideModel>()
         marker.photo1.let {
             imageList.add(SlideModel(it))
@@ -174,7 +169,6 @@ class MapPage : Fragment(),OnMapReadyCallback {
             imageList.add(SlideModel(marker.photo3))
         if (marker.photo4!=null)
             imageList.add(SlideModel(marker.photo4))
-
 
         imageSlider?.setImageList(imageList,ScaleTypes.CENTER_INSIDE)
 

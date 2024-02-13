@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -32,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:title="Etkinlik"
+                app:title="Etkinlik Detayı"
                 app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
                 app:titleTextColor="@color/red" />
 
@@ -44,7 +45,6 @@
                 app:iss_period="1000"
                 app:iss_delay="1000"
                 app:iss_placeholder="@drawable/loading_placeholder"
-
                 app:iss_text_align="CENTER"/>
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
-                android:text="TextView"
+                android:text="Etkinlik Türü: "
                 android:textColor="#000000"
                 android:textSize="25sp" />
 
@@ -65,8 +65,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                android:text="10.10.2021 19:30 "
-                android:textColor="@color/gray" />
+                android:textColor="@color/gray"
+                 />
 
             <TextView
                 android:layout_width="match_parent"
@@ -89,7 +89,6 @@
                     android:id="@+id/detailBottomsheetEventDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="TextViewTextViewTextView"
 
                     />
             </FrameLayout>
