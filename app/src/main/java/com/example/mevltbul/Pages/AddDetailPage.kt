@@ -28,6 +28,7 @@ import com.example.mevltbul.databinding.FragmentAddDetailPageBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.LinkedList
@@ -46,6 +47,8 @@ class AddDetailPage : Fragment()   {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility=View.GONE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.GONE
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -28,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Locale
 
 class AddingPage : Fragment(),OnMapReadyCallback {
@@ -43,6 +44,8 @@ class AddingPage : Fragment(),OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility=View.GONE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.GONE
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -36,6 +36,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -52,6 +53,8 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility=View.VISIBLE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.VISIBLE
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

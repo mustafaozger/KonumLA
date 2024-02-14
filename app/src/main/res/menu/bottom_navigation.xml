@@ -2,24 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title=""
+        android:id="@+id/mainPage"
+        android:title="Ana Sayfa"
         android:icon="@drawable/outline_home_24"
         />
+
     <item
-        android:id="@+id/bottom_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title=""
-        android:icon="@drawable/baseline_add_24"
+        android:id="@+id/bottom_home2"
+        android:title="Mesajlar"
+        android:icon="@drawable/outline_message_24"
         />
     <item
-        android:id="@+id/bottom_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/bottom_home29"
         android:title=""
+        android:enabled="false"
+        />
+
+    <item
+        android:id="@+id/savedEvent"
+        android:title="Etkinliklerim"
+        android:icon="@drawable/outline_bookmark_border_24"
+        />
+    <item
+        android:id="@+id/mapPage"
+        android:title="Hesabım"
+
         android:icon="@drawable/outline_person_24"
         />
 </menu>
