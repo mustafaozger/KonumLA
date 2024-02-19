@@ -58,6 +58,7 @@ class AddDetailPage : Fragment()   {
 
 
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -92,31 +93,7 @@ class AddDetailPage : Fragment()   {
 
 
         binding.btnShare.setOnClickListener {
-            if (binding.txtEventList.text.toString()!=""){
-                val sdf=SimpleDateFormat("dd/MM/yyyy HH:mm")
-                val currentDAte=sdf.format(System.currentTimeMillis())
-                detailVM.publishDetail(
-                    System.currentTimeMillis().toString(),
-                    bundle.latitude,
-                    bundle.longitude,
-                    binding.txtDetail.text.toString(),
-                    uriList,
-                    binding.txtEventList.text.toString(),currentDAte.toString()){
-                    if(it){
-                        Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
-                        Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
-
-                    }else{
-                        Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
-                        Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
-
-                    }
-                }
-            }else{
-                Toast.makeText(requireContext(),"Etkinlik Türünü Seçin",Toast.LENGTH_LONG).show()
-            }
-
-
+            publish()
         }
 
 
@@ -173,6 +150,35 @@ fun showAllert(){
     }
 
 
+    private fun publish(){
+        binding.progressBarPublishData.visibility=View.VISIBLE
 
+        if (binding.txtEventList.text.toString()!=""){
+            binding.linearLayoutAddDetailPage.visibility=View.GONE
+            val sdf=SimpleDateFormat("dd/MM/yyyy HH:mm")
+            val currentDAte=sdf.format(System.currentTimeMillis())
+            detailVM.publishDetail(
+                System.currentTimeMillis().toString(),
+                bundle.latitude,
+                bundle.longitude,
+                binding.txtDetail.text.toString(),
+                uriList,
+                binding.txtEventList.text.toString(),currentDAte.toString()){
+                if(it){
+                    Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
+                    Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
 
+                }else{
+                    Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
+                    Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
+
+                }
+            }
+        }else{
+            binding.progressBarPublishData.visibility=View.GONE
+
+            Toast.makeText(requireContext(),"Etkinlik Türünü Seçin",Toast.LENGTH_LONG).show()
+        }
+
+    }
 }
