@@ -5,11 +5,14 @@ import   android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Constants.Constants
+import com.example.mevltbul.Pages.MapPage
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.MainPageNeareventRcylerBinding
 
@@ -62,7 +65,15 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
             binding.imgMainpageExploreRyclerImage.setImageList(List<SlideModel>(1){SlideModel(R.drawable.loading_placeholder)}, ScaleTypes.CENTER_INSIDE)
         }
 
+        binding.rcylerNearEventLayout.setOnClickListener {
+            Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
+            Constants.showAllert(context,marker)
+
+        }
+
+
     }
+
 
 
 }

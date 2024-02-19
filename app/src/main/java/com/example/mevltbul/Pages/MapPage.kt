@@ -99,9 +99,9 @@ class MapPage : Fragment(),OnMapReadyCallback {
                         geocoder.getFromLocation(it.toDouble(),
                             it1.toDouble(),1)
                     } }
-                    val latLang= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
+                    val latLang= marker.marker_latitude?.let { marker.marker_longtitude?.let { it2 ->
                         LatLng(it.toDouble(),
-                            it1.toDouble())
+                            it2.toDouble())
                     } }
 
                     val markerOptions = latLang?.let {
@@ -128,7 +128,7 @@ class MapPage : Fragment(),OnMapReadyCallback {
             mMap?.setOnMarkerClickListener { clickedMarker->
                 val event=markList.get(clickedMarker)
                 if(event!=null){
-                    showAllert(event)
+                    Constants.showAllert(requireContext(),event)
                 }
                 true
             }
@@ -137,72 +137,5 @@ class MapPage : Fragment(),OnMapReadyCallback {
         }
     }
 
-
-
-    private fun showAllert(marker:Marker){
-        val dialog=BottomSheetDialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.detail_event_bottom_sheet)
-        val imageSlider: ImageSlider? =dialog.findViewById(R.id.image_slider)
-        val txt_eventType:TextView? =dialog.findViewById(R.id.detailBottomsheetEventType)
-        val txt_eventDate: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDate)
-        val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
-        val btn_direction:Chip?=dialog.findViewById(R.id.btn_direction)
-
-        if (marker.event_date!=null){
-            txt_eventDate?.text="${marker.event_date}"
-        }
-        if (marker.event_type!=null){
-            txt_eventType?.text="Etkinlik Türü : ${marker.event_type}"
-        }
-
-
-        txt_eventDescription?.text=marker.marker_detail
-
-        val imageList=ArrayList<SlideModel>()
-        marker.photo1.let {
-            imageList.add(SlideModel(it))
-        }
-        if(marker.photo2!=null)
-            imageList.add(SlideModel(marker.photo2))
-        if (marker.photo3!=null)
-            imageList.add(SlideModel(marker.photo3))
-        if (marker.photo4!=null)
-            imageList.add(SlideModel(marker.photo4))
-
-        imageSlider?.setImageList(imageList,ScaleTypes.CENTER_INSIDE)
-
-        btn_direction?.setOnClickListener {
-            marker.marker_latitude?.toDouble()
-                ?.let { it1 -> marker.marker_longtitude?.let { it2 ->
-                    direction(it1,
-                        it2.toDouble())
-                } }
-        }
-
-
-        dialog.show()
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.setWindowAnimations(R.style.DialogAnimation)
-        dialog.window?.setGravity(Gravity.BOTTOM)
-
-    }
-
-    private fun direction(latitude:Double,longitude:Double){
-        // Yol tarifi almak için Google Haritalar URL'i oluştur
-        val directionUri = Uri.parse("google.navigation:q=${latitude},${longitude}")
-
-// Implicit Intent oluştur ve harita uygulamasını başlat
-        val mapIntent = Intent(Intent.ACTION_VIEW, directionUri)
-        mapIntent.setPackage("com.google.android.apps.maps")  // Google Haritalar uygulamasını kullan
-
-        if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivity(mapIntent)
-        } else {
-            // Eğer Google Haritalar uygulaması yüklü değilse, kullanıcıya bir mesaj göster
-            Toast.makeText(requireContext() , "Google Haritalar uygulaması bulunamadı.", Toast.LENGTH_SHORT).show()
-        }
-    }
 
 }

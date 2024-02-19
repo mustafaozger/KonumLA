@@ -124,7 +124,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
             }
         }
-        if (!checkPermission()){
+        if (!Constants.checkPermission(requireContext())) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
         }else{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10,10f,locationListener)
@@ -163,9 +163,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
             e.printStackTrace()
         }
     }
-    private fun checkPermission():Boolean{
-        return ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-    }
+
 
 
 
