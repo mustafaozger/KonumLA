@@ -15,13 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mevltbul.Adapter.MainPageExploreRcylerAdapter
 import com.example.mevltbul.Classes.Marker
@@ -49,12 +46,20 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         var mMap:GoogleMap?=null
         private var markerList=MutableLiveData<ArrayList<Marker>>()
 
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility=View.VISIBLE
         val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
         fabButton.visibility=View.VISIBLE
+
+        val lastLocation:Location?=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if(lastLocation!=null){
+            markerList=detailVM.getEventLists(lastLocation.latitude,lastLocation.longitude)
+
+        }
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,21 +67,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         detailVM=temp
         locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
 
-        val lastLocation:Location?=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        if(lastLocation!=null){
-            markerList=detailVM.getEventLists(lastLocation.latitude,lastLocation.longitude)
-        }
 
     }
 
@@ -93,20 +84,31 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         binding.chip.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_mainPage_to_mapPage)
         }
+
+
+
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
         markerList.observe(viewLifecycleOwner){list->
             if(list.size>0){
+                binding.imgErrorMessage.visibility=View.GONE
                 val adapter= MainPageExploreRcylerAdapter(requireContext(),list)
                 binding.mainPageExploreRycler.adapter=adapter
                 binding.mainPageExploreRycler.layoutManager=
                     StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+                Log.d("hatmaMarkerList","list is not empty")
+                binding.progressBarEventList.visibility=View.GONE
 
+            }else{
+                binding.imgErrorMessage.visibility=View.VISIBLE
             }
 
         }
 
 
-
-        return binding.root
     }
 
 
@@ -122,14 +124,13 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
             }
         }
-        if (ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
-            !=PackageManager.PERMISSION_GRANTED){
+        if (!checkPermission()){
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
-
         }else{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10,10f,locationListener)
+            showMarker()
+
         }
-        showMarker()
 
     }
 
@@ -152,18 +153,18 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                             .icon(Constants.getMarker(requireContext()))
                     }
                      markerOptions?.let { mMap?.addMarker(it) }
-
-
-
-
                  }
+                 binding.progressBarMap.visibility=View.GONE
 
-            }
+             }
 
 
         }catch (e:Exception){
             e.printStackTrace()
         }
+    }
+    private fun checkPermission():Boolean{
+        return ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
 
