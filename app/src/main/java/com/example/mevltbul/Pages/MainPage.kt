@@ -26,6 +26,8 @@ import com.example.mevltbul.Constants.Constants
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentMainPageBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -37,6 +39,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
+
 @AndroidEntryPoint
 class MainPage: Fragment() ,OnMapReadyCallback{
         lateinit var binding: FragmentMainPageBinding
@@ -46,31 +49,20 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         var mMap:GoogleMap?=null
         private var markerList=MutableLiveData<ArrayList<Marker>>()
 
-    @SuppressLint("MissingPermission")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.visibility=View.VISIBLE
-        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
-        fabButton.visibility=View.VISIBLE
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-        val lastLocation:Location?=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        if(lastLocation!=null){
-            markerList=detailVM.getEventLists(lastLocation.latitude,lastLocation.longitude)
-
-        }
-
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val temp:DetailVM by viewModels()
         detailVM=temp
         locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+
 
 
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -80,18 +72,40 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-
         binding.chip.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_mainPage_to_mapPage)
         }
 
 
 
+
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+
+    @SuppressLint("MissingPermission")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.VISIBLE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.VISIBLE
+
+        if (Constants.checkPermission(requireContext())){
+            fusedLocationClient.lastLocation.addOnSuccessListener {location->
+                markerList=detailVM.getEventLists(location.latitude,location.longitude)
+                val currentLocation=LatLng(location.latitude,location.longitude)
+                if(mMap!=null){
+                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
+                }else{
+                    Log.d("hatamMainOnMapReady","2. mMap is null")
+                }
+
+            }
+            Log.e("hatamMainOnMapReady","2==  ${markerList.value?.size} ")
+
+            showMarker()
+        }
         markerList.observe(viewLifecycleOwner){list->
             if(list.size>0){
                 binding.imgErrorMessage.visibility=View.GONE
@@ -99,45 +113,74 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                 binding.mainPageExploreRycler.adapter=adapter
                 binding.mainPageExploreRycler.layoutManager=
                     StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-                Log.d("hatmaMarkerList","list is not empty")
+                Log.d("hatamOnWiewCreatedMainMarkerList","list is not empty")
                 binding.progressBarEventList.visibility=View.GONE
 
             }else{
+                Log.e("hatamMainOnWiewCreatedMarkerList","list is empty")
+
                 binding.imgErrorMessage.visibility=View.VISIBLE
             }
 
         }
-
-
     }
 
 
-    @SuppressLint("SuspiciousIndentation")
+//    override fun onMapReady(p0: GoogleMap) {
+//        mMap=p0
+//        Log.d("hatamMainOnMapReady","1. work")
+//
+//        locationListener=LocationListener{location ->
+//            Log.d("hatamMainOnMapReady","2. locationListener")
+//            markerList=detailVM.getEventLists(location.latitude,location.longitude)
+//            if (markerList.value==null){
+//                Log.d("hatamMainOnMapReady","2. markerList is null")
+//            }
+//
+//            val currentLocation=LatLng(location.latitude,location.longitude)
+//            if(mMap!=null){
+//                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
+//            }else{
+//                Log.d("hatamMainOnMapReady","2. mMap is null")
+//            }
+//        }
+//
+//        if (!Constants.checkPermission(requireContext())) {
+//            Log.d("hatamMainOnMapReady","3. not permission")
+//            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
+//        }else{
+//            Log.d("hatamMainOnMapReady","4. permission")
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10,10f,locationListener)
+//            showMarker()
+//
+//        }
+//
+//    }
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
 
-
-
-        locationListener=LocationListener{location ->
-            val currentLocation=LatLng(location.latitude,location.longitude)
-            if(mMap!=null){
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
-            }
-        }
         if (!Constants.checkPermission(requireContext())) {
+            Log.d("hatamMainOnMapReady","3. not permission")
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10,10f,locationListener)
-            showMarker()
+            Log.d("hatamMainOnMapReady","4. permission")
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10,10f,locationListener)
+//            locationManager.requestLocationUpdates()
+
+//            showMarker()
 
         }
 
     }
 
     private fun showMarker(){
+        Log.d("hatamMainShowMarker","1. work")
+
         val geocoder= Geocoder(requireContext(), Locale.getDefault())
         try {
              markerList.observe(viewLifecycleOwner){list->
+                 Log.d("hatamMainShowMarker","2. markerList observe size ${list.size}")
+
                  for ( marker in list){
                       val addressList= marker.marker_latitude?.let { marker.marker_longtitude?.let { it1 ->
                         geocoder.getFromLocation(it.toDouble(),
@@ -159,8 +202,10 @@ class MainPage: Fragment() ,OnMapReadyCallback{
              }
 
 
+
         }catch (e:Exception){
             e.printStackTrace()
+            Log.e("hatamMainShowMarker",e.toString())
         }
     }
 

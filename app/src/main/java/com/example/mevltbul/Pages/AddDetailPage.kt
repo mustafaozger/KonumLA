@@ -120,6 +120,7 @@ fun showAllert(){
             btn_camera.setOnClickListener {
                 // max size of image 1 MB
             ImagePicker.with(this).cameraOnly().compress(1024).start()
+
             dialog.dismiss()
         }
         btn_gallery.setOnClickListener {

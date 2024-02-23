@@ -14,6 +14,8 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.util.LinkedList
 import java.util.Queue
 
@@ -25,14 +27,21 @@ class DetailPageDaoRepo{
     private val urlQueue:Queue<String> = LinkedList()
     private val markerList=MutableLiveData<ArrayList<Marker>>()
 
+    init {
+
+    }
+
     fun getEventLists():MutableLiveData<ArrayList<Marker>>{
         return markerList
     }
 
 
-    fun getEventLists(latitude: Double, longitude: Double):MutableLiveData<ArrayList<Marker>>{
-        return getEventListsFromDatabas(latitude,longitude)
 
+    fun getEventLists(latitude: Double, longitude: Double): MutableLiveData<ArrayList<Marker>> {
+        Log.d("hatamDetailPageDaoRepo", "1. getEventLists")
+
+        getEventListsFromDatabas(latitude, longitude)
+        return markerList
     }
 
     fun publishDetail(
@@ -110,25 +119,83 @@ class DetailPageDaoRepo{
 
 
 
+//     private fun getEventListsFromDatabas(latitude:Double,longitude:Double):MutableLiveData<ArrayList<Marker>>{
+//       //I'm getting events in the area close to the user's location
+//        Log.d("hatamDetailPageDaoRepo","2. getEventListsFromDatabas work ")
+//       val collection= db.collection("images")
+//           .whereGreaterThanOrEqualTo("marker_latitude",(latitude-0.5).toString())
+//           .whereLessThanOrEqualTo("marker_latitude",(latitude+0.5 ).toString())
+//
+//
+//
+//       collection.get().addOnCompleteListener {documents->
+//           Log.d("hatamDetailPageDaoRepo","3. getEventListsFromDatabas collection get  ")
+//            if(!documents){
+//                val list=ArrayList<Marker>()
+//                for (document in documents){
+//                    val data = document.data
+//
+//                    //Firestore does not directly support disparity filters (like >, <) on multiple fields at once. so that's why I had to use the following if check
+//                    val markerLongitude = data.get("marker_longtitude") as? String
+//
+//
+//                    if (markerLongitude != null && markerLongitude.toDouble() in (longitude - 0.5)..(longitude + 0.5)) {
+//                        val marker=Marker(
+//                            data.get("marker_id") as String? ,
+//                            data.get("marker_latitude") as String?,
+//                            data.get("marker_longtitude") as String?,
+//                            data.get("marker_detail") as String?,
+//                            data.get("photo1") as String?,
+//                            data.get("photo2") as String?,
+//                            data.get("photo3") as String?,
+//                            data.get("photo4") as String?,
+//                            data.get("event_type") as String?,
+//                            data.get("event_date") as String?,
+//                        )
+//                        list.add(marker)
+//
+//                    }else{
+//                        Log.d("hatamDetailPageDaoRepo","marker longitude is not in range {${markerLongitude} ,  ${data.get("marker_latitude")}}")
+//                    }
+//
+//                }
+//                markerList.value=list
+//            }else{
+//                Log.d("hatamDetailPageDaoRepo"," documnet empty")
+//            }
+//
+//        }.addOnFailureListener {
+//            Log.d("hatamDetailPageDaoRepo","document failure {${it}}")
+//       }
+//
+//
+//       Log.e("hatamDetailPageDaoRepo","4. getEventListsFromDatabas ${markerList.value?.size} items")
+//       return markerList
+//   }
+//
 
-   private fun getEventListsFromDatabas(latitude:Double,longitude:Double):MutableLiveData<ArrayList<Marker>>{
-       //I'm getting events in the area close to the user's location
+    private fun getEventListsFromDatabas(latitude:Double,longitude:Double):MutableLiveData<ArrayList<Marker>>{
+        //I'm getting events in the area close to the user's location
+        Log.d("hatamDetailPageDaoRepo","2. getEventListsFromDatabas work ")
+        val collection= db.collection("images")
+            .whereGreaterThanOrEqualTo("marker_latitude",(latitude-0.5).toString())
+            .whereLessThanOrEqualTo("marker_latitude",(latitude+0.5 ).toString())
 
-       val collection= db.collection("images")
-           .whereGreaterThanOrEqualTo("marker_latitude",(latitude-0.5).toString())
-           .whereLessThanOrEqualTo("marker_latitude",(latitude+0.5 ).toString())
 
 
-       collection.get().addOnSuccessListener {documents->
-            if(!documents.isEmpty){
+        collection.get().addOnCompleteListener {documents->
+            Log.d("hatamDetailPageDaoRepo","3. getEventListsFromDatabas collection get  ")
+            if(documents.isSuccessful){
                 val list=ArrayList<Marker>()
-                for (document in documents){
+
+                for (document in documents.result){
                     val data = document.data
 
                     //Firestore does not directly support disparity filters (like >, <) on multiple fields at once. so that's why I had to use the following if check
                     val markerLongitude = data.get("marker_longtitude") as? String
-                    if (markerLongitude != null && markerLongitude.toDouble() in (longitude - 0.5)..(longitude + 0.5)) {
 
+
+                    if (markerLongitude != null && markerLongitude.toDouble() in (longitude - 0.5)..(longitude + 0.5)) {
                         val marker=Marker(
                             data.get("marker_id") as String? ,
                             data.get("marker_latitude") as String?,
@@ -144,21 +211,26 @@ class DetailPageDaoRepo{
                         list.add(marker)
 
                     }else{
-                        Log.d("hatamGetEventListsFromDatabas","marker longitude is not in range {${markerLongitude}}")
+                        Log.d("hatamDetailPageDaoRepo","marker longitude is not in range {${markerLongitude} ,  ${data.get("marker_latitude")}}")
                     }
 
                 }
                 markerList.value=list
-
             }else{
-                Log.d("hatamGetEventListsFromDatabas"," documnet empty")
+                Log.d("hatamDetailPageDaoRepo"," documnet empty")
             }
 
         }.addOnFailureListener {
-            Log.d("hatamGetEventListsFromDatabas","document failure {${it}}")
-       }
+            Log.d("hatamDetailPageDaoRepo","document failure {${it}}")
+        }
+
+
+        Log.e("hatamDetailPageDaoRepo","4. getEventListsFromDatabas ${markerList.value?.size} items")
         return markerList
     }
+
+
+
 
 
 

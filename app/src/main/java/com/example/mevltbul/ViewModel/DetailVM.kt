@@ -25,15 +25,18 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
     {
 
         viewModelScope.launch {
+
             detailPageDaoRepo.publishDetail( marker_id, marker_latitude, marker_longtitude, marker_detail, imageList,event_type,event_date,callback)
 
         }
     }
 
-    fun getEventLists(latitude:Double,longitude:Double): MutableLiveData<ArrayList<Marker>> {
+    fun getEventLists(latitude:Double,longitude:Double,): MutableLiveData<ArrayList<Marker>> {
+        Log.d("hatamDetailVM","1. getEventLists")
        return detailPageDaoRepo.getEventLists(latitude,longitude)
     }
     fun getEventLists():MutableLiveData<ArrayList<Marker>>{
+        Log.d("hatamDetailVM","2. getEventLists")
         return detailPageDaoRepo.getEventLists()
     }
 
