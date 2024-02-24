@@ -2,28 +2,20 @@ package com.example.mevltbul.Pages
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mevltbul.Adapter.MainPageExploreRcylerAdapter
-import com.example.mevltbul.Classes.Marker
-import com.example.mevltbul.Constants.Constants
+import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentMainPageBinding
@@ -90,7 +82,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         fabButton.visibility=View.VISIBLE
 
 
-        if (Constants.checkPermission(requireContext())){
+        if (Utils.checkPermission(requireContext())){
             fusedLocationClient.lastLocation.addOnSuccessListener {location->
                 detailVM.getMarkers(location.latitude,location.longitude)
                 val currentLocation=LatLng(location.latitude,location.longitude)
@@ -132,7 +124,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
 
-        if (!Constants.checkPermission(requireContext())) {
+        if (!Utils.checkPermission(requireContext())) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
         }else{
             showMarker()
@@ -159,7 +151,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
                     val markerOptions = latLng?.let {
                         MarkerOptions()
                             .position(it)
-                            .icon(Constants.getMarker(requireContext()))
+                            .icon(Utils.getMarker(requireContext()))
                     }
                      markerOptions?.let { mMap?.addMarker(it) }
                  }

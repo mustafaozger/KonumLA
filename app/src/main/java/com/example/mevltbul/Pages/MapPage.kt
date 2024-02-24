@@ -1,32 +1,21 @@
 package com.example.mevltbul.Pages
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.location.LocationListener
 import android.location.LocationManager
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import com.denzcoskun.imageslider.ImageSlider
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
-import com.example.mevltbul.Constants.Constants
+import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.FragmentMapPageBinding
@@ -36,8 +25,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -66,6 +53,10 @@ class MapPage : Fragment(),OnMapReadyCallback {
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment2) as SupportMapFragment
         markerList=detailVM.getEventLists()
         mapFragment.getMapAsync(this)
+
+
+
+
         return binding.root
     }
 
@@ -107,7 +98,7 @@ class MapPage : Fragment(),OnMapReadyCallback {
                     val markerOptions = latLang?.let {
                         MarkerOptions()
                             .position(it)
-                            .icon(Constants.getMarker(requireContext()))
+                            .icon(Utils.getMarker(requireContext()))
                     }
                     val mar=markerOptions?.let { mMap?.addMarker(it) }
                     if (mar != null) {
@@ -128,7 +119,7 @@ class MapPage : Fragment(),OnMapReadyCallback {
             mMap?.setOnMarkerClickListener { clickedMarker->
                 val event=markList.get(clickedMarker)
                 if(event!=null){
-                    Constants.showAllert(requireContext(),event)
+                    Utils.showAllert(requireContext(),event)
                 }
                 true
             }

@@ -1,4 +1,4 @@
-package com.example.mevltbul.Constants
+package com.example.mevltbul.Utils
 
 import android.content.Context
 import android.content.Intent
@@ -7,32 +7,24 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.Geocoder
 import android.net.Uri
-import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.R
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
-import java.util.Locale
 
-class Constants  {
+class Utils  {
     companion object{
          fun checkPermission(context: Context):Boolean{
             return ContextCompat.checkSelfPermission(context,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED

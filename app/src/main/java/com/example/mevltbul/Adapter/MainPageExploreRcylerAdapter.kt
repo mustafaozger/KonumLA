@@ -2,17 +2,13 @@ package com.example.mevltbul.Adapter
 
 import android.annotation.SuppressLint
 import   android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
-import com.example.mevltbul.Constants.Constants
-import com.example.mevltbul.Pages.MapPage
+import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.MainPageNeareventRcylerBinding
 
@@ -66,11 +62,11 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
         }
 
         binding.rcylerNearEventLayout.setOnClickListener {
-            Constants.showAllert(context,marker)
+            Utils.showAllert(context,marker)
 
         }
         binding.imgMainpageExploreRyclerImage.setOnClickListener(){
-            Constants.showAllert(context,marker)
+            Utils.showAllert(context,marker)
         }
 
 

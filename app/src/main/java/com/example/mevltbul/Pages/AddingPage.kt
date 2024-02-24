@@ -3,8 +3,6 @@ package com.example.mevltbul.Pages
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.GnssAntennaInfo.Listener
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -17,8 +15,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
-import com.example.mevltbul.Constants.Constants
+import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.FragmentAddingPageBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -101,7 +98,7 @@ class AddingPage : Fragment(),OnMapReadyCallback {
                 }catch (e:Exception){
                     Log.e("hatam AddingPageListener = ", e.toString())
                 }
-                mMap?.addMarker(MarkerOptions().position(p0).title(address).visible(true).icon(Constants.getMarker(requireContext())))
+                mMap?.addMarker(MarkerOptions().position(p0).title(address).visible(true).icon(Utils.getMarker(requireContext())))
                 selectedPosition=p0
             }
 
