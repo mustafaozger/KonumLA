@@ -66,10 +66,13 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
         }
 
         binding.rcylerNearEventLayout.setOnClickListener {
-            Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
             Constants.showAllert(context,marker)
 
         }
+        binding.imgMainpageExploreRyclerImage.setOnClickListener(){
+            Constants.showAllert(context,marker)
+        }
+
 
 
     }

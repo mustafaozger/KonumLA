@@ -9,10 +9,29 @@ import androidx.lifecycle.viewModelScope
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Repository.DetailPageDaoRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): ViewModel() {
+
+
+    // StateFlow to hold the list of markers
+    private val _markerList = MutableStateFlow<List<Marker>>(emptyList())
+    val markerList: StateFlow<List<Marker>> = _markerList
+
+    fun getMarkers(latitude: Double, longitude: Double) {
+        // Launch a coroutine in the viewModelScope
+        viewModelScope.launch {
+            // Call the function from the repository to get the Flow of markers
+            detailPageDaoRepo.getEventListsFromDatabaseWitfFlow(latitude, longitude).collect { markers ->
+                // Update the StateFlow with the new list of markers
+                _markerList.value = markers
+            }
+        }
+    }
+
 
     fun publishDetail( marker_id:String?,
                          marker_latitude:String?=null,
@@ -31,10 +50,7 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
         }
     }
 
-    fun getEventLists(latitude:Double,longitude:Double,): MutableLiveData<ArrayList<Marker>> {
-        Log.d("hatamDetailVM","1. getEventLists")
-       return detailPageDaoRepo.getEventLists(latitude,longitude)
-    }
+
     fun getEventLists():MutableLiveData<ArrayList<Marker>>{
         Log.d("hatamDetailVM","2. getEventLists")
         return detailPageDaoRepo.getEventLists()
