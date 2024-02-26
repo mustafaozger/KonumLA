@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="end"
+        android:gravity="end">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/design_send_message"
+            android:padding="15dp"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/txt_sended_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test Sürümü "
+                android:textSize="16sp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

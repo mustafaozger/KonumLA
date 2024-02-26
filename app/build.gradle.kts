@@ -92,6 +92,9 @@ dependencies {
     //ImageSlider
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
+    //Circular ImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
 
 }
 

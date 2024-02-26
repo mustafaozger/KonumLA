@@ -120,7 +120,7 @@ class DetailPageDaoRepo{
     fun getEventListsFromDatabaseWitfFlow(latitude: Double, longitude: Double): Flow<ArrayList<Marker>> = flow {
         //I'm getting events in the area close to the user's location
         Log.d("hatamDetailPageDaoRepo", "2. getEventListsFromDatabas work ")
-        val collection = db.collection("images")
+        val collection = db.collection( "images")
             .whereGreaterThanOrEqualTo("marker_latitude", (latitude - 0.5).toString())
             .whereLessThanOrEqualTo("marker_latitude", (latitude + 0.5).toString())
 
