@@ -2,10 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-        <color name="brown">#764B36</color>
+    <color name="brown">#764B36</color>
     <color name="cream">#efe7dd</color>
     <color name="gray">#959595</color>
-    
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="red">#840032</color>
     <color name="dark_blue">#002642</color>
     <color name="dark_yellow">#E59500</color>

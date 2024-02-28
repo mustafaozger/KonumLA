@@ -39,7 +39,7 @@
                     android:layout_marginStart="70dp"
                     android:layout_marginEnd="71dp"
                     android:layout_marginBottom="65dp"
-                    android:backgroundTint="@color/red"
+                    android:backgroundTint="#FCAF38"
                     android:text="Paylaş"
                     app:layout_constraintBottom_toBottomOf="@+id/addingPageMapFragment"
                     app:layout_constraintEnd_toEndOf="@+id/addingPageMapFragment"

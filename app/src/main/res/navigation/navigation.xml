@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainPage">
+    app:startDestination="@id/signInPage">
 
     <fragment
         android:id="@+id/addingPage"
@@ -44,4 +44,26 @@
         android:id="@+id/mapPage"
         android:name="com.example.mevltbul.Pages.MapPage"
         android:label="MapPage"/>
+    <fragment
+        android:id="@+id/registryPage"
+        android:name="com.example.mevltbul.Pages.RegistryPage"
+        android:label="RegistryPage" >
+        <action
+            android:id="@+id/action_registryPage_to_mainPage"
+            app:destination="@id/mainPage" />
+        <action
+            android:id="@+id/action_registryPage_to_signInPage2"
+            app:destination="@id/signInPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInPage"
+        android:name="com.example.mevltbul.Pages.SignInPage"
+        android:label="SignInPage" >
+        <action
+            android:id="@+id/action_signInPage_to_mainPage"
+            app:destination="@id/mainPage" />
+        <action
+            android:id="@+id/action_signInPage_to_registryPage"
+            app:destination="@id/registryPage" />
+    </fragment>
 </navigation>

@@ -6,7 +6,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import javax.security.auth.callback.Callback
 
 class UserDaoRepository {
     private lateinit var auth: FirebaseAuth
@@ -23,7 +22,7 @@ class UserDaoRepository {
             val userCollection=db.collection("Users")
             val user= hashMapOf(
                 "user_id" to auth.uid,
-                "user_name" to "User",
+                "user_name" to userName,
             )
             auth.uid?.let { it1 -> userCollection.document(it1).set(user) }
             isCreate(true)
