@@ -1,6 +1,7 @@
 package com.example.mevltbul.Hilt
 
 import com.example.mevltbul.Repository.DetailPageDaoRepo
+import com.example.mevltbul.Repository.UserDaoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +16,12 @@ class AppModule {
     @Singleton
     fun provideDetailPageDaoRepo():DetailPageDaoRepo{
         return DetailPageDaoRepo()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDaoRepo(): UserDaoRepository {
+        return UserDaoRepository()
     }
 
 }
