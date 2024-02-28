@@ -148,6 +148,7 @@ class DetailPageDaoRepo{
                             data.get("event_type") as String?,
                             data.get("event_date") as String?,
                         )
+
                         list.add(marker)
                     } else {
                         Log.d("hatamDetailPageDaoRepo", "marker longitude is not in range {${markerLongitude}, ${data?.get("marker_latitude")}}")

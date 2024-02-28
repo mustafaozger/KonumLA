@@ -4,7 +4,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 
-data class GroupMessage (
+data class MessageModel (
     var messageId:String?=null,
     var message:String?=null,
     var senderId:String?=null,

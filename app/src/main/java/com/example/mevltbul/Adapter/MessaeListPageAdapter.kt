@@ -4,15 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mevltbul.Classes.GroupMessage
-import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Classes.MessageModel
 import com.example.mevltbul.Utils.Utils
-import com.example.mevltbul.databinding.DesignNearEventListBinding
 import com.example.mevltbul.databinding.ReceiveMessageBinding
 import com.example.mevltbul.databinding.SendMessageBinding
 
-class MessaeListPageAdapter(val context: Context, messageList:ArrayList<GroupMessage>, senderId:String, receiverGroupId:String):RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
-    lateinit var messageList :ArrayList<GroupMessage>
+class MessaeListPageAdapter(val context: Context, messageList:ArrayList<MessageModel>, senderId:String, receiverGroupId:String):RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+    lateinit var messageList :ArrayList<MessageModel>
     val ITEM_SENT=1
     val ITEM_RECEIVE=2
     var senderId:String
