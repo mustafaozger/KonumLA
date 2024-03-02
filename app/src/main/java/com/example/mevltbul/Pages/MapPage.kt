@@ -71,7 +71,7 @@ class MapPage : Fragment(),OnMapReadyCallback {
                 detailVM.getMarkers(location.latitude,location.longitude)
                 val currentLocation=LatLng(location.latitude,location.longitude)
                 if(mMap!=null){
-                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,10f))
+                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,13f))
                 }else{
                     Log.d("hatamMainOnMapReady","2. mMap is null")
                 }

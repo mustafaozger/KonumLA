@@ -1,13 +1,10 @@
 package com.example.mevltbul.Repository
 
 import android.util.Log
-import java.util.ArrayList
 import com.example.mevltbul.Classes.MessageModel
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.tasks.await
 import java.util.Date
+import kotlin.collections.ArrayList
 
 class MessagePageDaoRepository {
     private val db= FirebaseFirestore.getInstance()
@@ -32,33 +29,7 @@ class MessagePageDaoRepository {
     }
 
 
-    fun getMessage(messageRoomId: String): Flow<ArrayList<MessageModel>> = flow {
-        try {
-            Log.d("hatamMessageDao", " message dao work + messageRoomId: "+messageRoomId)
-            val list = ArrayList<MessageModel>()
-            if (messageRoomId!=null|| messageRoomId!="null"){
 
-                val messages = db.collection("chats").document(messageRoomId).collection("message").get().await()
-                Log.d("hatamMessageDao", " messages size: "+messages.size())
-
-                for (message in messages) {
-                    Log.d("hatamMessageDao", " message: "+message.toString())
-                    val data = message.toObject(MessageModel::class.java)
-                    list.add(data)
-                }
-
-            }else{
-                Log.d("hatamMessageDao", " message room id null $messageRoomId")
-
-            }
-
-            Log.d("hatamMessageDao", " message dao work list : "+list)
-
-            emit(list)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
 
     fun addMassageRoomToUserDatabase(uid:String,messageRoomId:String){
@@ -71,13 +42,13 @@ class MessagePageDaoRepository {
     }
 
 
-    fun listenForMessages(messageRoomId: String, callback: (ArrayList<MessageModel>) -> Unit) {
+    fun getMessage(messageRoomId: String, callback: (ArrayList<MessageModel>) -> Unit) {
         try {
             db.collection("chats").document(messageRoomId)
                 .collection("message")
                 .addSnapshotListener { snapshots, e ->
                     if (e != null) {
-                        Log.w("hatamMessageDao", "Listen failed", e)
+                        Log.w("hatamMessageDao", "Error: Listen failed", e)
                         return@addSnapshotListener
                     }
 
@@ -99,6 +70,19 @@ class MessagePageDaoRepository {
 
 
 
+    fun getMessageRooms(uid:String,callback: (ArrayList<String>) -> Unit){
+        val user=db.collection("Users").document(uid)
+        user.collection("message_roooms_id").get().addOnSuccessListener { snapshots->
+            val list=ArrayList<String>()
+            if (!snapshots.isEmpty){
+                for (doc in snapshots.documents){
+                    val data=doc.data as String?
+                    data?.let { list.add(it) }
+                }
+                callback(list)
+            }
+        }
+    }
 
 
 

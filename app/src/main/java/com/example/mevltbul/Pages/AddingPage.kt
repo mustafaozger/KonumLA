@@ -1,5 +1,6 @@
 package com.example.mevltbul.Pages
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -18,6 +19,8 @@ import androidx.navigation.Navigation
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.FragmentAddingPageBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -31,11 +34,17 @@ import java.util.Locale
 class AddingPage : Fragment(),OnMapReadyCallback {
     private lateinit var binding:FragmentAddingPageBinding
     private var mMap:GoogleMap?=null
-    private lateinit var locationListener: LocationListener
-    private lateinit var locationManager: LocationManager
     private  var selectedPosition:LatLng?=null
     private var address=""
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,19 +70,24 @@ class AddingPage : Fragment(),OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
 
-        mMap?.setOnMapLongClickListener(listener)
-        locationManager=requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        locationListener=LocationListener{ location->
+        mMap?.setOnMapLongClickListener(listener)
+
+        if (Utils.checkPermission(requireContext())){
+            fusedLocationClient.lastLocation.addOnSuccessListener {location->
                 val currentLocation=LatLng(location.latitude,location.longitude)
-                mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
+                if(mMap!=null){
+                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,13f))
+                    mMap?.addMarker(MarkerOptions().position(currentLocation).title(address).visible(true).icon(Utils.getMarker(requireContext())))
+
+                }else{
+                    Toast.makeText(requireContext(),"Hata",Toast.LENGTH_LONG).show()
+                }
             }
-        if (ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
-            !=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10,10f,locationListener)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
         }
+
 
     }
 
@@ -100,6 +114,7 @@ class AddingPage : Fragment(),OnMapReadyCallback {
                 }
                 mMap?.addMarker(MarkerOptions().position(p0).title(address).visible(true).icon(Utils.getMarker(requireContext())))
                 selectedPosition=p0
+
             }
 
 

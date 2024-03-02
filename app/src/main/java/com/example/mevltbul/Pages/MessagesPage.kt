@@ -12,9 +12,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mevltbul.Adapter.MessagePageAdapter
+import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.MessageVM
 import com.example.mevltbul.ViewModel.UserVM
 import com.example.mevltbul.databinding.FragmentMessagesPageBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,8 +37,6 @@ class MessagesPage : Fragment() {
         val tempUserVM:UserVM by viewModels()
         userVM=tempUserVM
         messagePageVM=tempMessagePageVM
-        Log.d("hatamMessagePage", "onCreate: ")
-
 
     }
 
@@ -47,15 +48,18 @@ class MessagesPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.GONE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.GONE
+
         try {
             bindng=FragmentMessagesPageBinding.inflate(inflater,container,false)
 
             val messageRoomId= arguments?.getString("message_room_id")
             userId= FirebaseAuth.getInstance().uid.toString()
-            Log.d("hatamMessagePage", "messageId: $messageRoomId")
-            messagePageVM.getMessage(messageRoomId!!)
             userVM.getUserData()
-            messagePageVM.listenForMessages(messageRoomId!!)
+            messagePageVM.getMessage(messageRoomId!!)
 
             viewLifecycleOwner.lifecycleScope.launch {
                 userVM.userData.collect{user->
@@ -68,17 +72,6 @@ class MessagesPage : Fragment() {
             }
 
 
-
-
-
-//            messagePageVM.getMessage(messageRoomId!!).observe(viewLifecycleOwner){
-//                val adapter=MessagePageAdapter(requireContext(),it,userId,messageRoomId)
-//                bindng.messagePageRecycler.adapter=adapter
-//                adapter.notifyDataSetChanged()
-//                bindng.messagePageRecycler.layoutManager=LinearLayoutManager(requireContext())
-//            }
-//
-//
             messagePageVM.messagesLiveData.observe(viewLifecycleOwner){
                 val adapter=MessagePageAdapter(requireContext(),it,userId,messageRoomId)
                 bindng.messagePageRecycler.adapter=adapter
@@ -88,18 +81,12 @@ class MessagesPage : Fragment() {
 
             }
 
-
-
-
-
-
-
             bindng.btnSendMessage.setOnClickListener{
                 val message=bindng.txtSendMessage.text.toString()
                 if (message.isNotEmpty()){
                     messagePageVM.sendMessage(messageRoomId!!,message,userId){
                         if (it){
-                            messagePageVM.listenForMessages(messageRoomId!!)
+                            messagePageVM.getMessage(messageRoomId!!)
                             bindng.txtSendMessage.text.clear()
                         }else{
                             Toast.makeText(requireContext(),"Hata : Mesajınızı Gönderilemedi",Toast.LENGTH_SHORT).show()

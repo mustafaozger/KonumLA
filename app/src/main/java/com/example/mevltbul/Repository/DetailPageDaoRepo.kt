@@ -167,6 +167,38 @@ class DetailPageDaoRepo{
 
     }
 
+    fun getEventListWithID(idList:ArrayList<String>){
+        val retValue=ArrayList<Marker>()
+        if (idList.isEmpty()){
+
+        }else{
+//            db.collection("images").whereIn("marker_id",id)
+//            for (id in idList){
+
+                db.collection("images").whereIn("marker_id",idList).get().addOnSuccessListener {
+                    for (i in it ){
+                        val data=i.data
+                        val marker = Marker(
+                            data.get("marker_id") as String?,
+                            data.get("marker_latitude") as String?,
+                            data.get("marker_longtitude") as String?,
+                            data.get("marker_detail") as String?,
+                            data.get("photo1") as String?,
+                            data.get("photo2") as String?,
+                            data.get("photo3") as String?,
+                            data.get("photo4") as String?,
+                            data.get("event_type") as String?,
+                            data.get("event_date") as String?,
+                        )
+                        retValue.add(marker)
+//                    }
+                }
+                    markerList.value=retValue
+            }
+        }
+
+
+    }
 
 
 

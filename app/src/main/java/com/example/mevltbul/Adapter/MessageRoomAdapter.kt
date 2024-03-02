@@ -11,7 +11,7 @@ import com.example.mevltbul.R
 import com.example.mevltbul.databinding.DesignEventMessagesListBinding
 import com.squareup.picasso.Picasso
 
-class EventMessageListPageAdapter(val context: Context,val chatRoomID:ArrayList<Marker>):RecyclerView.Adapter<EventMessageListPageAdapter.EventMessageListPageVH>() {
+class MessageRoomAdapter(val context: Context,val chatRoomID:ArrayList<Marker>):RecyclerView.Adapter<MessageRoomAdapter.EventMessageListPageVH>() {
     inner class EventMessageListPageVH(val binding:DesignEventMessagesListBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventMessageListPageVH {

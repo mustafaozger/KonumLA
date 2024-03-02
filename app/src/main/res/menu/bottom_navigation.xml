@@ -8,12 +8,11 @@
         />
 
     <item
-        android:id="@+id/bottom_home2"
+        android:id="@+id/eventMessagesListPage"
         android:title=""
         android:icon="@drawable/outline_message_24"
         />
     <item
-        android:id="@+id/bottom_home29"
         android:title=""
         android:enabled="false"
         />
