@@ -39,6 +39,12 @@
         <action
             android:id="@+id/action_mainPage_to_mapPage"
             app:destination="@id/mapPage" />
+        <action
+            android:id="@+id/action_mainPage_to_eventMessagesListPage"
+            app:destination="@id/eventMessagesListPage" />
+        <action
+            android:id="@+id/action_mainPage_to_messagesPage"
+            app:destination="@id/messagesPage" />
     </fragment>
     <fragment
         android:id="@+id/mapPage"
@@ -65,5 +71,22 @@
         <action
             android:id="@+id/action_signInPage_to_registryPage"
             app:destination="@id/registryPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventMessagesListPage"
+        android:name="com.example.mevltbul.Pages.MessageRoomsPage"
+        android:label="EventMessagesListPage" >
+        <action
+            android:id="@+id/action_eventMessagesListPage_to_messagesPage"
+            app:destination="@id/messagesPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagesPage"
+        android:name="com.example.mevltbul.Pages.MessagesPage"
+        android:label="MessagesPage" >
+        <argument
+            android:name="message_room_id"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

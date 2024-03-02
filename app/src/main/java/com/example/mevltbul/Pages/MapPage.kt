@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
@@ -120,7 +121,13 @@ class MapPage : Fragment(),OnMapReadyCallback {
                     mMap?.setOnMarkerClickListener { clickedMarker->
                         val event =markList.get(clickedMarker)
                         if(event!=null){
-                            Utils.showAllert(requireContext(),event)
+                            Utils.showAllert(requireContext(),event){
+                                if (it){
+                                    val bundle= Bundle()
+                                    bundle.putString("message_room_id",event.marker_id)
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_mainPage_to_messagesPage,bundle)
+                                }
+                            }
                         }
                         true
                     }

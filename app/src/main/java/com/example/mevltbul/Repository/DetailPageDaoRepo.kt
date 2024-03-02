@@ -84,6 +84,7 @@ class DetailPageDaoRepo{
                         .addOnFailureListener {
                             callback(false)
                         }
+
                 }
             }
         }

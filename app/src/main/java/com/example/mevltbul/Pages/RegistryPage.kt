@@ -54,7 +54,8 @@ class RegistryPage : Fragment() {
 
             }
 
-            binding.txtGotoLoginPage.setOnClickListener { Navigation.findNavController(it).navigate(R.id.action_registryPage_to_signInPage2)
+            binding.txtGotoLoginPage.setOnClickListener {
+                Navigation.findNavController(it).navigate(R.id.action_registryPage_to_signInPage2)
             }
 
 

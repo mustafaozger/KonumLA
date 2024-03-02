@@ -1,15 +1,22 @@
 package com.example.mevltbul.ViewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mevltbul.Classes.User
 import com.example.mevltbul.Repository.UserDaoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.launch
+
 @HiltViewModel
 class UserVM @Inject constructor(var provideUserDaoRepo: UserDaoRepository) : ViewModel() {
-
+    private val  _userData= MutableStateFlow<User>(User())
+    val userData:StateFlow<User> = _userData
     fun createUser(userName:String,email:String,password:String,isCreate:(Boolean) -> Unit){
         provideUserDaoRepo.createUser(userName,email,password,isCreate)
     }
@@ -19,7 +26,29 @@ class UserVM @Inject constructor(var provideUserDaoRepo: UserDaoRepository) : Vi
     fun logoutUser(){
         provideUserDaoRepo.logoutUser()
     }
-    fun getUserData():Flow<User> = flow {
-        provideUserDaoRepo.getUserData()
+    fun getUserData2():Flow<User> = channelFlow {
+      val job=  viewModelScope.launch {
+
+            try {
+                provideUserDaoRepo.getUserData().collect {
+                    send(it)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }finally {
+                close()
+            }
+
+
+        }
+        job.cancel()
+
+    }
+    fun getUserData(){
+        viewModelScope.launch {
+            provideUserDaoRepo.getUserData().collect {
+                _userData.value=it
+            }
+        }
     }
 }

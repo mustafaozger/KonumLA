@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Classes.MessageModel
 import com.example.mevltbul.Repository.DetailPageDaoRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,5 +56,6 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
         Log.d("hatamDetailVM","2. getEventLists")
         return detailPageDaoRepo.getEventLists()
     }
+
 
 }

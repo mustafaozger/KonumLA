@@ -2,8 +2,10 @@ package com.example.mevltbul.Adapter
 
 import android.annotation.SuppressLint
 import   android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -61,13 +63,18 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
             binding.imgMainpageExploreRyclerImage.setImageList(List<SlideModel>(1){SlideModel(R.drawable.loading_placeholder)}, ScaleTypes.CENTER_INSIDE)
         }
 
-        binding.rcylerNearEventLayout.setOnClickListener {
-            Utils.showAllert(context,marker)
+        binding.rcylerNearEventLayout.setOnClickListener {view->
+            Utils.showAllert(context,marker){
+                if (it){
+                    val bundle= Bundle()
+                    bundle.putString("message_room_id",marker.marker_id)
+                    Navigation.findNavController(view).navigate(R.id.action_mainPage_to_messagesPage,bundle)
+                }
+
+            }
 
         }
-        binding.imgMainpageExploreRyclerImage.setOnClickListener(){
-            Utils.showAllert(context,marker)
-        }
+
 
 
 

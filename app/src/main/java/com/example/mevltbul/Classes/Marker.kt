@@ -13,7 +13,7 @@ data class Marker(var marker_id:String?=null,
                   var photo3:String?=null,
                   var photo4:String?=null,
                   var event_type:String?=null,
-                    var event_date:String?=null
+                  var event_date:String?=null
 
     ):Serializable{
 }

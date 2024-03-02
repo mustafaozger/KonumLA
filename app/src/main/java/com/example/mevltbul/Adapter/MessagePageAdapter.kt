@@ -1,6 +1,7 @@
 package com.example.mevltbul.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,8 +9,9 @@ import com.example.mevltbul.Classes.MessageModel
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.databinding.ReceiveMessageBinding
 import com.example.mevltbul.databinding.SendMessageBinding
+import com.google.firebase.auth.FirebaseAuth
 
-class MessaeListPageAdapter(val context: Context, messageList:ArrayList<MessageModel>, senderId:String, receiverGroupId:String):RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+class MessagePageAdapter(val context: Context, messageList: ArrayList <MessageModel>, senderId:String, receiverGroupId:String):RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
     lateinit var messageList :ArrayList<MessageModel>
     val ITEM_SENT=1
     val ITEM_RECEIVE=2
@@ -28,9 +30,7 @@ class MessaeListPageAdapter(val context: Context, messageList:ArrayList<MessageM
 
     override fun getItemViewType(position: Int): Int {
         val message=messageList[position]
-        return if (message.senderId==Utils.UID){
-            TODO("FirebaseAuth.getInstance().uid == message.senderId yapılacak")
-
+        return if (message.senderId==FirebaseAuth.getInstance().uid){
             ITEM_SENT
         } else{
             ITEM_RECEIVE
@@ -50,8 +50,8 @@ class MessaeListPageAdapter(val context: Context, messageList:ArrayList<MessageM
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int){
         val message=messageList[position]
-
-        if (holder.javaClass==SendMessageViewHolder::class.java){
+        Log.d("hatamMessageAdapter","message : ${message.message}")
+        if ( getItemViewType(holder.position)==ITEM_SENT){
             val viewHolder=holder as SendMessageViewHolder
             viewHolder.binding.txtSendedMessage.text=message.message
         }else{

@@ -8,12 +8,15 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -42,7 +45,7 @@ class Utils  {
             }
             return bitmap?.let { BitmapDescriptorFactory.fromBitmap(it) }
         }
-         fun showAllert(context:Context,marker: Marker){
+         fun showAllert(context:Context,marker: Marker,isMessage : (Boolean) -> Unit){
             val dialog= BottomSheetDialog(context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.detail_event_bottom_sheet)
@@ -51,6 +54,7 @@ class Utils  {
             val txt_eventDate: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDate)
             val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
             val btn_direction: Chip?=dialog.findViewById(R.id.btn_direction)
+             val btn_message_room:ImageButton?=dialog.findViewById(R.id.btn_message_room)
 
             if (marker.event_date!=null){
                 txt_eventDate?.text="${marker.event_date}"
@@ -83,6 +87,11 @@ class Utils  {
                     } }
             }
 
+             btn_message_room?.setOnClickListener{
+                 isMessage(true)
+                 dialog.cancel()
+             }
+
 
             dialog.show()
             dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -108,8 +117,6 @@ class Utils  {
                 }
             }
 
-//        TODO("Silinecek")
-        val UID="2334"
 
 
     }

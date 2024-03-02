@@ -1,60 +1,124 @@
 package com.example.mevltbul.Pages
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mevltbul.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mevltbul.Adapter.MessagePageAdapter
+import com.example.mevltbul.ViewModel.MessageVM
+import com.example.mevltbul.ViewModel.UserVM
+import com.example.mevltbul.databinding.FragmentMessagesPageBinding
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MessagesPage.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class MessagesPage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var bindng: FragmentMessagesPageBinding
+    lateinit var messagePageVM:MessageVM
+    lateinit var userVM: UserVM
+    lateinit var userId:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        val tempMessagePageVM:MessageVM by viewModels()
+        val tempUserVM:UserVM by viewModels()
+        userVM=tempUserVM
+        messagePageVM=tempMessagePageVM
+        Log.d("hatamMessagePage", "onCreate: ")
+
+
     }
 
+
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages_page, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MessagesPage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MessagesPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        try {
+            bindng=FragmentMessagesPageBinding.inflate(inflater,container,false)
+
+            val messageRoomId= arguments?.getString("message_room_id")
+            userId= FirebaseAuth.getInstance().uid.toString()
+            Log.d("hatamMessagePage", "messageId: $messageRoomId")
+            messagePageVM.getMessage(messageRoomId!!)
+            userVM.getUserData()
+            messagePageVM.listenForMessages(messageRoomId!!)
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                userVM.userData.collect{user->
+                    if (user.message_roooms_id?.find{it==messageRoomId} !=null){
+                        bindng.layoutMessagePageMakeJoinChat.visibility=View.GONE
+                    }else{
+                        bindng.layoutMessagePageMakeJoinChat.visibility=View.VISIBLE
+                    }
                 }
             }
+
+
+
+
+
+//            messagePageVM.getMessage(messageRoomId!!).observe(viewLifecycleOwner){
+//                val adapter=MessagePageAdapter(requireContext(),it,userId,messageRoomId)
+//                bindng.messagePageRecycler.adapter=adapter
+//                adapter.notifyDataSetChanged()
+//                bindng.messagePageRecycler.layoutManager=LinearLayoutManager(requireContext())
+//            }
+//
+//
+            messagePageVM.messagesLiveData.observe(viewLifecycleOwner){
+                val adapter=MessagePageAdapter(requireContext(),it,userId,messageRoomId)
+                bindng.messagePageRecycler.adapter=adapter
+                adapter.notifyDataSetChanged()
+                bindng.messagePageRecycler.layoutManager=LinearLayoutManager(requireContext())
+                bindng.messagePageRecycler.scrollToPosition(adapter.itemCount - 1)
+
+            }
+
+
+
+
+
+
+
+            bindng.btnSendMessage.setOnClickListener{
+                val message=bindng.txtSendMessage.text.toString()
+                if (message.isNotEmpty()){
+                    messagePageVM.sendMessage(messageRoomId!!,message,userId){
+                        if (it){
+                            messagePageVM.listenForMessages(messageRoomId!!)
+                            bindng.txtSendMessage.text.clear()
+                        }else{
+                            Toast.makeText(requireContext(),"Hata : Mesajınızı Gönderilemedi",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+            bindng.btnMessagePageJoinChat.setOnClickListener{
+                messagePageVM.addMassageRoomToUserDatabase(userId,messageRoomId!!)
+                bindng.layoutMessagePageMakeJoinChat.visibility=View.GONE
+
+            }
+
+        }catch (e:Exception){
+            Log.e("hatamMessagePage", "exceptionnum : ",e)
+        }
+
+        return bindng.root
     }
+
 }
