@@ -42,6 +42,7 @@ class DetailPageDaoRepo{
 
     fun publishDetail(
         marker_id: String?,
+        marker_name: String? = null,
         marker_latitude: String? = null,
         marker_longitude: String? = null,
         marker_detail: String? = null,
@@ -64,6 +65,7 @@ class DetailPageDaoRepo{
                 }
                 val marker = Marker(
                     marker_id,
+                    marker_name,
                     marker_latitude,
                     marker_longitude,
                     marker_detail,
@@ -76,9 +78,15 @@ class DetailPageDaoRepo{
                 )
 
                 marker.marker_id?.let {
-                    db.collection("images").document(it).set(marker)
+                    db.collection("markers").document(it).set(marker)
                         .addOnSuccessListener {
-                            callback(true)
+                            val data= hashMapOf(
+                                "marker_name" to marker_detail,
+                                "marker_photo" to imageUrl
+                            )
+                            db.collection("chats").document(marker_id!!).set(data).addOnSuccessListener{
+                                callback(true)
+                            }
 
                         }
                         .addOnFailureListener {
@@ -121,7 +129,7 @@ class DetailPageDaoRepo{
     fun getEventListsFromDatabaseWitfFlow(latitude: Double, longitude: Double): Flow<ArrayList<Marker>> = flow {
         //I'm getting events in the area close to the user's location
         Log.d("hatamDetailPageDaoRepo", "2. getEventListsFromDatabas work ")
-        val collection = db.collection( "images")
+        val collection = db.collection( "markers")
             .whereGreaterThanOrEqualTo("marker_latitude", (latitude - 0.5).toString())
             .whereLessThanOrEqualTo("marker_latitude", (latitude + 0.5).toString())
 
@@ -139,6 +147,7 @@ class DetailPageDaoRepo{
                     if (markerLongitude != null && markerLongitude.toDouble() in (longitude - 0.5)..(longitude + 0.5)) {
                         val marker = Marker(
                             data.get("marker_id") as String?,
+                            data.get("marker_name") as String?,
                             data.get("marker_latitude") as String?,
                             data.get("marker_longtitude") as String?,
                             data.get("marker_detail") as String?,
@@ -172,10 +181,8 @@ class DetailPageDaoRepo{
         if (idList.isEmpty()){
 
         }else{
-//            db.collection("images").whereIn("marker_id",id)
-//            for (id in idList){
-
-                db.collection("images").whereIn("marker_id",idList).get().addOnSuccessListener {
+//
+                db.collection("markers").whereIn("marker_id",idList).get().addOnSuccessListener {
                     for (i in it ){
                         val data=i.data
                         val marker = Marker(

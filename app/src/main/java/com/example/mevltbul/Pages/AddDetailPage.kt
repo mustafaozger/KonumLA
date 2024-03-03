@@ -152,14 +152,13 @@ fun showAllert(){
 
 
     private fun publish(){
-        binding.progressBarPublishData.visibility=View.VISIBLE
 
         if (binding.txtEventList.text.toString()!=""){
-            binding.linearLayoutAddDetailPage.visibility=View.GONE
             val sdf=SimpleDateFormat("dd/MM/yyyy HH:mm")
             val currentDAte=sdf.format(System.currentTimeMillis())
             detailVM.publishDetail(
                 System.currentTimeMillis().toString(),
+                null,
                 bundle.latitude,
                 bundle.longitude,
                 binding.txtDetail.text.toString(),

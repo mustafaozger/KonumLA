@@ -9,18 +9,31 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+          android:backgroundTint="#FFFFFF">
 
-            <LinearLayout
-                android:id="@+id/linearLayout_addDetailPage"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                android:orientation="vertical"
+            <ProgressBar
+                android:id="@+id/progressBarPublishData"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#F57C00"
+                android:progressTint="#656565"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:context=".Pages.AddDetailPage">
+                app:layout_constraintVertical_bias="0.5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                   <androidx.appcompat.widget.Toolbar
                       android:id="@+id/toolbar"
@@ -34,192 +47,212 @@
                       app:layout_constraintTop_toTopOf="parent"
                       app:navigationIcon="@drawable/baseline_arrow_back_24"
                       app:title="Detaylar"
-                      app:titleTextColor="@color/red" />
+                      app:titleTextColor="@color/project_dark_blue" />
 
-                  <TextView
+                  <ScrollView
                       android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="12dp"
-                      android:layout_marginTop="15dp"
-                      android:text="Fotoğraflar"
-                      android:textSize="20sp"
-                      android:textStyle="bold" />
+                      android:layout_height="match_parent">
 
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="120dp"
-                      android:layout_marginLeft="10dp"
-                      android:layout_marginTop="15dp"
-                      android:layout_marginRight="10dp"
-                      android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/add_image1"
-                            android:layout_width="90dp"
-                            android:layout_height="120dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:adjustViewBounds="false"
-                            android:background="@drawable/background_photo"
-                            android:cropToPadding="false"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/add_photo" />
-
-                        <ImageView
-                            android:id="@+id/add_image2"
-                            android:layout_width="90dp"
-                            android:layout_height="120dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_photo"
-                            android:scaleType="centerCrop" />
-
-                        <ImageView
-                            android:id="@+id/add_image3"
-                            android:layout_width="90dp"
-                            android:layout_height="120dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_photo"
-                            android:scaleType="centerCrop" />
-
-                        <ImageView
-                            android:id="@+id/add_image4"
-                            android:layout_width="90dp"
-                            android:layout_height="120dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_photo"
-                            android:scaleType="centerCrop" />
-
-                  </LinearLayout>
-
-                  <TextView
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="12dp"
-                      android:layout_marginTop="15dp"
-                      android:text="Etkinlik Türü"
-                      android:textSize="20sp"
-                      android:textStyle="bold" />
-
-                  <com.google.android.material.textfield.TextInputLayout
-                      style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="12dp"
-                      android:layout_marginTop="15dp"
-                      android:layout_marginRight="12dp">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/txt_eventList"
+                        <LinearLayout
+                            android:id="@+id/linearLayout_addDetailPage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:hint="Etkinlik Turu"
-                            android:inputType="none"
+                            android:background="#FFFFFF"
+                            android:orientation="vertical"
+                            tools:context=".Pages.AddDetailPage">
 
-                            />
+                              <TextView
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:text="Fotoğraflar"
+                                  android:textSize="20sp"
+                                  android:textStyle="bold" />
 
-                  </com.google.android.material.textfield.TextInputLayout>
+                              <LinearLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="120dp"
+                                  android:layout_marginLeft="10dp"
+                                  android:layout_marginTop="15dp"
+                                  android:layout_marginRight="10dp"
+                                  android:orientation="horizontal">
 
-                  <TextView
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="12dp"
-                      android:layout_marginTop="15dp"
-                      android:text="Konum"
-                      android:textSize="20sp"
-                      android:textStyle="bold" />
+                                    <ImageView
+                                        android:id="@+id/add_image1"
+                                        android:layout_width="90dp"
+                                        android:layout_height="120dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_weight="1"
+                                        android:adjustViewBounds="false"
+                                        android:background="@drawable/background_photo"
+                                        android:cropToPadding="false"
+                                        android:scaleType="centerCrop"
+                                        app:srcCompat="@drawable/add_photo" />
 
-                  <TextView
-                      android:id="@+id/txt_location"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="12dp"
-                      android:layout_marginTop="15dp"
-                      android:layout_marginRight="12dp"
-                      android:background="@drawable/background_photo"
-                      android:hint="Konum"
-                      android:padding="10sp"
-                      android:paddingLeft="12sp"
-                      android:textSize="18sp"
-                      android:textStyle="normal" />
+                                    <ImageView
+                                        android:id="@+id/add_image2"
+                                        android:layout_width="90dp"
+                                        android:layout_height="120dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/background_photo"
+                                        android:scaleType="centerCrop" />
 
-                  <TextView
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="12dp"
-                      android:layout_marginTop="15dp"
-                      android:text="Açıklama"
-                      android:textSize="20sp"
-                      android:textStyle="bold" />
+                                    <ImageView
+                                        android:id="@+id/add_image3"
+                                        android:layout_width="90dp"
+                                        android:layout_height="120dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/background_photo"
+                                        android:scaleType="centerCrop" />
+
+                                    <ImageView
+                                        android:id="@+id/add_image4"
+                                        android:layout_width="90dp"
+                                        android:layout_height="120dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/background_photo"
+                                        android:scaleType="centerCrop" />
+
+                              </LinearLayout>
 
 
-                  <FrameLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="120dp"
-                      android:layout_margin="15dp"
-                      android:background="@drawable/background_photo">
+                              <TextView
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:text="Etkinlik Adı"
+                                  android:textSize="20sp"
+                                  android:textStyle="bold" />
+
+                              <FrameLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="50dp"
+                                  android:layout_margin="15dp"
+                                  android:background="@drawable/background_photo">
+
+                                    <EditText
+                                        android:id="@+id/txt_event_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="10dp"
+                                        android:background="@android:color/transparent"
+                                        android:ems="10"
+                                        android:gravity="start|top"
+                                        android:hint="Etkinlik Adını Yaz..."
+                                        android:inputType="textMultiLine"
+
+                                        />
+                              </FrameLayout>
+
+                              <TextView
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:text="Etkinlik Türü"
+                                  android:textSize="20sp"
+                                  android:textStyle="bold" />
+
+                              <com.google.android.material.textfield.TextInputLayout
+                                  style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:layout_marginRight="12dp">
+
+                                    <AutoCompleteTextView
+                                        android:id="@+id/txt_eventList"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:hint="Etkinlik Turu"
+                                        android:inputType="none"
+
+                                        />
+
+                              </com.google.android.material.textfield.TextInputLayout>
+
+                              <TextView
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:text="Konum"
+                                  android:textSize="20sp"
+                                  android:textStyle="bold" />
+
+                              <TextView
+                                  android:id="@+id/txt_location"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:layout_marginRight="12dp"
+                                  android:background="@drawable/background_photo"
+                                  android:hint="Konum"
+                                  android:padding="10sp"
+                                  android:paddingLeft="12sp"
+                                  android:textSize="18sp"
+                                  android:textStyle="normal" />
+
+                              <TextView
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="12dp"
+                                  android:layout_marginTop="15dp"
+                                  android:text="Açıklama"
+                                  android:textSize="20sp"
+                                  android:textStyle="bold" />
 
 
-                        <EditText
-                            android:id="@+id/txt_detail"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:background="@android:color/transparent"
-                            android:ems="10"
-                            android:gravity="start|top"
-                            android:hint="Açıklama Yaz..."
-                            android:inputType="textMultiLine"
+                              <FrameLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="120dp"
+                                  android:layout_margin="15dp"
+                                  android:background="@drawable/background_photo">
 
-                            />
-                  </FrameLayout>
 
-                  <Button
-                      android:id="@+id/btn_share"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginStart="50dp"
+                                    <EditText
+                                        android:id="@+id/txt_detail"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="10dp"
+                                        android:background="@android:color/transparent"
+                                        android:ems="10"
+                                        android:gravity="start|top"
+                                        android:hint="Açıklama Yaz..."
+                                        android:inputType="textMultiLine"
 
-                      android:layout_marginEnd="50dp"
+                                        />
+                              </FrameLayout>
 
-                      android:backgroundTint="#840032"
+                              <Button
+                                  android:id="@+id/btn_share"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
 
-                      android:padding="10sp"
-                      android:text="Paylaş"
-                      android:textColor="@color/cream"
-                      android:textSize="20sp" />
+                                  android:layout_marginStart="50dp"
+
+                                  android:layout_marginEnd="50dp"
+
+                                  android:layout_marginBottom="50dp"
+                                  android:backgroundTint="@color/project_orange"
+                                  android:padding="10sp"
+                                  android:text="Paylaş"
+                                  android:textColor="@color/cream"
+                                  android:textSize="20sp" />
+
+                        </LinearLayout>
+                  </ScrollView>
 
             </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/progressBar_publishData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="#430909"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                  <ProgressBar
-                      android:id="@+id/progressBar2"
-                      style="?android:attr/progressBarStyle"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintHorizontal_bias="0.5"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintVertical_bias="0.5" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
       </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -5,6 +5,7 @@ import java.io.Serializable
 
 @IgnoreExtraProperties
 data class Marker(var marker_id:String?=null,
+                  var marker_name:String?=null,
                   var marker_latitude:String?=null,
                   var marker_longtitude: String?=null,
                   var marker_detail:String?=null,
@@ -13,7 +14,8 @@ data class Marker(var marker_id:String?=null,
                   var photo3:String?=null,
                   var photo4:String?=null,
                   var event_type:String?=null,
-                  var event_date:String?=null
+                  var event_date:String?=null,
+
 
     ):Serializable{
 }

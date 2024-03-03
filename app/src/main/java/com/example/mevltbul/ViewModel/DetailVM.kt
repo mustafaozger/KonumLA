@@ -34,6 +34,7 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
 
 
     fun publishDetail( marker_id:String?,
+                       marker_name:String?=null,
                          marker_latitude:String?=null,
                          marker_longtitude: String?=null,
                          marker_detail:String?=null,
@@ -45,7 +46,7 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
 
         viewModelScope.launch {
 
-            detailPageDaoRepo.publishDetail( marker_id, marker_latitude, marker_longtitude, marker_detail, imageList,event_type,event_date,callback)
+            detailPageDaoRepo.publishDetail( marker_id,marker_name, marker_latitude, marker_longtitude, marker_detail, imageList,event_type,event_date,callback)
 
         }
     }
