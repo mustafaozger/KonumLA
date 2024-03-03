@@ -3,10 +3,12 @@ package com.example.mevltbul.ViewModel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Classes.MessageRoomModel
 import com.example.mevltbul.Repository.DetailPageDaoRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,11 +58,18 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
         Log.d("hatamDetailVM","2. getEventLists")
         return detailPageDaoRepo.getEventLists()
     }
-    fun getEventListWithID(idList:ArrayList<String>):MutableLiveData<ArrayList<Marker>> {
-        detailPageDaoRepo.getEventListWithID(idList)
-        return detailPageDaoRepo.getEventLists()
+
+
+
+    private val _messageRoomLiveData = MutableLiveData<ArrayList<MessageRoomModel>>()
+    val messageRoomLiveData: LiveData<ArrayList<MessageRoomModel>> = _messageRoomLiveData
+
+    fun getMessageRooms(idList: ArrayList<String>){
+        detailPageDaoRepo.getEventListWithID(idList){
+            _messageRoomLiveData.postValue(it)
+        }
     }
 
 
 
-    }
+}

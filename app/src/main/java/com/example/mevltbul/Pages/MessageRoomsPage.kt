@@ -1,6 +1,7 @@
 package com.example.mevltbul.Pages
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.mevltbul.ViewModel.MessageVM
 import com.example.mevltbul.databinding.FragmentEventMessagesListPageBinding
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
 
@@ -39,13 +41,18 @@ class MessageRoomsPage : Fragment() {
 
         val userID=FirebaseAuth.getInstance().uid
         messageVM.getMessageRooms(userID!!)
-        messageVM.messageRoomLiveData.observe(viewLifecycleOwner){roomListIdList->
-            if (roomListIdList != null) {
-                detailVM.getEventListWithID(roomListIdList ).observe(viewLifecycleOwner){
+        Log.d("hatamRoomListID","work")
 
-                    val messageAdapter=MessageRoomAdapter(requireContext(),it)
-                    bindig.eventMessageRoomRcyler.adapter=messageAdapter
-                    bindig.eventMessageRoomRcyler.layoutManager= LinearLayoutManager(requireContext())
+        messageVM.messageRoomLiveData.observe(viewLifecycleOwner){roomListIdList->
+            Log.d("hatamRoomListID","id list  $roomListIdList")
+            if (roomListIdList != null) {
+                detailVM.getMessageRooms(roomListIdList)
+                detailVM.messageRoomLiveData.observe(viewLifecycleOwner){
+                    Log.d("hatamRoomListID","event lisy  $it ")
+
+                    val adapter=MessageRoomAdapter(requireContext(),it)
+                    bindig.eventMessageRoomRcyler.adapter=adapter
+                    bindig.eventMessageRoomRcyler.layoutManager=LinearLayoutManager(requireContext())
                 }
 
             }

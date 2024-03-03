@@ -28,17 +28,16 @@ class MessagePageDaoRepository {
         }
     }
 
-
-
-
-
-    fun addMassageRoomToUserDatabase(uid:String,messageRoomId:String){
+    fun addMassageRoomToUserDatabase(uid:String,newMessageRoomId:String){
         val user=db.collection("Users").document(uid)
-        user.collection("message_roooms_id").get().addOnSuccessListener { dataList->
-            val list=dataList.toObjects(String::class.java)
-            list.add(messageRoomId)
-            user.update("message_roooms_id",list)
+        user.get().addOnSuccessListener {roomList->
+            val retList=roomList.get("message_roooms_id") as ArrayList<String>
+            retList.add(newMessageRoomId)
+            user.update("message_roooms_id",retList)
         }
+
+
+
     }
 
 
@@ -70,22 +69,16 @@ class MessagePageDaoRepository {
 
 
 
+
+
     fun getMessageRooms(uid:String,callback: (ArrayList<String>) -> Unit){
-        val user=db.collection("Users").document(uid)
-        user.collection("message_roooms_id").get().addOnSuccessListener { snapshots->
-            val list=ArrayList<String>()
-            if (!snapshots.isEmpty){
-                for (doc in snapshots.documents){
-                    val data=doc.data as String?
-                    data?.let { list.add(it) }
-                }
+        val user=db.collection("Users").document(uid).get().addOnSuccessListener {
+            if (it!=null){
+                val list=it.get("message_roooms_id") as ArrayList<String>
                 callback(list)
             }
         }
+
     }
-
-
-
-
 
 }

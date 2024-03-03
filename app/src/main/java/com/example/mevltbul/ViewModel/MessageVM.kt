@@ -1,5 +1,6 @@
 package com.example.mevltbul.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,13 +31,13 @@ class MessageVM @Inject constructor(var provideMessagePageDaoRepo:MessagePageDao
         }
     }
 
-
-
     private val _messageRoomLiveData = MutableLiveData<ArrayList<String>>()
     val messageRoomLiveData: LiveData<ArrayList<String>> = _messageRoomLiveData
 
     fun getMessageRooms(uid:String){
+
         provideMessagePageDaoRepo.getMessageRooms(uid) { messageRooms ->
+            Log.d("hatamRoomVM",messageRooms.toString())
             _messageRoomLiveData.postValue(messageRooms)
         }
     }

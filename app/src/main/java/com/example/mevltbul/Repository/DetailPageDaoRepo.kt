@@ -8,6 +8,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Classes.MessageModel
+import com.example.mevltbul.Classes.MessageRoomModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -29,16 +31,10 @@ class DetailPageDaoRepo{
     private val urlQueue:Queue<String> = LinkedList()
     private val markerList=MutableLiveData<ArrayList<Marker>>()
 
-    init {
-
-    }
 
     fun getEventLists():MutableLiveData<ArrayList<Marker>>{
         return markerList
     }
-
-
-
 
     fun publishDetail(
         marker_id: String?,
@@ -81,8 +77,9 @@ class DetailPageDaoRepo{
                     db.collection("markers").document(it).set(marker)
                         .addOnSuccessListener {
                             val data= hashMapOf(
-                                "marker_name" to marker_detail,
-                                "marker_photo" to imageUrl
+                                "chat_id" to marker_id,
+                                "chat_name" to marker_detail,
+                                "chat_photo" to imageUrl
                             )
                             db.collection("chats").document(marker_id!!).set(data).addOnSuccessListener{
                                 callback(true)
@@ -128,7 +125,6 @@ class DetailPageDaoRepo{
 
     fun getEventListsFromDatabaseWitfFlow(latitude: Double, longitude: Double): Flow<ArrayList<Marker>> = flow {
         //I'm getting events in the area close to the user's location
-        Log.d("hatamDetailPageDaoRepo", "2. getEventListsFromDatabas work ")
         val collection = db.collection( "markers")
             .whereGreaterThanOrEqualTo("marker_latitude", (latitude - 0.5).toString())
             .whereLessThanOrEqualTo("marker_latitude", (latitude + 0.5).toString())
@@ -176,34 +172,32 @@ class DetailPageDaoRepo{
 
     }
 
-    fun getEventListWithID(idList:ArrayList<String>){
-        val retValue=ArrayList<Marker>()
-        if (idList.isEmpty()){
-
-        }else{
-//
-                db.collection("markers").whereIn("marker_id",idList).get().addOnSuccessListener {
-                    for (i in it ){
-                        val data=i.data
-                        val marker = Marker(
-                            data.get("marker_id") as String?,
-                            data.get("marker_latitude") as String?,
-                            data.get("marker_longtitude") as String?,
-                            data.get("marker_detail") as String?,
-                            data.get("photo1") as String?,
-                            data.get("photo2") as String?,
-                            data.get("photo3") as String?,
-                            data.get("photo4") as String?,
-                            data.get("event_type") as String?,
-                            data.get("event_date") as String?,
-                        )
-                        retValue.add(marker)
-//                    }
+    fun getEventListWithID(idList:ArrayList<String>,callback: (ArrayList<MessageRoomModel>) -> Unit) {
+        if (idList.size!=0){
+            try {
+                val retList=ArrayList<MessageRoomModel>()
+                for (id in idList){
+                    db.collection("chats").whereEqualTo("chat_id",id).get().addOnSuccessListener{
+                        if (!it.isEmpty){
+                            Log.d("hatamRoomDAO","marker found ${it.documents.get(0).get("marker_photo1")}")
+                            val messageRoomModel=MessageRoomModel(
+                                it.documents.get(0).get("chat_id") as String?
+                                ,it.documents.get(0).get("chat_name") as String?
+                                , it.documents.get(0).get("chat_photo") as String?)
+                            retList.add(messageRoomModel)
+                        }else{
+                            Log.e("hatamRoomDAO","marker not found")
+                        }
+                        callback(retList)
+                    }
                 }
-                    markerList.value=retValue
-            }
-        }
 
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }else{
+            callback(ArrayList())
+        }
 
     }
 
