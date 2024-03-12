@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/signInPage">
+    app:startDestination="@id/mainPage">
 
     <fragment
         android:id="@+id/addingPage"
@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_mainPage_to_messagesPage"
             app:destination="@id/messagesPage" />
+        <action
+            android:id="@+id/action_mainPage_to_signInPage"
+            app:destination="@id/signInPage" />
     </fragment>
     <fragment
         android:id="@+id/mapPage"
@@ -89,4 +92,5 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+
 </navigation>

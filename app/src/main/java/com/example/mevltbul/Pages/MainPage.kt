@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -51,7 +52,6 @@ class MainPage: Fragment() ,OnMapReadyCallback{
 
 
 
-
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +61,16 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         binding=FragmentMainPageBinding.inflate(layoutInflater)
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        binding.layoutMainPage.visibility=View.GONE
+
+        if (FirebaseAuth.getInstance().currentUser!=null){
+            binding.layoutMainPage.visibility=View.VISIBLE
+            binding.layoutMainPageProgress.visibility=View.GONE
+        }else{
+            Navigation.findNavController(requireView()).navigate(R.id.action_mainPage_to_signInPage)
+        }
+
 
         binding.chip.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_mainPage_to_mapPage)
