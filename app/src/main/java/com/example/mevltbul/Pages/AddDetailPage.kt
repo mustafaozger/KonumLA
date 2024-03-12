@@ -151,7 +151,7 @@ fun showAllert(){
 
     private fun publish(){
 
-        if (binding.txtEventList.text.toString()!=""){
+        if (binding.txtEventList.text.toString()!="" ){
             val sdf=SimpleDateFormat("dd/MM/yyyy HH:mm")
             val currentDAte=sdf.format(System.currentTimeMillis())
             detailVM.publishDetail(
