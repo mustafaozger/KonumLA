@@ -20,6 +20,15 @@
 
     </style>
 
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="splashScreenIconSize">128dp</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.MevlütBul</item>
+
+
+
+    </style>
+
 
     <style name="Theme.LoginAndSignUp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->

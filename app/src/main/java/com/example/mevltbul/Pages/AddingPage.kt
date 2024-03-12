@@ -77,6 +77,7 @@ class AddingPage : Fragment(),OnMapReadyCallback {
             fusedLocationClient.lastLocation.addOnSuccessListener {location->
                 val currentLocation=LatLng(location.latitude,location.longitude)
                 if(mMap!=null){
+                    selectedPosition=currentLocation
                     mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,13f))
                     mMap?.addMarker(MarkerOptions().position(currentLocation).title(address).visible(true).icon(Utils.getMarker(requireContext())))
 
