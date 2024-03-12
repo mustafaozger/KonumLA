@@ -10,6 +10,7 @@ import com.example.mevltbul.Classes.MessageRoomModel
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.DesignEventMessagesListBinding
 import com.squareup.picasso.Picasso
+import java.lang.IllegalStateException
 
 class MessageRoomAdapter(val context: Context,val chatRoomIdList:ArrayList<MessageRoomModel>):RecyclerView.Adapter<MessageRoomAdapter.EventMessageListPageVH>() {
     inner class EventMessageListPageVH(val binding:DesignEventMessagesListBinding):RecyclerView.ViewHolder(binding.root)
@@ -26,13 +27,19 @@ class MessageRoomAdapter(val context: Context,val chatRoomIdList:ArrayList<Messa
 
     override fun onBindViewHolder(holder: EventMessageListPageVH, position: Int) {
         val binding=holder.binding
-        if (chatRoomIdList[position].message_image!=null){
-            Picasso.get().load(chatRoomIdList[position].message_image)
-                .centerCrop()
-                .fit().placeholder(R.drawable.loading_placeholder)
-                .error(R.drawable.ic_launcher_foreground)
-                .into(binding.eventMessagesListPageImage)
+        try {
+            if (chatRoomIdList[position].message_image!=null){
+                Picasso.get().load(chatRoomIdList[position].message_image)
+                    .centerCrop()
+                    .fit().placeholder(R.drawable.loading_placeholder)
+                    .error(R.drawable.loading_placeholder)
+                    .into(binding.eventMessagesListPageImage)
+            }
+        }catch (e:IllegalStateException){
+            binding.eventMessagesListPageImage.setImageResource(R.drawable.loading_placeholder)
+
         }
+
         binding.eventMessagesListPageEventName.text= chatRoomIdList[position].message_room_name
 
         binding.designEventListMessageLayout.setOnClickListener {
