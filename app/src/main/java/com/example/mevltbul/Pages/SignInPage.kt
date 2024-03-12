@@ -1,6 +1,7 @@
 package com.example.mevltbul.Pages
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.Navigation
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.UserVM
 import com.example.mevltbul.databinding.FragmentSignInPageBinding
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +33,6 @@ class SignInPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSignInPageBinding.inflate(inflater, container, false)
-
 
         binding.signInButton.setOnClickListener {
             val email=binding.loginEmail.text.toString()

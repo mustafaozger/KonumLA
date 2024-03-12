@@ -32,34 +32,32 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@color/white">
+                android:background="@drawable/toolbar_background">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/materialToolbar3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="?attr/actionBarTheme"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="260dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/project_dark_blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:title="Etkinlik Detayı"
-                    app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:titleTextColor="@color/red" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/btn_message_room"
                     android:layout_width="75dp"
                     android:layout_height="57dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="3dp"
                     android:backgroundTint="@color/white"
                     android:scaleType="centerCrop"
                     android:src="@drawable/message_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/materialToolbar3"
-                    app:layout_constraintEnd_toEndOf="@+id/materialToolbar3"
-                    app:layout_constraintTop_toTopOf="@+id/materialToolbar3" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="Sohbet Odası" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,6 +99,9 @@ dependencies {
     //Picasso
     implementation("com.squareup.picasso:picasso:2.8")
 
+    //Splashscreen
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 
 }
 
