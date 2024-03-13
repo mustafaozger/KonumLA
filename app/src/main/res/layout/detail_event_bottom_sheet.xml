@@ -36,28 +36,43 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="260dp"
+                    android:layout_width="200dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/project_dark_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
                 <ImageButton
                     android:id="@+id/btn_message_room"
                     android:layout_width="75dp"
                     android:layout_height="57dp"
+                    android:layout_marginEnd="15dp"
                     android:backgroundTint="@color/white"
+                    android:contentDescription="Sohbet Odası"
                     android:scaleType="centerCrop"
                     android:src="@drawable/message_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_save_location"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_save_location"
+                    android:layout_width="44dp"
+                    android:layout_height="57dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/white"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="Sohbet Odası" />
+                    app:srcCompat="@drawable/outline_bookmark_border_24" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

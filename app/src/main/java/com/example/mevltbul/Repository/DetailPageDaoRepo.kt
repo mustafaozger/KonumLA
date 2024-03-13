@@ -98,7 +98,6 @@ class DetailPageDaoRepo{
     private fun uploadImages(imageUris: ArrayList<Uri?>, folderName: String, callback: (String) ->  Unit) {
         val imageNamePrefix = "image_${System.currentTimeMillis()}"
         var uploadedCount = 0
-
         for (imageUri in imageUris) {
             val imageName = "$imageNamePrefix${uploadedCount++}"
             val imageRef: StorageReference = storageReference.child("$folderName/$imageName")
@@ -172,7 +171,7 @@ class DetailPageDaoRepo{
 
     }
 
-    fun getEventListWithID(idList:ArrayList<String>,callback: (ArrayList<MessageRoomModel>) -> Unit) {
+    fun getChatListWithID(idList:ArrayList<String>,callback: (ArrayList<MessageRoomModel>) -> Unit) {
         if (idList.size!=0){
             try {
                 val retList=ArrayList<MessageRoomModel>()
@@ -199,6 +198,28 @@ class DetailPageDaoRepo{
             callback(ArrayList())
         }
 
+    }
+
+    fun getSavedEventList(idList:ArrayList<String>,callback: (ArrayList<Marker>) -> Unit){
+        if(idList!=null){
+            val list=ArrayList<Marker>()
+
+            for (id in idList) {
+                db.collection("markers").document(id).get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        documentSnapshot?.let { snapshot ->
+                            val marker = snapshot.toObject(Marker::class.java)
+                            if (marker != null) {
+                                list.add(marker)
+                            }
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        exception.printStackTrace()
+                    }
+            }
+            callback(list)
+        }
     }
 
 

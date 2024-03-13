@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_mainPage_to_signInPage"
             app:destination="@id/signInPage" />
+        <action
+            android:id="@+id/action_mainPage_to_savedEnevtsPage"
+            app:destination="@id/savedEnevtsPage" />
     </fragment>
     <fragment
         android:id="@+id/mapPage"
@@ -92,5 +95,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/savedEnevtsPage"
+        android:name="com.example.mevltbul.Pages.SavedEnevtsPage"
+        android:label="SavedEnevtsPage" />
 
 </navigation>

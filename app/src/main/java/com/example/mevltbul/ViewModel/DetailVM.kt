@@ -65,8 +65,17 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
     val messageRoomLiveData: LiveData<ArrayList<MessageRoomModel>> = _messageRoomLiveData
 
     fun getMessageRooms(idList: ArrayList<String>){
-        detailPageDaoRepo.getEventListWithID(idList){
+        detailPageDaoRepo.getChatListWithID(idList){
             _messageRoomLiveData.postValue(it)
+        }
+    }
+
+    private val _savedRoomLiveData = MutableLiveData<ArrayList<Marker>>()
+    val savedRoomLiveData: LiveData<ArrayList<Marker>> = _savedRoomLiveData
+
+    fun uploadSavedList(idList: ArrayList<String>){
+        detailPageDaoRepo.getSavedEventList(idList){
+            _savedRoomLiveData.postValue(it)
         }
     }
 

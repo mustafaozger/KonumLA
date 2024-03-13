@@ -18,7 +18,7 @@
         />
 
     <item
-        android:id="@+id/savedEvent"
+        android:id="@+id/savedEnevtsPage"
         android:title=""
         android:icon="@drawable/outline_bookmark_border_24"
         />

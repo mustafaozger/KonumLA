@@ -55,6 +55,7 @@ class Utils  {
             val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
             val btn_direction: Chip?=dialog.findViewById(R.id.btn_direction)
              val btn_message_room:ImageButton?=dialog.findViewById(R.id.btn_message_room)
+             val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_save_location)
 
             if (marker.event_date!=null){
                 txt_eventDate?.text="${marker.event_date}"
@@ -90,6 +91,10 @@ class Utils  {
              btn_message_room?.setOnClickListener{
                  isMessage(true)
                  dialog.cancel()
+             }
+
+             btn_saveLocation?.setOnClickListener {
+
              }
 
 
