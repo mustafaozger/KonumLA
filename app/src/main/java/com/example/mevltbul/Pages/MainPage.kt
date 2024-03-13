@@ -64,12 +64,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
 
         binding.layoutMainPage.visibility=View.GONE
 
-        if (FirebaseAuth.getInstance().currentUser!=null){
-            binding.layoutMainPage.visibility=View.VISIBLE
-            binding.layoutMainPageProgress.visibility=View.GONE
-        }else{
-            Navigation.findNavController(requireView()).navigate(R.id.action_mainPage_to_signInPage)
-        }
+
 
 
         binding.chip.setOnClickListener {
@@ -86,6 +81,14 @@ class MainPage: Fragment() ,OnMapReadyCallback{
     @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (FirebaseAuth.getInstance().currentUser!=null){
+            binding.layoutMainPage.visibility=View.VISIBLE
+            binding.layoutMainPageProgress.visibility=View.GONE
+        }else{
+            Navigation.findNavController(requireView()).navigate(R.id.action_mainPage_to_signInPage)
+        }
+
         val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility=View.VISIBLE
         val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
@@ -93,20 +96,29 @@ class MainPage: Fragment() ,OnMapReadyCallback{
 
 
         if (Utils.checkPermission(requireContext())){
+            try {
+
             fusedLocationClient.lastLocation.addOnSuccessListener {location->
-                detailVM.getMarkers(location.latitude,location.longitude)
-                val currentLocation=LatLng(location.latitude,location.longitude)
-                if(mMap!=null){
-                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
-                }else{
-                    Log.d("hatamMainOnMapReady","2. mMap is null")
+                if(location!=null){
+                    detailVM.getMarkers(location.latitude,location.longitude)
+                    val currentLocation=LatLng(location.latitude,location.longitude)
+                    if(mMap!=null){
+                        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,8f))
+                    }else{
+                        Log.d("","2. mMap is null")
+                    }
                 }
 
+
+            }
+            }catch (e:Exception){
+                Log.e("hatamMainOnMapReady",e.toString())
             }
 
         }else{
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
         }
+
 
         viewLifecycleOwner.lifecycleScope.launch {
             detailVM.markerList.collect{list->

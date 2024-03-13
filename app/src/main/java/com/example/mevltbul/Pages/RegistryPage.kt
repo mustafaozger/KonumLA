@@ -31,7 +31,13 @@ class RegistryPage : Fragment() {
     ): View? {
 
         binding = FragmentRegistryPageBinding.inflate(inflater,container,false)
+        
+        return binding.root
+    }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.btnRegister.setOnClickListener{
             val username = binding.txtRegisterUserName.text.toString()
@@ -60,8 +66,7 @@ class RegistryPage : Fragment() {
 
 
         }
-        // Inflate the layout for this fragment
-        return binding.root
+
     }
 
 }

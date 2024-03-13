@@ -1,151 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
 
     </data>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:orientation="vertical">
 
-        android:backgroundTint="@color/white">
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/white">
 
-            android:hapticFeedbackEnabled="true"
-            android:orientation="vertical">
-
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:srcCompat="@drawable/baseline_horizontal_rule_24" />
+                android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/toolbar_background">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="200dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textColor="@color/project_dark_blue"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
-
-                <ImageButton
-                    android:id="@+id/btn_message_room"
-                    android:layout_width="75dp"
-                    android:layout_height="57dp"
-                    android:layout_marginEnd="15dp"
-                    android:backgroundTint="@color/white"
-                    android:contentDescription="Sohbet Odası"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/message_icon"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_save_location"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/btn_save_location"
-                    android:layout_width="44dp"
-                    android:layout_height="57dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@color/white"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/outline_bookmark_border_24" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/image_slider"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                app:iss_auto_cycle="false"
-                app:iss_delay="1000"
-                app:iss_period="1000"
-                app:iss_placeholder="@drawable/loading_placeholder"
-                app:iss_text_align="CENTER" />
-
-            <TextView
-                android:id="@+id/detailBottomsheetEventType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:text="Etkinlik Türü: "
-                android:textColor="#000000"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/detailBottomsheetEventDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:textColor="@color/gray" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:text="Hakkında"
-                android:textColor="#000000"
-                android:textSize="25sp" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/diaolg_box_background">
-
-
-                <TextView
-                    android:id="@+id/detailBottomsheetEventDescription"
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/baseline_horizontal_rule_24" />
 
-                    />
-            </FrameLayout>
+                <LinearLayout
+                    android:id="@+id/event_detail_toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/btn_direction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:text="Yol Tarifi Al"
-                android:textAlignment="center"
+                    <TextView
+                        android:id="@+id/txt_detail_event_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="10"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Toplantı"
+                        android:textAllCaps="false"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
 
-                />
+                    <ImageButton
+                        android:id="@+id/btn_detail_save_event"
+                        android:layout_width="30dp"
+
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/saved_button_default" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:background="@color/black" />
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/img_detail_image_slider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_margin="10dp"
+                    app:iss_auto_cycle="false"
+                    app:iss_delay="1000"
+                    app:iss_period="1000"
+                    app:iss_placeholder="@drawable/loading_placeholder"
+                    app:iss_text_align="CENTER" />
+
+                <TextView
+                    android:id="@+id/txt_detail_event_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="8 mart 19:00"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_detail_event_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Kulüp Toplantısı"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layout_detail_event_adress_direction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="29dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/location" />
+
+                    <LinearLayout
+                        android:layout_width="204dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="4"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp">
+
+                        <TextView
+                            android:id="@+id/txt213"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:text="Etkinlik Adresi"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_detail_event_adress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:text="Muratpaşa konyaalyı "
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text=">"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="#AAA7A7" />
 
 
-        </LinearLayout>
-    </ScrollView>
+                <LinearLayout
+                    android:id="@+id/layout_detail_message_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/icon_chat_room2" />
+
+                    <LinearLayout
+                        android:layout_width="204dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="4"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp">
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:text="Etkinlik Sohbetine Katıl "
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:text="Bu etkiniğe giden diğer kişilerle           sohbet edin"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text=">"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="#AAA7A7" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Etkinlik Hakkında"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_detail_event_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Etkinlik Detayı" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

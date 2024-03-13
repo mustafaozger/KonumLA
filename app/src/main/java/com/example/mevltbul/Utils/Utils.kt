@@ -13,6 +13,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -49,19 +50,19 @@ class Utils  {
             val dialog= BottomSheetDialog(context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.detail_event_bottom_sheet)
-            val imageSlider: ImageSlider? =dialog.findViewById(R.id.image_slider)
-            val txt_eventType: TextView? =dialog.findViewById(R.id.detailBottomsheetEventType)
-            val txt_eventDate: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDate)
-            val txt_eventDescription: TextView? =dialog.findViewById(R.id.detailBottomsheetEventDescription)
-            val btn_direction: Chip?=dialog.findViewById(R.id.btn_direction)
-             val btn_message_room:ImageButton?=dialog.findViewById(R.id.btn_message_room)
-             val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_save_location)
+            val imageSlider: ImageSlider? =dialog.findViewById(R.id.img_detail_image_slider)
+            val txt_eventType: TextView? =dialog.findViewById(R.id.txt_detail_event_type)
+            val txt_eventDate: TextView? =dialog.findViewById(R.id.txt_detail_event_date)
+            val txt_eventDescription: TextView? =dialog.findViewById(R.id.txt_detail_event_detail)
+            val btn_direction: LinearLayout?=dialog.findViewById(R.id.layout_detail_event_adress_direction)
+             val btn_message_room:LinearLayout?=dialog.findViewById(R.id.layout_detail_message_room)
+//             val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_detail_save_event)
 
             if (marker.event_date!=null){
                 txt_eventDate?.text="${marker.event_date}"
             }
             if (marker.event_type!=null){
-                txt_eventType?.text="Etkinlik Türü : ${marker.event_type}"
+                txt_eventType?.text="${marker.event_type}"
             }
 
 
@@ -93,9 +94,9 @@ class Utils  {
                  dialog.cancel()
              }
 
-             btn_saveLocation?.setOnClickListener {
-
-             }
+//             btn_saveLocation?.setOnClickListener {
+//
+//             }
 
 
             dialog.show()

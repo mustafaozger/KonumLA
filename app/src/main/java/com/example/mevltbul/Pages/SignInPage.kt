@@ -12,6 +12,8 @@ import androidx.navigation.Navigation
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.UserVM
 import com.example.mevltbul.databinding.FragmentSignInPageBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +34,14 @@ class SignInPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.GONE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.GONE
+
+
+
         binding = FragmentSignInPageBinding.inflate(inflater, container, false)
 
         binding.signInButton.setOnClickListener {
