@@ -54,13 +54,6 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
     }
 
 
-    fun getEventLists():MutableLiveData<ArrayList<Marker>>{
-        Log.d("hatamDetailVM","2. getEventLists")
-        return detailPageDaoRepo.getEventLists()
-    }
-
-
-
     private val _messageRoomLiveData = MutableLiveData<ArrayList<MessageRoomModel>>()
     val messageRoomLiveData: LiveData<ArrayList<MessageRoomModel>> = _messageRoomLiveData
 
@@ -74,9 +67,16 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
     val savedRoomLiveData: LiveData<ArrayList<Marker>> = _savedRoomLiveData
 
     fun uploadSavedList(idList: ArrayList<String>){
+        Log.d("hatamSavedVM", "list is in VM idList  $idList")
+
         detailPageDaoRepo.getSavedEventList(idList){
+            Log.d("hatamSavedVM", "list is in VM  $it")
             _savedRoomLiveData.postValue(it)
         }
+    }
+
+    fun addSavedEvent(markerId:String){
+        detailPageDaoRepo.addSavedEvent(markerId)
     }
 
 

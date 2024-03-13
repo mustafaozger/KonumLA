@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.mevltbul.Classes.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.tasks.await
@@ -53,28 +55,36 @@ class UserDaoRepository {
         auth.signOut()
     }
 
-    fun getUserData():Flow<User> = channelFlow{
-        val collection= auth.uid?.let {
-            val snapshot=  db.collection("Users").document(it).get().await()
 
-            val data=User(snapshot.get("user_id").toString(),
-                snapshot.get("user_name").toString(),
-                snapshot.get("shared_event_list") as ArrayList<String>,
-                snapshot.get("saved_location_list") as ArrayList<String>,
-                snapshot.get("message_roooms_id") as ArrayList<String>)
-
-
-            if(data!=null){
-                Log.d("hatamUserDao", "getUserData not null: $data")
-                send(data)
-            }else{
-                Log.d("hatamUserDao", "getUserData null: $data")
-                send(User())
+    fun getUserData(): Flow<User> = channelFlow {
+        val collection = auth.uid?.let { userId ->
+            val snapshotListener = db.collection("Users").document(userId)
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) {
+                        // Hata durumunu işle
+                        close(error)
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null && snapshot.exists()) {
+                        val data = snapshot.toObject<User>(User::class.java)
+                        if (data != null) {
+                            // Veriyi gönder
+                            trySend(data).isSuccess
+                        } else {
+                            // Dönüşüm başarısız oldu
+                            close(Exception("User data conversion failed"))
+                        }
+                    } else {
+                        // Belge bulunamadı veya null
+                        close(Exception("User data not found"))
+                    }
+                }
+            // Akış sona erdiğinde snapshot dinleyicisini kapat
+            awaitClose {
+                snapshotListener.remove()
             }
-        }
+        } ?: close(Exception("User ID is null"))
     }
-
-
 
 
 

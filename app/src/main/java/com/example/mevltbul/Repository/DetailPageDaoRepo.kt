@@ -11,8 +11,10 @@ import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Classes.MessageModel
 import com.example.mevltbul.Classes.MessageRoomModel
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.delay
@@ -24,7 +26,7 @@ import java.util.LinkedList
 import java.util.Queue
 
 class DetailPageDaoRepo{
-
+    private val auth=FirebaseAuth.getInstance()
     private  var db:FirebaseFirestore=Firebase.firestore
     private val storage = FirebaseStorage.getInstance()
     private val storageReference = storage.reference
@@ -205,20 +207,27 @@ class DetailPageDaoRepo{
             val list=ArrayList<Marker>()
 
             for (id in idList) {
-                db.collection("markers").document(id).get()
-                    .addOnSuccessListener { documentSnapshot ->
-                        documentSnapshot?.let { snapshot ->
-                            val marker = snapshot.toObject(Marker::class.java)
-                            if (marker != null) {
-                                list.add(marker)
-                            }
-                        }
+                db.collection("markers").document(id).addSnapshotListener{snapshot,errror->
+                    if (snapshot!=null){
+                        val data =snapshot?.toObject<Marker>(Marker::class.java)
+                        data?.let { list.add(it) }
                     }
-                    .addOnFailureListener { exception ->
-                        exception.printStackTrace()
-                    }
+                    callback(list)
+                }
+
             }
-            callback(list)
+
+
+        }
+    }
+
+    fun addSavedEvent(markerId:String){
+        val user=db.collection("Users").document(auth.uid!!)
+        user.get().addOnSuccessListener {
+            val list=it.get("saved_location_list") as ArrayList<String>
+            list.add(markerId)
+            user.update("saved_location_list",list)
+
         }
     }
 

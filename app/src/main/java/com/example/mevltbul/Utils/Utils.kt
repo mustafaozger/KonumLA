@@ -23,6 +23,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.R
+import com.example.mevltbul.ViewModel.DetailVM
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -46,7 +47,7 @@ class Utils  {
             }
             return bitmap?.let { BitmapDescriptorFactory.fromBitmap(it) }
         }
-         fun showAllert(context:Context,marker: Marker,isMessage : (Boolean) -> Unit){
+         fun showAllert(context:Context,marker: Marker,detailVM: DetailVM,isMessage : (Boolean) -> Unit){
             val dialog= BottomSheetDialog(context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.detail_event_bottom_sheet)
@@ -56,7 +57,7 @@ class Utils  {
             val txt_eventDescription: TextView? =dialog.findViewById(R.id.txt_detail_event_detail)
             val btn_direction: LinearLayout?=dialog.findViewById(R.id.layout_detail_event_adress_direction)
              val btn_message_room:LinearLayout?=dialog.findViewById(R.id.layout_detail_message_room)
-//             val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_detail_save_event)
+             val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_detail_save_event)
 
             if (marker.event_date!=null){
                 txt_eventDate?.text="${marker.event_date}"
@@ -94,9 +95,9 @@ class Utils  {
                  dialog.cancel()
              }
 
-//             btn_saveLocation?.setOnClickListener {
-//
-//             }
+             btn_saveLocation?.setOnClickListener {
+                 marker.marker_id?.let { it1 -> detailVM.addSavedEvent(it1) }
+             }
 
 
             dialog.show()

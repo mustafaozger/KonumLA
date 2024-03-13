@@ -12,9 +12,10 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
+import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.MainPageNeareventRcylerBinding
 
-class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Marker>):RecyclerView.Adapter<MainPageExploreRcylerAdapter.ViewHolder>() {
+class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Marker>,val detailVM: DetailVM):RecyclerView.Adapter<MainPageExploreRcylerAdapter.ViewHolder>() {
      class ViewHolder(val binding:MainPageNeareventRcylerBinding):RecyclerView.ViewHolder(binding.root){
     }
 
@@ -64,7 +65,7 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
         }
 
         binding.rcylerNearEventLayout.setOnClickListener {view->
-            Utils.showAllert(context,marker){
+            Utils.showAllert(context,marker,detailVM){
                 if (it){
                     val bundle= Bundle()
                     bundle.putString("message_room_id",marker.marker_id)

@@ -1,6 +1,7 @@
 package com.example.mevltbul.Pages
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,15 +37,22 @@ class SavedEnevtsPage : Fragment() {
         binding= FragmentSavedEnevtsPageBinding.inflate(inflater,container,false)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            userVM.userData.collect(){user->
+                userVM.getUserData()
+                userVM.userData.collect(){user->
                 if (user.saved_location_list!=null){
-                    detailVM.getMessageRooms(user.saved_location_list!!)
-                    detailVM.savedRoomLiveData.observe(viewLifecycleOwner){
-                        if (it!=null){
-                            val adapter= MainPageExploreRcylerAdapter(requireContext(),it)
+                    Log.d("hatamSavedPage", "saved list is  ${user.saved_location_list}")
+
+                    detailVM.uploadSavedList(user.saved_location_list!!)
+                    detailVM.savedRoomLiveData.observe(viewLifecycleOwner){markerList->
+                        if (markerList!=null){
+                            Log.d("hatamSavedPage", "list is  $markerList")
+
+                            val adapter= MainPageExploreRcylerAdapter(requireContext(),markerList,detailVM)
                             binding.savedPageRcyler.adapter=adapter
                             binding.savedPageRcyler.layoutManager=
                                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                        }else{
+                            Log.d("hatamSavedPage", "list is   null $markerList")
                         }
 
                     }
