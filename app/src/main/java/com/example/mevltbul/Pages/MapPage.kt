@@ -121,7 +121,7 @@ class MapPage : Fragment(),OnMapReadyCallback {
                     mMap?.setOnMarkerClickListener { clickedMarker->
                         val event =markList.get(clickedMarker)
                         if(event!=null){
-                            Utils.showAllert(requireContext(),event,detailVM){
+                            Utils.showAllert(requireContext(),event,detailVM,this@MapPage){
                                 if (it){
                                     val bundle= Bundle()
                                     bundle.putString("message_room_id",event.marker_id)

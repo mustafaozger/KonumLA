@@ -8,7 +8,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
@@ -17,7 +17,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
@@ -27,7 +27,6 @@ import com.example.mevltbul.ViewModel.DetailVM
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.chip.Chip
 
 class Utils  {
     companion object{
@@ -47,7 +46,7 @@ class Utils  {
             }
             return bitmap?.let { BitmapDescriptorFactory.fromBitmap(it) }
         }
-         fun showAllert(context:Context,marker: Marker,detailVM: DetailVM,isMessage : (Boolean) -> Unit){
+         fun showAllert(context:Context,marker: Marker,detailVM: DetailVM,fragment: Fragment,isMessage : (Boolean) -> Unit){
             val dialog= BottomSheetDialog(context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.detail_event_bottom_sheet)
@@ -58,13 +57,42 @@ class Utils  {
             val btn_direction: LinearLayout?=dialog.findViewById(R.id.layout_detail_event_adress_direction)
              val btn_message_room:LinearLayout?=dialog.findViewById(R.id.layout_detail_message_room)
              val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_detail_save_event)
-
+             val savedveventList=ArrayList<Marker>()
             if (marker.event_date!=null){
                 txt_eventDate?.text="${marker.event_date}"
             }
             if (marker.event_type!=null){
                 txt_eventType?.text="${marker.event_type}"
             }
+
+             detailVM.getSavedList().observe(fragment.viewLifecycleOwner){
+                 savedveventList.clear()
+                 savedveventList.addAll(it)
+                 Log.d("hatamUtilSave","it room")
+                 if (it.contains(marker)){
+                     btn_saveLocation?.setImageResource(R.drawable.saved_button_dark)
+                     Log.d("hatamUtilSave","it room contains")
+                 }else{
+                     btn_saveLocation?.setImageResource(R.drawable.saved_button_default)
+                     Log.d("hatamUtilSave","it room not contains")
+                 }
+
+
+             }
+             btn_saveLocation?.setOnClickListener {
+                 if (savedveventList.contains(marker)){
+                     Log.d("hatamUtilSave","it  click contains")
+                     btn_saveLocation?.setImageResource(R.drawable.saved_button_default)
+                     detailVM.deleteSavedEvent(marker.marker_id!!)
+                     if (savedveventList.size==1){
+                         savedveventList.clear()
+                     }
+                 }else{
+                     btn_saveLocation?.setImageResource(R.drawable.saved_button_dark)
+                     Log.d("hatamUtilSave","it click not contains")
+                     detailVM.addSavedEvent(marker.marker_id!!)
+                 }
+             }
 
 
             txt_eventDescription?.text=marker.marker_detail
@@ -82,6 +110,9 @@ class Utils  {
 
             imageSlider?.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
 
+
+
+
             btn_direction?.setOnClickListener {
                 marker.marker_latitude?.toDouble()
                     ?.let { it1 -> marker.marker_longtitude?.let { it2 ->
@@ -95,9 +126,6 @@ class Utils  {
                  dialog.cancel()
              }
 
-             btn_saveLocation?.setOnClickListener {
-                 marker.marker_id?.let { it1 -> detailVM.addSavedEvent(it1) }
-             }
 
 
             dialog.show()

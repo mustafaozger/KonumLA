@@ -5,6 +5,7 @@ import   android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -15,7 +16,7 @@ import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.MainPageNeareventRcylerBinding
 
-class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Marker>,val detailVM: DetailVM):RecyclerView.Adapter<MainPageExploreRcylerAdapter.ViewHolder>() {
+class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Marker>,val detailVM: DetailVM,val fragment: Fragment):RecyclerView.Adapter<MainPageExploreRcylerAdapter.ViewHolder>() {
      class ViewHolder(val binding:MainPageNeareventRcylerBinding):RecyclerView.ViewHolder(binding.root){
     }
 
@@ -65,7 +66,7 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
         }
 
         binding.rcylerNearEventLayout.setOnClickListener {view->
-            Utils.showAllert(context,marker,detailVM){
+            Utils.showAllert(context,marker,detailVM,fragment){
                 if (it){
                     val bundle= Bundle()
                     bundle.putString("message_room_id",marker.marker_id)

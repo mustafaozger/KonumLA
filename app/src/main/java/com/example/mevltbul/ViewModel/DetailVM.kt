@@ -1,6 +1,5 @@
 package com.example.mevltbul.ViewModel
 
-import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,9 +10,11 @@ import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Classes.MessageRoomModel
 import com.example.mevltbul.Repository.DetailPageDaoRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 @HiltViewModel
 class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): ViewModel() {
@@ -63,22 +64,44 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
         }
     }
 
-    private val _savedRoomLiveData = MutableLiveData<ArrayList<Marker>>()
-    val savedRoomLiveData: LiveData<ArrayList<Marker>> = _savedRoomLiveData
+//    private var savedMarkersLiveData = MutableLiveData<List<Marker>>()
+//
+//    fun getSavedList2(): LiveData<List<Marker>> {
+//        viewModelScope.launch {
+//            val markers = withContext(Dispatchers.IO) {
+//                detailPageDaoRepo.getSavedMarkers()
+//            }
+//            if (markers.isEmpty()) {
+//                savedMarkersLiveData=MutableLiveData()
+//            }
+//            savedMarkersLiveData.postValue(markers)
+//        }
+//        return savedMarkersLiveData
+//    }
 
-    fun uploadSavedList(idList: ArrayList<String>){
-        Log.d("hatamSavedVM", "list is in VM idList  $idList")
+    private var savedMarkersLiveData = MutableLiveData<List<Marker>>()
 
-        detailPageDaoRepo.getSavedEventList(idList){
-            Log.d("hatamSavedVM", "list is in VM  $it")
-            _savedRoomLiveData.postValue(it)
+    fun getSavedList(): LiveData<List<Marker>> {
+        viewModelScope.launch {
+            detailPageDaoRepo.getSavedEvents {markers->
+                if (markers.size==0 || markers.isEmpty()) {
+                    savedMarkersLiveData.postValue(arrayListOf())
+                }else{
+                    savedMarkersLiveData.postValue(markers)
+                }
+            }
         }
+        return savedMarkersLiveData
     }
+
 
     fun addSavedEvent(markerId:String){
         detailPageDaoRepo.addSavedEvent(markerId)
     }
 
+    fun deleteSavedEvent(markerId:String) {
+        detailPageDaoRepo.deleteSavedEvent(markerId)
+    }
 
 
 }

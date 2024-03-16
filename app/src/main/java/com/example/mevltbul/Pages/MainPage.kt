@@ -124,7 +124,7 @@ class MainPage: Fragment() ,OnMapReadyCallback{
             detailVM.markerList.collect{list->
                 if(list.size>0){
                     binding.imgErrorMessage.visibility=View.GONE
-                    val adapter= MainPageExploreRcylerAdapter(requireContext(),list,detailVM)
+                    val adapter= MainPageExploreRcylerAdapter(requireContext(),list,detailVM,this@MainPage)
                     binding.mainPageExploreRycler.adapter=adapter
                     binding.mainPageExploreRycler.layoutManager=
                         StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)

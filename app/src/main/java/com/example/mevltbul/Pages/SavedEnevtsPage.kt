@@ -37,27 +37,21 @@ class SavedEnevtsPage : Fragment() {
         binding= FragmentSavedEnevtsPageBinding.inflate(inflater,container,false)
 
         viewLifecycleOwner.lifecycleScope.launch {
-                userVM.getUserData()
-                userVM.userData.collect(){user->
-                if (user.saved_location_list!=null){
-                    Log.d("hatamSavedPage", "saved list is  ${user.saved_location_list}")
+                     userVM.getUserData()
+                    detailVM.getSavedList().observe(viewLifecycleOwner) { markerList ->
+                        binding.savedPageRcyler.visibility = View.VISIBLE
 
-                    detailVM.uploadSavedList(user.saved_location_list!!)
-                    detailVM.savedRoomLiveData.observe(viewLifecycleOwner){markerList->
-                        if (markerList!=null){
+                        if (markerList != null) {
                             Log.d("hatamSavedPage", "list is  $markerList")
-
-                            val adapter= MainPageExploreRcylerAdapter(requireContext(),markerList,detailVM)
-                            binding.savedPageRcyler.adapter=adapter
-                            binding.savedPageRcyler.layoutManager=
+                            val adapter =
+                                MainPageExploreRcylerAdapter(requireContext(), markerList, detailVM,this@SavedEnevtsPage)
+                            binding.savedPageRcyler.adapter = adapter
+                            binding.savedPageRcyler.layoutManager =
                                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                        }else{
+                        } else {
+                            binding.savedPageRcyler.visibility = View.GONE
                             Log.d("hatamSavedPage", "list is   null $markerList")
                         }
-
-                    }
-
-                }
             }
 
         }

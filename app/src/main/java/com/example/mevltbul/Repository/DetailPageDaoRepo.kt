@@ -17,8 +17,10 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
@@ -51,8 +53,6 @@ class DetailPageDaoRepo{
     ) {
         val totalImages = imageList.size
         var uploadedImages = 0
-
-
         uploadImages(imageList, "markers") { imageUrl ->
             uploadedImages++
             if (uploadedImages == totalImages) {
@@ -202,24 +202,45 @@ class DetailPageDaoRepo{
 
     }
 
-    fun getSavedEventList(idList:ArrayList<String>,callback: (ArrayList<Marker>) -> Unit){
-        if(idList!=null){
-            val list=ArrayList<Marker>()
-
-            for (id in idList) {
-                db.collection("markers").document(id).addSnapshotListener{snapshot,errror->
-                    if (snapshot!=null){
-                        val data =snapshot?.toObject<Marker>(Marker::class.java)
-                        data?.let { list.add(it) }
-                    }
-                    callback(list)
-                }
-
-            }
-
-
-        }
+    fun getSavedEvents(callback: (ArrayList<Marker>) ->  Unit){
+       db.collection("Users").document(auth.uid!!).addSnapshotListener {snapshot,error->
+            val idList=snapshot?.get("saved_location_list") as? ArrayList<String>
+           if(idList!=null){
+               val list=ArrayList<Marker>()
+               for (id in idList) {
+                   db.collection("markers").document(id).addSnapshotListener{snapshot,errror->
+                       if (snapshot!=null){
+                           val data =snapshot?.toObject<Marker>(Marker::class.java)
+                           data?.let { list.add(it) }
+                       }
+                       callback(list)
+                   }
+               }
+               if (idList.size==0){
+                   callback(ArrayList())
+               }
+           }else{
+               callback(ArrayList())
+           }
+       }
     }
+
+
+    suspend fun getSavedMarkers(): List<Marker> {
+        val uid = auth.currentUser?.uid
+        val idList = db.collection("Users").document(uid!!)
+            .get().await().get("saved_location_list") as? List<String> ?: emptyList()
+        val markers = mutableListOf<Marker>()
+        for (id in idList) {
+            val markerSnapshot = db.collection("markers").document(id).get().await()
+            val marker = markerSnapshot.toObject(Marker::class.java)
+            marker?.let { markers.add(it) }
+        }
+        return markers
+    }
+
+
+
 
     fun addSavedEvent(markerId:String){
         val user=db.collection("Users").document(auth.uid!!)
@@ -227,10 +248,17 @@ class DetailPageDaoRepo{
             val list=it.get("saved_location_list") as ArrayList<String>
             list.add(markerId)
             user.update("saved_location_list",list)
-
         }
     }
 
+    fun deleteSavedEvent(markerId:String){
+        val user=db.collection("Users").document(auth.uid!!)
+        user.get().addOnSuccessListener {
+            val list=it.get("saved_location_list") as ArrayList<String>
+            list.remove(markerId)
+            user.update("saved_location_list",list)
+        }
+    }
 
 
 }
