@@ -109,6 +109,17 @@
         <action
             android:id="@+id/action_accountPage_to_signInPage"
             app:destination="@id/signInPage" />
+        <action
+            android:id="@+id/action_accountPage_to_updatePasswordPage"
+            app:destination="@id/updatePasswordPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/updatePasswordPage"
+        android:name="com.example.mevltbul.Pages.UpdatePasswordPage"
+        android:label="UpdatePasswordPage" >
+        <action
+            android:id="@+id/action_updatePasswordPage_to_accountPage"
+            app:destination="@id/accountPage" />
     </fragment>
 
 </navigation>

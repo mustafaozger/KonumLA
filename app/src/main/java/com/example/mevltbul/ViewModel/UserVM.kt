@@ -17,6 +17,13 @@ import kotlinx.coroutines.launch
 class UserVM @Inject constructor(var provideUserDaoRepo: UserDaoRepository) : ViewModel() {
     private val  _userData= MutableStateFlow<User>(User())
     val userData:StateFlow<User> = _userData
+    fun getUserData(){
+        viewModelScope.launch {
+            provideUserDaoRepo.getUserData().collect {
+                _userData.value=it
+            }
+        }
+    }
     fun createUser(userName:String,email:String,password:String,isCreate:(Boolean) -> Unit){
         provideUserDaoRepo.createUser(userName,email,password,isCreate)
     }
@@ -26,29 +33,42 @@ class UserVM @Inject constructor(var provideUserDaoRepo: UserDaoRepository) : Vi
     fun logoutUser(){
         provideUserDaoRepo.logoutUser()
     }
-    fun getUserData2():Flow<User> = channelFlow {
-      val job=  viewModelScope.launch {
 
-            try {
-                provideUserDaoRepo.getUserData().collect {
-                    send(it)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }finally {
-                close()
-            }
-
-
-        }
-        job.cancel()
-
-    }
-    fun getUserData(){
-        viewModelScope.launch {
-            provideUserDaoRepo.getUserData().collect {
-                _userData.value=it
-            }
+    fun changePassword(newPassword:String,isChange:(Boolean) -> Unit){
+        provideUserDaoRepo.changePassword(newPassword){
+            isChange(it)
         }
     }
+
+    fun changeEmail(newEmail:String,isChange:(Boolean) -> Unit){
+        provideUserDaoRepo.changeEmail(newEmail){
+            isChange(it)
+        }
+    }
+
+    fun checkUserPassword(password:String,isCheck:(Boolean) -> Unit){
+        provideUserDaoRepo.checkUserPassword(password){
+            isCheck(it)
+        }
+    }
+
+//    fun getUserData2():Flow<User> = channelFlow {
+//      val job=  viewModelScope.launch {
+//
+//            try {
+//                provideUserDaoRepo.getUserData().collect {
+//                    send(it)
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }finally {
+//                close()
+//            }
+//
+//
+//        }
+//        job.cancel()
+//
+//    }
+//
 }

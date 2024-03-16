@@ -30,6 +30,8 @@ class UserDaoRepository {
             val user= hashMapOf(
                 "user_id" to auth.uid,
                 "user_name" to userName,
+                "password" to password,
+                "user_mail" to email,
                 "shared_event_list" to shared_event_list,
                 "saved_location_list" to saved_location_list,
                 "message_roooms_id" to meessageRoomsId,
@@ -55,35 +57,56 @@ class UserDaoRepository {
         auth.signOut()
     }
 
+    fun changePassword(password:String,isChange:(Boolean) -> Unit){
+        auth.currentUser?.updatePassword(password)?.addOnSuccessListener {
+            isChange(true)
+        }?.addOnFailureListener {
+            isChange(false)
+        }
+    }
+    fun changeEmail(email:String,isChange:(Boolean) -> Unit){
+        auth.currentUser?.updateEmail(email)?.addOnSuccessListener {
+            val userCollection=db.collection("Users")
+            auth.uid?.let { it1 -> userCollection.document(it1).update("user_mail",email) }
+            isChange(true)
+        }?.addOnFailureListener {
+            isChange(false)
+        }
+    }
+
 
     fun getUserData(): Flow<User> = channelFlow {
         val collection = auth.uid?.let { userId ->
             val snapshotListener = db.collection("Users").document(userId)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
-                        // Hata durumunu işle
                         close(error)
                         return@addSnapshotListener
                     }
                     if (snapshot != null && snapshot.exists()) {
                         val data = snapshot.toObject<User>(User::class.java)
                         if (data != null) {
-                            // Veriyi gönder
                             trySend(data).isSuccess
                         } else {
-                            // Dönüşüm başarısız oldu
                             close(Exception("User data conversion failed"))
                         }
                     } else {
-                        // Belge bulunamadı veya null
                         close(Exception("User data not found"))
                     }
                 }
-            // Akış sona erdiğinde snapshot dinleyicisini kapat
             awaitClose {
                 snapshotListener.remove()
             }
         } ?: close(Exception("User ID is null"))
+    }
+
+    fun checkUserPassword(password:String,isCheck:(Boolean) -> Unit){
+        auth.currentUser?.email?.let { it1 -> auth.signInWithEmailAndPassword(it1, password).addOnSuccessListener {
+            isCheck(true)
+        }?.addOnFailureListener {
+            isCheck(false)
+        } }
+        db.collection("Users").document(auth.uid!!).get()
     }
 
 
