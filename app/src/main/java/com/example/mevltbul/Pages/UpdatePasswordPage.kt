@@ -66,6 +66,10 @@ class UpdatePasswordPage : Fragment() {
             }
         }
 
+        binding.btnBackPasswordToAccountPage.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_updatePasswordPage_to_accountPage)
+        }
+
 
 
 

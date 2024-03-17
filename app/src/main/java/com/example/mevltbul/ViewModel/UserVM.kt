@@ -51,6 +51,12 @@ class UserVM @Inject constructor(var provideUserDaoRepo: UserDaoRepository) : Vi
             isCheck(it)
         }
     }
+    fun changeUserName(userName: String,isChange:(Boolean) -> Unit) {
+        provideUserDaoRepo.changeUserName(userName){
+            isChange(it)
+        }
+
+    }
 
 //    fun getUserData2():Flow<User> = channelFlow {
 //      val job=  viewModelScope.launch {

@@ -13,31 +13,19 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/textView101"
+            android:id="@+id/confirm_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/alata"
-            android:text="Şifrenizi Tekrar Giriniz"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
-
-        <TextView
-            android:id="@+id/textView103"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/alata"
-            android:text="Yeni Şifre"
+            android:text="Parola Onayı"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordLayout2" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordLayout"
+            android:id="@+id/pass_confirm"
             style="@style/Theme.LoginAndSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView103"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_pass"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -56,12 +44,12 @@
                 style="@style/Theme.LoginAndSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Yeni Şifre"
+                android:hint="Lütfen Parolanızı Onaylayın"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
-            android:id="@+id/btn_back_password_to_account_page"
+            android:id="@+id/btn_back_user_to_account_page"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -77,11 +65,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/alata"
-            android:text="Şifreyi Değiştir"
+            android:text="Kullanıcı Adını Değiştir"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_back_password_to_account_page" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_back_user_to_account_page" />
 
 
         <TextView
@@ -91,14 +79,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/alata"
-            android:text="Mevcut Şifre"
+            android:text="Kullanıcı Adı"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview123" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordLayout2"
-            style="@style/Theme.LoginAndSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -107,44 +94,21 @@
             app:hintTextColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/textView10">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_current_password"
+                android:id="@+id/txt_new_user_name"
                 style="@style/Theme.LoginAndSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mevcut Şifre"
-                android:inputType="textPassword" />
+                android:hint="Yeni Kullanıc Adınız"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confirmPasswordLayout"
-            style="@style/Theme.LoginAndSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
-            app:boxStrokeColor="@color/black"
-            app:hintTextColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView101"
-            app:passwordToggleEnabled="true">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_new_password_confirm"
-                style="@style/Theme.LoginAndSignUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Yeni Şifreyi Tekrar Girin"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/btn_save_password"
+            android:id="@+id/btn_save_user_name"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"

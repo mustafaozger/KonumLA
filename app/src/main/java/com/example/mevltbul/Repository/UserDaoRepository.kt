@@ -106,10 +106,24 @@ class UserDaoRepository {
         }?.addOnFailureListener {
             isCheck(false)
         } }
-        db.collection("Users").document(auth.uid!!).get()
     }
 
 
+
+
+
+    fun changeUserName(userName: String,isChange:(Boolean) -> Unit){
+        val userCollection=db.collection("Users")
+        auth.uid?.let { it1 ->
+            userCollection.document(it1).update("user_mail",userName).addOnSuccessListener {
+                isChange(true)
+            }.addOnFailureListener{
+                isChange(false)
+            }
+        }?.addOnFailureListener{
+            isChange(false)
+        }
+    }
 
 
 
