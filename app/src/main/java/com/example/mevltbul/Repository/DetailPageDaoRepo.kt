@@ -34,7 +34,11 @@ class DetailPageDaoRepo{
     private val storageReference = storage.reference
     private val urlQueue:Queue<String> = LinkedList()
     private val markerList=MutableLiveData<ArrayList<Marker>>()
+    private val list = ArrayList<Marker>()
 
+    init {
+        checkAdminEvents()
+    }
 
     fun getEventLists():MutableLiveData<ArrayList<Marker>>{
         return markerList
@@ -126,37 +130,28 @@ class DetailPageDaoRepo{
 
     fun getEventListsFromDatabaseWitfFlow(latitude: Double, longitude: Double): Flow<ArrayList<Marker>> = flow {
         //I'm getting events in the area close to the user's location
+        try {
         val collection = db.collection( "markers")
             .whereGreaterThanOrEqualTo("marker_latitude", (latitude - 0.5).toString())
             .whereLessThanOrEqualTo("marker_latitude", (latitude + 0.5).toString())
 
-        try {
             val snapshot = collection.get().await()
-            val list = ArrayList<Marker>()
+            list.clear()
+            checkAdminEvents()
             for (document in snapshot.documents) {
                 Log.d("hatamDetailPageDaoRepo", "3. getEventListsFromDatabas collection get  ")
                 if (document.exists()) {
-                    val data = document.data
 
+                    val data = document.data
                     //Firestore does not directly support disparity filters (like >, <) on multiple fields at once. so that's why I had to use the following if check
                     val markerLongitude = data?.get("marker_longtitude") as? String
 
                     if (markerLongitude != null && markerLongitude.toDouble() in (longitude - 0.5)..(longitude + 0.5)) {
-                        val marker = Marker(
-                            data.get("marker_id") as String?,
-                            data.get("marker_name") as String?,
-                            data.get("marker_latitude") as String?,
-                            data.get("marker_longtitude") as String?,
-                            data.get("marker_detail") as String?,
-                            data.get("photo1") as String?,
-                            data.get("photo2") as String?,
-                            data.get("photo3") as String?,
-                            data.get("photo4") as String?,
-                            data.get("event_type") as String?,
-                            data.get("event_date") as String?,
-                        )
 
-                        list.add(marker)
+                        val marker = document.toObject(Marker::class.java)
+                        if (marker!=null){
+                            list.add(marker)
+                        }
                     } else {
                         Log.d("hatamDetailPageDaoRepo", "marker longitude is not in range {${markerLongitude}, ${data?.get("marker_latitude")}}")
                     }
@@ -169,6 +164,20 @@ class DetailPageDaoRepo{
             Log.e("hatamDetailPageDaoRepo", "Error fetching data: ${e.message}", e)
             // Emit an empty list or handle the error as required
             emit(ArrayList())
+        }
+
+    }
+    private fun checkAdminEvents(){
+        try {
+           val collection = db.collection("AdminEvent").whereEqualTo("isVisible",true)
+            collection.get().addOnSuccessListener {markerList->
+                for(data in markerList){
+                    val marker=  data.toObject(Marker::class.java)
+                    list.add(marker)
+                }
+            }
+        }catch (e:Exception){
+            Log.e("hatamDetailPageDaoRepo", "Error fetching data: ${e.message}", e)
         }
 
     }

@@ -15,17 +15,6 @@
         tools:context=".Pages.AccountPage">
 
         <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
-
-        <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -46,55 +35,42 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/alata"
             android:text="Hesabım"
-            android:textSize="50sp"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout5"
+            android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="15dp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9">
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:src="@drawable/perspn_icon2" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/txt_account_user_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/alata"
+                android:gravity="center"
+                android:text="2334jh"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_account_user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/alata"
-                    android:text="2334jh"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_account_user_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/alata"
-                    android:text="ozgermustafa118@gmail.com"
-                    android:textSize="15sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_account_user_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/alata"
+                android:gravity="center"
+                android:text="ozgermustafa118@gmail.com"
+                android:textSize="15sp" />
         </LinearLayout>
 
 
@@ -103,11 +79,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="40dp"
             android:background="@color/white"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -156,8 +132,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/perspn_icon"
-                app:srcCompat="@drawable/password_icon" />
+                android:src="@drawable/password_icon" />
 
             <TextView
                 android:layout_width="261dp"
@@ -199,17 +174,32 @@
             android:id="@+id/btn_log_out"
             android:layout_width="261dp"
             android:layout_height="60dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="60dp"
+            android:contentDescription="Çıkış"
+            android:fontFamily="@font/alata"
             android:text="Çıkış Yap"
             android:textAlignment="center"
             android:textSize="25sp"
             app:chipBackgroundColor="@color/white"
             app:chipIcon="@drawable/log_out"
             app:chipIconSize="35sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="137dp"
+            android:layout_height="123dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:srcCompat="@drawable/perspn_icon2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

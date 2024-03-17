@@ -10,15 +10,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mevltbul.Adapter.MessagePageAdapter
 import com.example.mevltbul.R
+import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.ViewModel.MessageVM
 import com.example.mevltbul.ViewModel.UserVM
 import com.example.mevltbul.databinding.FragmentMessagesPageBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.coroutines.launch
@@ -37,7 +41,6 @@ class MessagesPage : Fragment() {
         val tempUserVM:UserVM by viewModels()
         userVM=tempUserVM
         messagePageVM=tempMessagePageVM
-
     }
 
 
@@ -56,7 +59,18 @@ class MessagesPage : Fragment() {
         try {
             bindng=FragmentMessagesPageBinding.inflate(inflater,container,false)
 
-            val messageRoomId= arguments?.getString("message_room_id")
+            val bundle :MessagesPageArgs by navArgs()
+
+            bindng.txtMessagePageName.text=bundle.messageRoom.message_room_name
+
+            Picasso.get().load(bundle.messageRoom.message_image)
+                .centerCrop()
+                .fit().placeholder(R.drawable.loading_placeholder)
+                .error(R.drawable.loading_placeholder)
+                .into(bindng.imgMessageIcon)
+
+
+            val messageRoomId= bundle.messageRoom.message_room_id
             userId= FirebaseAuth.getInstance().uid.toString()
             userVM.getUserData()
             messagePageVM.getMessage(messageRoomId!!)
@@ -70,6 +84,7 @@ class MessagesPage : Fragment() {
                     }
                 }
             }
+
 
 
             messagePageVM.messagesLiveData.observe(viewLifecycleOwner){
@@ -99,6 +114,10 @@ class MessagesPage : Fragment() {
                 messagePageVM.addMassageRoomToUserDatabase(userId,messageRoomId!!)
                 bindng.layoutMessagePageMakeJoinChat.visibility=View.GONE
 
+            }
+
+            bindng.btnBackChatRoom.setOnClickListener {
+                Navigation.findNavController(it).navigate(R.id.action_messagesPage_to_eventMessagesListPage)
             }
 
         }catch (e:Exception){

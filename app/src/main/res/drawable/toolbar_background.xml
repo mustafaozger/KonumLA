@@ -5,7 +5,7 @@
     <item>
         <shape android:shape="rectangle">
 
-            <solid android:color="@color/project_dark_blue" /> <!-- Background Color -->
+            <solid android:color="@color/black" /> <!-- Background Color -->
 
         </shape>
     </item>

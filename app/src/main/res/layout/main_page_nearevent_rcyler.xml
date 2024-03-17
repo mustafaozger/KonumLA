@@ -16,17 +16,24 @@
         android:layout_margin="10dp"
         android:background="@drawable/background_photo"
         android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/layout_main_page_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/img_mainpage_explore_rycler_image"
-            android:layout_width="150dp"
-            android:layout_height="160dp"
-            android:layout_margin="10dp"
-            app:iss_auto_cycle="false"
-            app:iss_delay="1000"
-            app:iss_period="1000"
-            app:iss_placeholder="@drawable/loading_placeholder"
-            app:iss_text_align="CENTER" />
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/img_mainpage_explore_rycler_image"
+                android:layout_width="150dp"
+                android:layout_height="160dp"
+                android:layout_margin="10dp"
+                app:iss_auto_cycle="false"
+                app:iss_delay="1000"
+                app:iss_period="1000"
+                app:iss_placeholder="@drawable/loading_placeholder"
+                app:iss_text_align="CENTER" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/txt_mainpage_explore_rycler_date"
@@ -51,7 +58,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txt_mainpage_explore_rycler_event_detail"
+            android:id="@+id/txt_mainpage_explore_rycler_event_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="25dp"

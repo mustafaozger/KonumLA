@@ -18,6 +18,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Classes.MessageRoomModel
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
@@ -123,9 +124,9 @@ class MapPage : Fragment(),OnMapReadyCallback {
                         if(event!=null){
                             Utils.showAllert(requireContext(),event,detailVM,this@MapPage){
                                 if (it){
-                                    val bundle= Bundle()
-                                    bundle.putString("message_room_id",event.marker_id)
-                                    Navigation.findNavController(requireView()).navigate(R.id.action_mainPage_to_messagesPage,bundle)
+                                    val messageRoom=MessageRoomModel(event.marker_id,event.marker_name,event.photo1)
+                                    val bundle= MapPageDirections.actionMapPageToMessagesPage(messageRoom)
+                                    Navigation.findNavController(requireView()).navigate(bundle)
                                 }
                             }
                         }

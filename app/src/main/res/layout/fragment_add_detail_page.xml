@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                   <androidx.appcompat.widget.Toolbar
-                      android:id="@+id/toolbar"
+                      android:id="@+id/add_detail_toolbar"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:background="@drawable/toolbar_background"
@@ -45,9 +45,9 @@
                       app:layout_constraintEnd_toEndOf="parent"
                       app:layout_constraintStart_toStartOf="parent"
                       app:layout_constraintTop_toTopOf="parent"
-                      app:navigationIcon="@drawable/baseline_arrow_back_24"
+                      app:navigationIcon="@drawable/ic_back2"
                       app:title="Detaylar"
-                      app:titleTextColor="@color/project_dark_blue" />
+                      app:titleTextColor="@color/black" />
 
                   <ScrollView
                       android:layout_width="match_parent"
@@ -66,6 +66,7 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="12dp"
                                   android:layout_marginTop="15dp"
+                                  android:fontFamily="@font/alata"
                                   android:text="Fotoğraflar"
                                   android:textSize="20sp"
                                   android:textStyle="bold" />
@@ -126,6 +127,7 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="12dp"
                                   android:layout_marginTop="15dp"
+                                  android:fontFamily="@font/alata"
                                   android:text="Etkinlik Adı"
                                   android:textSize="20sp"
                                   android:textStyle="bold" />
@@ -155,6 +157,7 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="12dp"
                                   android:layout_marginTop="15dp"
+                                  android:fontFamily="@font/alata"
                                   android:text="Etkinlik Türü"
                                   android:textSize="20sp"
                                   android:textStyle="bold" />
@@ -175,7 +178,7 @@
                                         android:hint="Etkinlik Turu"
                                         android:inputType="none"
 
-                                        />
+                                        app:dropDownBackgroundTint="@color/white" />
 
                               </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,6 +187,7 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="12dp"
                                   android:layout_marginTop="15dp"
+                                  android:fontFamily="@font/alata"
                                   android:text="Konum"
                                   android:textSize="20sp"
                                   android:textStyle="bold" />
@@ -207,6 +211,7 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="12dp"
                                   android:layout_marginTop="15dp"
+                                  android:fontFamily="@font/alata"
                                   android:text="Açıklama"
                                   android:textSize="20sp"
                                   android:textStyle="bold" />
@@ -233,21 +238,24 @@
                                         />
                               </FrameLayout>
 
-                              <Button
+
+                              <com.google.android.material.chip.Chip
                                   android:id="@+id/btn_share"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
+                                  android:layout_width="303dp"
+                                  android:layout_height="58dp"
 
                                   android:layout_marginStart="50dp"
 
                                   android:layout_marginEnd="50dp"
 
                                   android:layout_marginBottom="50dp"
-                                  android:backgroundTint="@color/project_orange"
-                                  android:padding="10sp"
+                                  android:fontFamily="@font/alata"
                                   android:text="Paylaş"
-                                  android:textColor="@color/cream"
-                                  android:textSize="20sp" />
+                                  android:textAlignment="center"
+                                  android:textSize="20sp"
+                                  android:textStyle="bold"
+                                  app:chipBackgroundColor="@color/white"
+                                  app:chipCornerRadius="20dp" />
 
                         </LinearLayout>
                   </ScrollView>

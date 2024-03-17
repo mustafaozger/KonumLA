@@ -57,6 +57,7 @@ class Utils  {
             val btn_direction: LinearLayout?=dialog.findViewById(R.id.layout_detail_event_adress_direction)
              val btn_message_room:LinearLayout?=dialog.findViewById(R.id.layout_detail_message_room)
              val btn_saveLocation:ImageButton?=dialog.findViewById(R.id.btn_detail_save_event)
+             val txt_detail_event_name:TextView?=dialog.findViewById(R.id.txt_detail_event_name)
              val savedveventList=ArrayList<Marker>()
             if (marker.event_date!=null){
                 txt_eventDate?.text="${marker.event_date}"
@@ -124,6 +125,12 @@ class Utils  {
              btn_message_room?.setOnClickListener{
                  isMessage(true)
                  dialog.cancel()
+             }
+
+             if (txt_detail_event_name != null) {
+                 txt_detail_event_name.text=marker.marker_name
+             }else{
+                 txt_detail_event_name?.text=""
              }
 
 

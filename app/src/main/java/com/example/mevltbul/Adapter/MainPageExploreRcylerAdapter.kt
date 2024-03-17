@@ -3,14 +3,19 @@ package com.example.mevltbul.Adapter
 import android.annotation.SuppressLint
 import   android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.Classes.MessageRoomModel
+import com.example.mevltbul.Pages.MainPageDirections
+import com.example.mevltbul.Pages.MessageRoomsPageDirections
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
@@ -38,11 +43,13 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
 
         if (markerList[position].marker_detail!=null){
             if (markerList[position].marker_detail!!.length>56){
-                binding.txtMainpageExploreRyclerEventDetail.text=markerList[position].marker_detail!!.substring(0,56)+"..."
+                binding.txtMainpageExploreRyclerEventName.text=markerList[position].marker_name!!.substring(0,56)+"..."
 
             }else{
-                binding.txtMainpageExploreRyclerEventDetail.text=markerList[position].marker_detail
+                binding.txtMainpageExploreRyclerEventName.text=markerList[position].marker_name
             }
+        }else{
+            binding.txtMainpageExploreRyclerEventName.text=""
         }
 
        val marker=markerList[position]
@@ -65,12 +72,43 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
             binding.imgMainpageExploreRyclerImage.setImageList(List<SlideModel>(1){SlideModel(R.drawable.loading_placeholder)}, ScaleTypes.CENTER_INSIDE)
         }
 
+        binding.imgMainpageExploreRyclerImage.setOnClickListener {view->
+            Utils.showAllert(context,marker,detailVM,fragment){
+                if (it){
+                    val messageRoom=MessageRoomModel(marker.marker_id,marker.marker_name,marker.photo1)
+                    Log.d("hatamMessageRoom",messageRoom.toString())
+                    val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
+                    Navigation.findNavController(view).navigate(bundle)
+                }
+
+            }
+        }
+
+        binding.imgMainpageExploreRyclerImage.setItemClickListener(object :ItemClickListener{
+            override fun doubleClick(position: Int) {
+            }
+
+            override fun onItemSelected(position: Int) {
+                Utils.showAllert(context,marker,detailVM,fragment){
+                    if (it){
+                        val messageRoom=MessageRoomModel(marker.marker_id,marker.marker_name,marker.photo1)
+                        Log.d("hatamMessageRoom",messageRoom.toString())
+                        val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
+                    Navigation.findNavController(fragment.requireView()).navigate(bundle)
+                    }
+
+                }
+            }
+
+        })
+
         binding.rcylerNearEventLayout.setOnClickListener {view->
             Utils.showAllert(context,marker,detailVM,fragment){
                 if (it){
-                    val bundle= Bundle()
-                    bundle.putString("message_room_id",marker.marker_id)
-                    Navigation.findNavController(view).navigate(R.id.action_mainPage_to_messagesPage,bundle)
+                    val messageRoom=MessageRoomModel(marker.marker_id,marker.marker_name,marker.photo1)
+                    Log.d("hatamMessageRoom",messageRoom.toString())
+                    val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
+                    Navigation.findNavController(view).navigate(bundle)
                 }
 
             }

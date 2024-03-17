@@ -28,12 +28,14 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="0dp"
+                    android:id="@+id/btn_back_chat_room"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_back2" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_message_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -43,6 +45,7 @@
                 </de.hdodenhof.circleimageview.CircleImageView>
 
                 <TextView
+                    android:id="@+id/txt_message_page_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

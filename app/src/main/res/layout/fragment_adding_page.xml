@@ -19,6 +19,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/materialToolbar6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:navigationIcon="@drawable/ic_back2"
+                app:title="Harita" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -38,8 +48,8 @@
                     android:layout_height="62dp"
                     android:layout_marginStart="70dp"
                     android:layout_marginEnd="71dp"
-                    android:layout_marginBottom="65dp"
-                    android:backgroundTint="#FCAF38"
+                    android:layout_marginBottom="30dp"
+                    android:backgroundTint="@color/dark_yellow"
                     android:text="Paylaş"
                     app:layout_constraintBottom_toBottomOf="@+id/addingPageMapFragment"
                     app:layout_constraintEnd_toEndOf="@+id/addingPageMapFragment"

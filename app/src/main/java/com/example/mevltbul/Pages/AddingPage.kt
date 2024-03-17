@@ -7,12 +7,15 @@ import android.location.Geocoder
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
@@ -42,8 +45,6 @@ class AddingPage : Fragment(),OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +65,9 @@ class AddingPage : Fragment(),OnMapReadyCallback {
             publish()
         }
 
+
+
+
         return binding.root
     }
 
@@ -80,7 +84,7 @@ class AddingPage : Fragment(),OnMapReadyCallback {
                     selectedPosition=currentLocation
                     mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,13f))
                     mMap?.addMarker(MarkerOptions().position(currentLocation).title(address).visible(true).icon(Utils.getMarker(requireContext())))
-
+                    getAddress(currentLocation)
                 }else{
                     Toast.makeText(requireContext(),"Hata",Toast.LENGTH_LONG).show()
                 }
@@ -89,6 +93,9 @@ class AddingPage : Fragment(),OnMapReadyCallback {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
         }
 
+        binding.materialToolbar6.setNavigationOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_addingPage_to_mainPage)
+        }
 
     }
 
@@ -98,17 +105,7 @@ class AddingPage : Fragment(),OnMapReadyCallback {
             val geocoder=Geocoder(requireContext(), Locale.getDefault())
             if(p0!=null){
                 try {
-                    val addressList=geocoder.getFromLocation(p0.latitude,p0.longitude,1)
-                    if (addressList != null) {
-                        if(addressList.size>0){
-                            if (addressList.get(0).thoroughfare!=null){
-                                address+="${addressList[0].thoroughfare} "
-                            }
-                            if(addressList.get(0).subThoroughfare!=null){
-                                address+= addressList[0].subThoroughfare
-                            }
-                        }
-                    }
+                    getAddress(p0)
 
                 }catch (e:Exception){
                     Log.e("hatam AddingPageListener = ", e.toString())
@@ -121,6 +118,19 @@ class AddingPage : Fragment(),OnMapReadyCallback {
 
         }
 
+    }
+
+
+    private fun getAddress(position: LatLng) {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        try {
+            val addressList = geocoder.getFromLocation(position.latitude, position.longitude, 1)
+            if (addressList != null && addressList.size > 0) {
+                address = addressList[0].getAddressLine(0)
+            }
+        } catch (e: Exception) {
+            Log.e("hatam getAddress = ", e.toString())
+        }
     }
 
     private fun publish(){

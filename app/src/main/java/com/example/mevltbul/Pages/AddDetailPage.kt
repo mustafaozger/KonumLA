@@ -94,8 +94,9 @@ class AddDetailPage : Fragment()   {
             publish()
         }
 
-
-
+        binding.addDetailToolbar.setNavigationOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
         return binding.root
     }
 
@@ -156,7 +157,7 @@ fun showAllert(){
             val currentDAte=sdf.format(System.currentTimeMillis())
             detailVM.publishDetail(
                 System.currentTimeMillis().toString(),
-                null,
+                binding.txtEventName.text.toString(),
                 bundle.latitude,
                 bundle.longitude,
                 binding.txtDetail.text.toString(),

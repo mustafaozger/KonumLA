@@ -10,9 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mevltbul.Adapter.MessageRoomAdapter
 import com.example.mevltbul.Classes.Marker
+import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.ViewModel.MessageVM
 import com.example.mevltbul.databinding.FragmentEventMessagesListPageBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
@@ -38,6 +41,11 @@ class MessageRoomsPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         bindig=FragmentEventMessagesListPageBinding.inflate(inflater,container,false)
+
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.VISIBLE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.VISIBLE
 
         val userID=FirebaseAuth.getInstance().uid
         messageVM.getMessageRooms(userID!!)

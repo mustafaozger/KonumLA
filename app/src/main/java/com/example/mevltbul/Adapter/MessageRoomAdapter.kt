@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mevltbul.Classes.MessageRoomModel
+import com.example.mevltbul.Pages.MessageRoomsPageDirections
 import com.example.mevltbul.R
 import com.example.mevltbul.databinding.DesignEventMessagesListBinding
 import com.squareup.picasso.Picasso
@@ -43,9 +44,9 @@ class MessageRoomAdapter(val context: Context,val chatRoomIdList:ArrayList<Messa
         binding.eventMessagesListPageEventName.text= chatRoomIdList[position].message_room_name
 
         binding.designEventListMessageLayout.setOnClickListener {
-            val bundle=Bundle()
-            bundle.putString("message_room_id", chatRoomIdList[position].message_room_id)
-            Navigation.findNavController(it).navigate(R.id.action_eventMessagesListPage_to_messagesPage,bundle)
+            val bundle=MessageRoomsPageDirections.actionEventMessagesListPageToMessagesPage(chatRoomIdList[position])
+            Navigation.findNavController(it).navigate(bundle)
+
         }
 
 

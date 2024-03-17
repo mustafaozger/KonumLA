@@ -9,9 +9,13 @@
         android:id="@+id/addingPage"
         android:name="com.example.mevltbul.Pages.AddingPage"
         android:label="AddingPage" >
+
         <action
             android:id="@+id/action_addingPage_to_addDetailPage"
             app:destination="@id/addDetailPage" />
+        <action
+            android:id="@+id/action_addingPage_to_mainPage"
+            app:destination="@id/mainPage" />
     </fragment>
     <fragment
         android:id="@+id/addDetailPage"
@@ -58,7 +62,11 @@
     <fragment
         android:id="@+id/mapPage"
         android:name="com.example.mevltbul.Pages.MapPage"
-        android:label="MapPage"/>
+        android:label="MapPage">
+        <action
+            android:id="@+id/action_mapPage_to_messagesPage"
+            app:destination="@id/messagesPage" />
+    </fragment>
     <fragment
         android:id="@+id/registryPage"
         android:name="com.example.mevltbul.Pages.RegistryPage"
@@ -93,10 +101,12 @@
         android:id="@+id/messagesPage"
         android:name="com.example.mevltbul.Pages.MessagesPage"
         android:label="MessagesPage" >
+        <action
+            android:id="@+id/action_messagesPage_to_eventMessagesListPage"
+            app:destination="@id/eventMessagesListPage" />
         <argument
-            android:name="message_room_id"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="message_room"
+            app:argType="com.example.mevltbul.Classes.MessageRoomModel" />
     </fragment>
     <fragment
         android:id="@+id/savedEnevtsPage"

@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.addingPage)
         }
     }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() ||  super.onSupportNavigateUp()
     }

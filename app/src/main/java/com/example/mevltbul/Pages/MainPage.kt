@@ -4,10 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,10 +41,10 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class MainPage: Fragment() ,OnMapReadyCallback{
-        lateinit var binding: FragmentMainPageBinding
-        lateinit var detailVM:DetailVM
-        var mMap:GoogleMap?=null
-
+       private lateinit var binding: FragmentMainPageBinding
+       private lateinit var detailVM:DetailVM
+       private var mMap:GoogleMap?=null
+    private var doubleBackToExitPressedOnce = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +52,6 @@ class MainPage: Fragment() ,OnMapReadyCallback{
         val temp:DetailVM by viewModels()
         detailVM=temp
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
-
 
 
     }
@@ -64,14 +66,31 @@ class MainPage: Fragment() ,OnMapReadyCallback{
 
         binding.layoutMainPage.visibility=View.GONE
 
-
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.VISIBLE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.VISIBLE
 
 
         binding.chip.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_mainPage_to_mapPage)
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
+            OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce) {
+                    requireActivity().finish()
+                } else {
+                    doubleBackToExitPressedOnce = true
+                    Toast.makeText(requireContext(), "Çıkış yapmak için tekrar geri tuşuna basın.", Toast.LENGTH_SHORT).show()
 
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        doubleBackToExitPressedOnce = false
+                    }, 2000)
+                }
+            }
+        })
 
 
         return binding.root

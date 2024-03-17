@@ -19,7 +19,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <ImageView
@@ -241,12 +241,21 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_detail_event_detail"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Etkinlik Detayı" />
+                    android:layout_margin="15dp"
+                    android:background="@drawable/background_photo"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/txt_detail_event_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/alata"
+                        android:text="Etkinlik Detayı" />
+                </FrameLayout>
 
             </LinearLayout>
         </ScrollView>

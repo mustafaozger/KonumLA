@@ -53,7 +53,11 @@ class AccountPage : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_accountPage_to_updatePasswordPage)
         }
         binding.btnChangeUserName.setOnClickListener {
-
+            Navigation.findNavController(it).navigate(R.id.action_accountPage_to_updateUserNamePage)
+        }
+        binding.btnLogOut.setOnClickListener {
+            userVM.logoutUser()
+            Navigation.findNavController(it).navigate(R.id.action_accountPage_to_signInPage)
         }
 
         return binding.root
