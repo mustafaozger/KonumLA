@@ -5,6 +5,7 @@ import   android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -105,19 +106,26 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
         binding.rcylerNearEventLayout.setOnClickListener {view->
             Utils.showAllert(context,marker,detailVM,fragment){
                 if (it){
-                    val messageRoom=MessageRoomModel(marker.marker_id,marker.marker_name,marker.photo1)
-                    Log.d("hatamMessageRoom",messageRoom.toString())
-                    val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
-                    Navigation.findNavController(view).navigate(bundle)
+                    goMessage(marker,view)
                 }
 
             }
 
         }
 
+        binding.btnReclerMessage.setOnClickListener {
+            goMessage(marker,it)
+        }
 
 
 
+
+    }
+    private fun goMessage(marker:Marker,view: View){
+        val messageRoom=MessageRoomModel(marker.marker_id,marker.marker_name,marker.photo1)
+        Log.d("hatamMessageRoom",messageRoom.toString())
+        val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
+        Navigation.findNavController(view).navigate(bundle)
     }
 
 

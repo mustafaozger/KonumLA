@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
@@ -9,67 +10,90 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rcyler_near_event_layout"
-        android:foreground="?android:attr/selectableItemBackground"
         android:layout_width="wrap_content"
-        android:layout_height="320dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/background_photo"
-        android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/layout_main_page_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:foreground="?android:attr/selectableItemBackground">
 
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/img_mainpage_explore_rycler_image"
-                android:layout_width="150dp"
-                android:layout_height="160dp"
-                android:layout_margin="10dp"
-                app:iss_auto_cycle="false"
-                app:iss_delay="1000"
-                app:iss_period="1000"
-                app:iss_placeholder="@drawable/loading_placeholder"
-                app:iss_text_align="CENTER" />
-
-        </LinearLayout>
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/img_mainpage_explore_rycler_image"
+            android:layout_width="150dp"
+            android:layout_height="170dp"
+            android:layout_margin="10dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="13dp"
+            app:circularflow_defaultRadius="20dp"
+            app:iss_auto_cycle="false"
+            app:iss_corner_radius="50"
+            app:iss_delay="1000"
+            app:iss_period="1000"
+            app:iss_placeholder="@drawable/loading_placeholder"
+            app:iss_text_align="CENTER"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/txt_mainpage_explore_rycler_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:text=""
+            android:fontFamily="@font/alata"
+            android:text="18/12/2012 13:03"
             android:textColor="@color/date_color"
-            android:textSize="12sp" />
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_mainpage_explore_rycler_image" />
 
         <TextView
             android:id="@+id/txt_mainpage_explore_rycler_event_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:text=""
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/alata"
+            android:text="Toplantı"
             android:textColor="#0B0A0A"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_mainpage_explore_rycler_date" />
 
         <TextView
             android:id="@+id/txt_mainpage_explore_rycler_event_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="25dp"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+
+
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="20dp"
-
-
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/alata"
+            android:text="Grup toplantısı"
             android:textAllCaps="false"
-            app:autoSizeMaxTextSize="100sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_mainpage_explore_rycler_event_type" />
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_recler_message"
+            android:layout_width="37dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:contentDescription="Sohbet Odası"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/txt_mainpage_explore_rycler_event_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/chat_room" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
