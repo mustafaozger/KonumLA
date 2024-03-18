@@ -22,9 +22,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="ANKA"
+            app:title="Konumla"
             app:titleCentered="true"
-            app:titleTextColor="@color/red" />
+            app:titleTextColor="@color/black" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mapFragment2"

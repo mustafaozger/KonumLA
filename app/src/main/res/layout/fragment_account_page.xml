@@ -82,6 +82,8 @@
             android:layout_marginTop="40dp"
             android:background="@color/white"
             android:orientation="horizontal"
+            android:foreground="?android:attr/selectableItemBackground"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
@@ -125,6 +127,8 @@
             android:layout_marginTop="30dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
+            android:foreground="?android:attr/selectableItemBackground"
+
             app:layout_constraintTop_toBottomOf="@+id/view">
 
             <ImageView

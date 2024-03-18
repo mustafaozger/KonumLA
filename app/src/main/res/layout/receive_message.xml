@@ -6,27 +6,30 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="start"
-        android:gravity="start">
+        android:gravity="start"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:background="@drawable/design_receive_message"
-            android:padding="15dp"
-            android:layout_margin="20dp">
+            android:padding="15dp">
 
             <TextView
                 android:id="@+id/txt_recieved_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/alata"
                 android:text="test Sürümü "
-                android:textSize="16sp"
-                android:textAlignment="textStart"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
 
         </LinearLayout>

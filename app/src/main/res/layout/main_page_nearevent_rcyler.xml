@@ -11,6 +11,7 @@
 
     <LinearLayout
         android:id="@+id/rcyler_near_event_layout"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_width="wrap_content"
         android:layout_height="320dp"
         android:layout_margin="10dp"
