@@ -235,28 +235,16 @@ class DetailPageDaoRepo{
     }
 
 
-    suspend fun getSavedMarkers(): List<Marker> {
-        val uid = auth.currentUser?.uid
-        val idList = db.collection("Users").document(uid!!)
-            .get().await().get("saved_location_list") as? List<String> ?: emptyList()
-        val markers = mutableListOf<Marker>()
-        for (id in idList) {
-            val markerSnapshot = db.collection("markers").document(id).get().await()
-            val marker = markerSnapshot.toObject(Marker::class.java)
-            marker?.let { markers.add(it) }
-        }
-        return markers
-    }
-
-
 
 
     fun addSavedEvent(markerId:String){
         val user=db.collection("Users").document(auth.uid!!)
         user.get().addOnSuccessListener {
             val list=it.get("saved_location_list") as ArrayList<String>
-            list.add(markerId)
-            user.update("saved_location_list",list)
+            if(!list.contains(markerId)){
+                list.add(markerId)
+                user.update("saved_location_list",list)
+            }
         }
     }
 
@@ -264,8 +252,10 @@ class DetailPageDaoRepo{
         val user=db.collection("Users").document(auth.uid!!)
         user.get().addOnSuccessListener {
             val list=it.get("saved_location_list") as ArrayList<String>
-            list.remove(markerId)
-            user.update("saved_location_list",list)
+            if (list.contains(markerId)){
+                list.remove(markerId)
+                user.update("saved_location_list",list)
+            }
         }
     }
 

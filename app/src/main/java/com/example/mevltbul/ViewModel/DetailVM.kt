@@ -20,10 +20,13 @@ import javax.inject.Inject
 class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): ViewModel() {
 
 
-    // StateFlow to hold the list of markers
     private val _markerList = MutableStateFlow<List<Marker>>(emptyList())
     val markerList: StateFlow<List<Marker>> = _markerList
 
+    private val _messageRoomLiveData = MutableLiveData<ArrayList<MessageRoomModel>>()
+    val messageRoomLiveData: LiveData<ArrayList<MessageRoomModel>> = _messageRoomLiveData
+
+    private var savedMarkersLiveData = MutableLiveData<List<Marker>>()
     fun getMarkers(latitude: Double, longitude: Double) {
         // Launch a coroutine in the viewModelScope
         viewModelScope.launch {
@@ -55,31 +58,12 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
     }
 
 
-    private val _messageRoomLiveData = MutableLiveData<ArrayList<MessageRoomModel>>()
-    val messageRoomLiveData: LiveData<ArrayList<MessageRoomModel>> = _messageRoomLiveData
-
     fun getMessageRooms(idList: ArrayList<String>){
         detailPageDaoRepo.getChatListWithID(idList){
             _messageRoomLiveData.postValue(it)
         }
     }
 
-//    private var savedMarkersLiveData = MutableLiveData<List<Marker>>()
-//
-//    fun getSavedList2(): LiveData<List<Marker>> {
-//        viewModelScope.launch {
-//            val markers = withContext(Dispatchers.IO) {
-//                detailPageDaoRepo.getSavedMarkers()
-//            }
-//            if (markers.isEmpty()) {
-//                savedMarkersLiveData=MutableLiveData()
-//            }
-//            savedMarkersLiveData.postValue(markers)
-//        }
-//        return savedMarkersLiveData
-//    }
-
-    private var savedMarkersLiveData = MutableLiveData<List<Marker>>()
 
     fun getSavedList(): LiveData<List<Marker>> {
         viewModelScope.launch {

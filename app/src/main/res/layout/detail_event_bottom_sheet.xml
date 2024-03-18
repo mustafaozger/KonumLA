@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/diaolg_box_background"
         android:orientation="vertical">
 
         <ScrollView
@@ -244,17 +245,21 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="15dp"
-                    android:background="@drawable/background_photo"
-                    android:padding="10dp">
+                    android:background="@drawable/background_photo">
 
                     <TextView
                         android:id="@+id/txt_detail_event_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
                         android:fontFamily="@font/alata"
-                        android:text="Etkinlik Detayı" />
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Etkinlik Detayı"
+                        android:textAlignment="textStart"
+                        android:textSize="15sp" />
                 </FrameLayout>
 
             </LinearLayout>
