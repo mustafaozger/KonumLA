@@ -81,8 +81,8 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="40dp"
             android:background="@color/white"
-            android:orientation="horizontal"
             android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
@@ -125,9 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="30dp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            android:foreground="?android:attr/selectableItemBackground"
 
             app:layout_constraintTop_toBottomOf="@+id/view">
 
@@ -174,26 +174,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_change_password" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/btn_log_out"
-            android:layout_width="261dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="150dp"
-            android:layout_marginBottom="60dp"
-            android:contentDescription="Çıkış"
-            android:fontFamily="@font/alata"
-            android:text="Çıkış Yap"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            app:chipBackgroundColor="@color/white"
-            app:chipIcon="@drawable/log_out"
-            app:chipIconSize="35sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="137dp"
@@ -204,6 +184,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9"
             app:srcCompat="@drawable/perspn_icon2" />
+
+        <FrameLayout
+            android:id="@+id/btn_log_out"
+            android:layout_width="261dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/background_photo"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintCircleRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="42dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center|start"
+                android:layout_marginLeft="10dp"
+                app:srcCompat="@drawable/log_out" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/alata"
+                android:text="Çıkış Yap"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

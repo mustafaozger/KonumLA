@@ -115,8 +115,8 @@ class MessagesPage : Fragment() {
                 bindng.layoutMessagePageMakeJoinChat.visibility=View.GONE
             }
 
-            bindng.btnBackChatRoom.setOnClickListener {
-                Navigation.findNavController(it).navigate(R.id.action_messagesPage_to_eventMessagesListPage)
+            bindng.btnChatBackStage.setOnClickListener {
+                Navigation.findNavController(it).popBackStack()
             }
 
         }catch (e:Exception){

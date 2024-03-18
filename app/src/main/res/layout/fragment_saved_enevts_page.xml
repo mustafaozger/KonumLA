@@ -12,19 +12,25 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <FrameLayout
             android:id="@+id/materialToolbar23"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="@drawable/toolbar_background"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="KONUMLA"
-            app:titleCentered="true"
-            app:titleTextColor="@color/red" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Kaydedilenler"
+                android:textSize="30sp" />
+        </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/saved_page_rcyler"

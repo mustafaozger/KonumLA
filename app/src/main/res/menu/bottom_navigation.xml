@@ -3,14 +3,13 @@
 
     <item
         android:id="@+id/mainPage"
-        android:title=""
-        android:icon="@drawable/outline_home_24"
+        android:icon="@drawable/selector_home"
+
         />
 
     <item
         android:id="@+id/eventMessagesListPage"
-        android:title=""
-        android:icon="@drawable/outline_message_24"
+        android:icon="@drawable/selector_message"
         />
     <item
         android:title=""
@@ -19,13 +18,10 @@
 
     <item
         android:id="@+id/savedEnevtsPage"
-        android:title=""
-        android:icon="@drawable/outline_bookmark_border_24"
+        android:icon="@drawable/selector_bookmark"
         />
     <item
         android:id="@+id/accountPage"
-        android:title=""
-
-        android:icon="@drawable/outline_person_24"
+        android:icon="@drawable/selector_person"
         />
 </menu>

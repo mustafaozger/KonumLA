@@ -48,7 +48,7 @@ class SavedEnevtsPage : Fragment() {
                                  it.event_date
                              }.toMutableList() as ArrayList<Marker>
                             val adapter =
-                                MainPageExploreRcylerAdapter(requireContext(), sortedList, detailVM,this@SavedEnevtsPage)
+                                MainPageExploreRcylerAdapter(requireContext(), sortedList, detailVM,this@SavedEnevtsPage,"SavedEventsPage")
                             binding.savedPageRcyler.adapter = adapter
                             binding.savedPageRcyler.layoutManager =
                                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

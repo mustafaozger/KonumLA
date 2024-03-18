@@ -17,12 +17,14 @@ import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Classes.MessageRoomModel
 import com.example.mevltbul.Pages.MainPageDirections
 import com.example.mevltbul.Pages.MessageRoomsPageDirections
+import com.example.mevltbul.Pages.SavedEnevtsPage
+import com.example.mevltbul.Pages.SavedEnevtsPageDirections
 import com.example.mevltbul.Utils.Utils
 import com.example.mevltbul.R
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.databinding.MainPageNeareventRcylerBinding
 
-class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Marker>,val detailVM: DetailVM,val fragment: Fragment):RecyclerView.Adapter<MainPageExploreRcylerAdapter.ViewHolder>() {
+class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Marker>,val detailVM: DetailVM,val fragment: Fragment,val callingFragmentTag:String):RecyclerView.Adapter<MainPageExploreRcylerAdapter.ViewHolder>() {
      class ViewHolder(val binding:MainPageNeareventRcylerBinding):RecyclerView.ViewHolder(binding.root){
     }
 
@@ -124,8 +126,16 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
     private fun goMessage(marker:Marker,view: View){
         val messageRoom=MessageRoomModel(marker.marker_id,marker.marker_name,marker.photo1)
         Log.d("hatamMessageRoom",messageRoom.toString())
-        val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
-        Navigation.findNavController(view).navigate(bundle)
+
+        if(callingFragmentTag=="MainPage"){
+            val bundle =MainPageDirections.actionMainPageToMessagesPage(messageRoom)
+            Navigation.findNavController(view).navigate(bundle)
+        }else if (callingFragmentTag=="SavedEnevtsPage"){
+
+            val bundle =SavedEnevtsPageDirections.actionSavedEnevtsPageToMessagesPage(messageRoom)
+            Navigation.findNavController(view).navigate(bundle)
+        }
+
     }
 
 

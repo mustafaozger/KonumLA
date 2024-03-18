@@ -13,7 +13,7 @@
         tools:context=".Pages.MapPage">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar2"
+            android:id="@+id/toolbar_map_page"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="@drawable/toolbar_background"
@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back2"
             app:title="Konumla"
             app:titleCentered="true"
             app:titleTextColor="@color/black" />
@@ -31,10 +32,13 @@
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialToolbar2" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_map_page"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_mapPage_to_messagesPage"
             app:destination="@id/messagesPage" />
+        <action
+            android:id="@+id/action_mapPage_to_mainPage"
+            app:destination="@id/mainPage" />
     </fragment>
     <fragment
         android:id="@+id/registryPage"
@@ -111,7 +114,11 @@
     <fragment
         android:id="@+id/savedEnevtsPage"
         android:name="com.example.mevltbul.Pages.SavedEnevtsPage"
-        android:label="SavedEnevtsPage" />
+        android:label="SavedEnevtsPage" >
+        <action
+            android:id="@+id/action_savedEnevtsPage_to_messagesPage"
+            app:destination="@id/messagesPage" />
+    </fragment>
     <fragment
         android:id="@+id/accountPage"
         android:name="com.example.mevltbul.Pages.AccountPage"

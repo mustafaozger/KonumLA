@@ -31,6 +31,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -56,10 +58,20 @@ class MapPage : Fragment(),OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val bottomNavigationView=requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility=View.GONE
+        val fabButton=requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fabButton.visibility=View.GONE
+
         binding=FragmentMapPageBinding.inflate(layoutInflater)
+
+
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment2) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        binding.toolbarMapPage.setNavigationOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
 
 
         return binding.root

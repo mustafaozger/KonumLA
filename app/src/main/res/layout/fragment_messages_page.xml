@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/btn_back_chat_room"
+                    android:id="@+id/btn_chat_back_stage"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_weight="1"
