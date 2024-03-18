@@ -11,13 +11,17 @@ import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_MOVE
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -118,13 +122,22 @@ fun showAllert(){
 
             btn_camera.setOnClickListener {
                 // max size of image 1 MB
-            ImagePicker.with(this).cameraOnly().compress(1024).start()
+                showProgressBar()
+
+                ImagePicker.with(this).cameraOnly().compress(1024)
+                .createIntent { intent ->
+                startForProfileImageResult.launch(intent)
+            }
 
             dialog.dismiss()
         }
         btn_gallery.setOnClickListener {
             // max size of image 1 MB
-            ImagePicker.with(this).galleryOnly().compress(1024).start()
+            showProgressBar()
+            ImagePicker.with(this).galleryOnly().compress(1024).createIntent { intent ->
+                startForProfileImageResult.launch(intent)
+
+            }
             dialog.dismiss()
 
         }
@@ -134,25 +147,37 @@ fun showAllert(){
         dialog.window?.setWindowAnimations(R.style.DialogAnimation)
         dialog.window?.setGravity(Gravity.BOTTOM)
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode==Activity.RESULT_OK && requestCode ==ImagePicker.REQUEST_CODE){
+    private val startForProfileImageResult =registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
+
+        val resultCode = result.resultCode
+        val data = result.data
+        if (resultCode == Activity.RESULT_OK) {
+
             if (data != null) {
                 imageViewList.poll()?.setImageURI(data.data)
                 uriList.add(data.data)
                 if(imageViewList.size!=0){
                     imageViewList.peek()?.setImageResource(R.drawable.add_photo)
                 }
+                hideProgressBar()
             }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            hideProgressBar()
+            Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            hideProgressBar()
+            Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
-
     }
+
+
 
 
     private fun publish(){
 
         if (binding.txtEventList.text.toString()!="" ){
+            showProgressBar()
             val sdf=SimpleDateFormat("dd/MM/yyyy HH:mm")
             val currentDAte=sdf.format(System.currentTimeMillis())
             detailVM.publishDetail(
@@ -164,20 +189,52 @@ fun showAllert(){
                 uriList,
                 binding.txtEventList.text.toString(),currentDAte.toString()){
                 if(it){
+                    hideProgressBar()
                     Toast.makeText(requireContext(),"Paylaşıldı",Toast.LENGTH_LONG).show()
                     Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
 
                 }else{
+                    hideProgressBar()
                     Toast.makeText(requireContext(),"Hata Paylaşılmadı",Toast.LENGTH_LONG).show()
                     Navigation.findNavController(requireView()).navigate(R.id.action_addDetailPage_to_mainPage)
 
                 }
             }
         }else{
-            binding.progressBarPublishData.visibility=View.GONE
-
             Toast.makeText(requireContext(),"Etkinlik Türünü Seçin",Toast.LENGTH_LONG).show()
         }
 
+
     }
+
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun showProgressBar() {
+        Log.d("hatamAddDetailProgress"," show progressBar starat")
+        val layoutParams= activity?.window?.attributes
+        binding.layoutAddDetailProgress.visibility=View.VISIBLE
+        activity?.window?.attributes = layoutParams
+        activity?.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+
+        Log.d("hatamAddDetailProgress"," show progressBar finish")
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun hideProgressBar() {
+        val layoutParams= activity?.window?.attributes
+        Log.d("hatamAddDetailProgress"," hide progressBar starat")
+        binding.layoutAddDetailProgress.visibility=View.GONE
+        activity?.window?.attributes = layoutParams
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        Log.d("hatamAddDetailProgress"," hide progressBar finish")
+
+    }
+
+
+
 }
