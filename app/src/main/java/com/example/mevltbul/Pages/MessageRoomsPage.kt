@@ -56,6 +56,7 @@ class MessageRoomsPage : Fragment() {
             if (roomListIdList != null) {
                 detailVM.getMessageRooms(roomListIdList)
                 detailVM.messageRoomLiveData.observe(viewLifecycleOwner){
+
                     Log.d("hatamRoomListID","event lisy  $it ")
 
                     val adapter=MessageRoomAdapter(requireContext(),it)

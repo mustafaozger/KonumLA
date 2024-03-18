@@ -7,6 +7,7 @@ import java.io.Serializable
 data class MessageRoomModel (
     var message_room_id:String?=null,
     var message_room_name:String?=null,
-    var message_image:String?=null
+    var message_image:String?=null,
+    var messge_date:String?=null
 ):Serializable{
 }

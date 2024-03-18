@@ -189,14 +189,12 @@ class DetailPageDaoRepo{
                 for (id in idList){
                     db.collection("chats").whereEqualTo("chat_id",id).get().addOnSuccessListener{
                         if (!it.isEmpty){
-                            Log.d("hatamRoomDAO","marker found ${it.documents.get(0).get("marker_photo1")}")
                             val messageRoomModel=MessageRoomModel(
                                 it.documents.get(0).get("chat_id") as String?
                                 ,it.documents.get(0).get("chat_name") as String?
-                                , it.documents.get(0).get("chat_photo") as String?)
+                                , it.documents.get(0).get("chat_photo") as String?
+                                ,System.currentTimeMillis().toString() as String?)
                             retList.add(messageRoomModel)
-                        }else{
-                            Log.e("hatamRoomDAO","marker not found")
                         }
                         callback(retList)
                     }

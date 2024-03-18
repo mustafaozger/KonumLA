@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mevltbul.Adapter.MainPageExploreRcylerAdapter
+import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.ViewModel.DetailVM
 import com.example.mevltbul.ViewModel.UserVM
 import com.example.mevltbul.databinding.FragmentSavedEnevtsPageBinding
@@ -43,8 +44,11 @@ class SavedEnevtsPage : Fragment() {
 
                         if (markerList != null) {
                             Log.d("hatamSavedPage", "list is  $markerList")
+                           val sortedList=  markerList.sortedBy {
+                                 it.event_date
+                             }.toMutableList() as ArrayList<Marker>
                             val adapter =
-                                MainPageExploreRcylerAdapter(requireContext(), markerList, detailVM,this@SavedEnevtsPage)
+                                MainPageExploreRcylerAdapter(requireContext(), sortedList, detailVM,this@SavedEnevtsPage)
                             binding.savedPageRcyler.adapter = adapter
                             binding.savedPageRcyler.layoutManager =
                                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.Classes.MessageRoomModel
@@ -73,6 +74,7 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
                 }else{
                     savedMarkersLiveData.postValue(markers)
                 }
+
             }
         }
         return savedMarkersLiveData

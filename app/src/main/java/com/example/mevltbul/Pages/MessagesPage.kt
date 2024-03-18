@@ -113,7 +113,6 @@ class MessagesPage : Fragment() {
             bindng.btnMessagePageJoinChat.setOnClickListener{
                 messagePageVM.addMassageRoomToUserDatabase(userId,messageRoomId!!)
                 bindng.layoutMessagePageMakeJoinChat.visibility=View.GONE
-
             }
 
             bindng.btnBackChatRoom.setOnClickListener {
