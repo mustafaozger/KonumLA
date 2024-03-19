@@ -98,7 +98,7 @@ class AddDetailPage : Fragment()   {
             publish()
         }
 
-        binding.addDetailToolbar.setNavigationOnClickListener {
+        binding.btnDetailPageBack.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
         return binding.root

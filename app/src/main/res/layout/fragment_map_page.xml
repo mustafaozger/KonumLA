@@ -12,20 +12,43 @@
         android:layout_height="match_parent"
         tools:context=".Pages.MapPage">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_map_page"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_page_toolbar"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="@drawable/toolbar_background"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_back2"
-            app:title="Konumla"
-            app:titleCentered="true"
-            app:titleTextColor="@color/black" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="@font/alata"
+                android:gravity="center"
+                android:text="Konumla"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <ImageView
+                android:id="@+id/btn_map_page_back"
+                android:layout_width="35dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:srcCompat="@drawable/ic_back2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mapFragment2"
@@ -37,8 +60,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_map_page"
+            app:layout_constraintTop_toBottomOf="@+id/layout_map_page_toolbar"
             app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="104dp"
+            android:clickable="true"
+            android:contentDescription="Konumuna Git"
+            android:foregroundTint="#888888"
+            app:backgroundTint="@color/white"
+            app:fabCustomSize="56dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="35dp"
+            app:srcCompat="@drawable/target2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

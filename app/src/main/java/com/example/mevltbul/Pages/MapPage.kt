@@ -69,8 +69,12 @@ class MapPage : Fragment(),OnMapReadyCallback {
         val mapFragment=childFragmentManager.findFragmentById(R.id.mapFragment2) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        binding.toolbarMapPage.setNavigationOnClickListener {
+        binding.btnMapPageBack.setOnClickListener {
             Navigation.findNavController(it).popBackStack()
+        }
+
+        binding.btnTarget.setOnClickListener{
+            getLocation(15f)
         }
 
 
@@ -79,19 +83,7 @@ class MapPage : Fragment(),OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
-        if (Utils.checkPermission(requireContext())){
-            fusedLocationClient.lastLocation.addOnSuccessListener {location->
-                detailVM.getMarkers(location.latitude,location.longitude)
-                val currentLocation=LatLng(location.latitude,location.longitude)
-                if(mMap!=null){
-                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,13f))
-                }else{
-                    Log.d("hatamMainOnMapReady","2. mMap is null")
-                }
-            }
-        }else{
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
-        }
+        getLocation(13f)
 
 
         if(Utils.checkPermission(requireContext())){
@@ -150,6 +142,21 @@ class MapPage : Fragment(),OnMapReadyCallback {
 
         }catch (e:Exception){
             Log.e("hatamMapPageShowMarker",e.toString())
+        }
+    }
+    private fun getLocation(zoom:Float){
+        if (Utils.checkPermission(requireContext())){
+            fusedLocationClient.lastLocation.addOnSuccessListener {location->
+                detailVM.getMarkers(location.latitude,location.longitude)
+                val currentLocation=LatLng(location.latitude,location.longitude)
+                if(mMap!=null){
+                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,zoom))
+                }else{
+                    Log.d("hatamMainOnMapReady","2. mMap is null")
+                }
+            }
+        }else{
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
         }
     }
 

@@ -65,6 +65,9 @@ class AddingPage : Fragment(),OnMapReadyCallback {
             publish()
         }
 
+        binding.btnAddMapPageTarget.setOnClickListener{
+            getLocation(15f)
+        }
 
 
 
@@ -73,34 +76,19 @@ class AddingPage : Fragment(),OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         mMap=p0
+        getLocation(13f)
+
+        mMap?.setOnMapClickListener(listener)
 
 
-        mMap?.setOnMapLongClickListener(listener)
-
-        if (Utils.checkPermission(requireContext())){
-            fusedLocationClient.lastLocation.addOnSuccessListener {location->
-                val currentLocation=LatLng(location.latitude,location.longitude)
-                if(mMap!=null){
-                    selectedPosition=currentLocation
-                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,13f))
-                    mMap?.addMarker(MarkerOptions().position(currentLocation).title(address).visible(true).icon(Utils.getMarker(requireContext())))
-                    getAddress(currentLocation)
-                }else{
-                    Toast.makeText(requireContext(),"Hata",Toast.LENGTH_LONG).show()
-                }
-            }
-        }else{
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
-        }
-
-        binding.materialToolbar6.setNavigationOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_addingPage_to_mainPage)
+        binding.btnMapPageBack.setOnClickListener {
+            Navigation.findNavController(it).popBackStack()
         }
 
     }
 
-    private val listener=object:GoogleMap.OnMapLongClickListener{
-        override fun onMapLongClick(p0: LatLng) {
+    private val listener=object:GoogleMap.OnMapClickListener{
+        override fun onMapClick(p0: LatLng) {
             mMap?.clear()
             val geocoder=Geocoder(requireContext(), Locale.getDefault())
             if(p0!=null){
@@ -143,6 +131,24 @@ class AddingPage : Fragment(),OnMapReadyCallback {
 
 
         }
+    }
+    private fun getLocation(zoom:Float){
+        if (Utils.checkPermission(requireContext())){
+            fusedLocationClient.lastLocation.addOnSuccessListener {location->
+                val currentLocation=LatLng(location.latitude,location.longitude)
+                if(mMap!=null){
+                    selectedPosition=currentLocation
+                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,zoom))
+                    mMap?.addMarker(MarkerOptions().position(currentLocation).title(address).visible(true).icon(Utils.getMarker(requireContext())))
+                    getAddress(currentLocation)
+                }else{
+                    Toast.makeText(requireContext(),"Hata",Toast.LENGTH_LONG).show()
+                }
+            }
+        }else{
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
+        }
+
     }
 
 
