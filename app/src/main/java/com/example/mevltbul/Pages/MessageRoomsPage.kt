@@ -51,21 +51,21 @@ class MessageRoomsPage : Fragment() {
         messageVM.getMessageRooms(userID!!)
         Log.d("hatamRoomListID","work")
 
-        messageVM.messageRoomLiveData.observe(viewLifecycleOwner){roomListIdList->
-            Log.d("hatamRoomListID","id list  $roomListIdList")
-            if (roomListIdList != null) {
-                detailVM.getMessageRooms(roomListIdList)
-                detailVM.messageRoomLiveData.observe(viewLifecycleOwner){
-
-                    Log.d("hatamRoomListID","event lisy  $it ")
-
-                    val adapter=MessageRoomAdapter(requireContext(),it)
-                    bindig.eventMessageRoomRcyler.adapter=adapter
-                    bindig.eventMessageRoomRcyler.layoutManager=LinearLayoutManager(requireContext())
-                }
-
-            }
+        detailVM.getMessageRooms().observe(viewLifecycleOwner){
+            Log.d("hatamRoomListID","event lisy  $it ")
+            val adapter=MessageRoomAdapter(requireContext(),it)
+            bindig.eventMessageRoomRcyler.adapter=adapter
+            bindig.eventMessageRoomRcyler.layoutManager=LinearLayoutManager(requireContext())
         }
+
+//        messageVM.messageRoomLiveData.observe(viewLifecycleOwner){roomListIdList->
+//            Log.d("hatamRoomListID","id list  $roomListIdList")
+//            if (roomListIdList != null) {
+//
+//
+//
+//            }
+//        }
 
         return bindig.root
     }

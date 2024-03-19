@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 //        NavigationUI.setupWithNavController(bottomNavigationView,navController)
 
     }
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp() ||  super.onSupportNavigateUp()
-//    }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() ||  super.onSupportNavigateUp()
+    }
 }

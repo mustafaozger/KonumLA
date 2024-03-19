@@ -1,29 +1,28 @@
 package com.example.mevltbul.Repository
 
-import android.content.Context
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.example.mevltbul.Classes.Marker
-import com.example.mevltbul.Classes.MessageModel
 import com.example.mevltbul.Classes.MessageRoomModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.util.LinkedList
 import java.util.Queue
 
@@ -230,6 +229,64 @@ class DetailPageDaoRepo{
                callback(ArrayList())
            }
        }
+    }
+
+
+//    fun getChatRoom() :Flow<ArrayList<MessageRoomModel>> = callbackFlow {
+//        val roomIdList=ArrayList<String>()
+//        db.collection("Users").document(auth.uid!!).get().addOnSuccessListener {user->
+//            val idList=user.get("chat_id_list") as? ArrayList<String>
+//
+//            db.collection("chats").whereEqualTo("chat_id",auth.uid).get().addOnSuccessListener{
+//                if (!it.isEmpty){
+//                    val messageRoomModel=MessageRoomModel(
+//                        it.documents.get(0).get("chat_id") as String?
+//                        ,it.documents.get(0).get("chat_name") as String?
+//                        , it.documents.get(0).get("chat_photo") as String?
+//                        ,System.currentTimeMillis().toString() as String?)
+//                    roomIdList.add(messageRoomModel)
+//                }
+//                trySend(roomIdList)
+//            }
+//
+//        }
+//
+//        awaitClose {
+//            close()
+//        }
+//
+//
+//
+//    }
+
+    fun getChatListWithID2( callback: (ArrayList<MessageRoomModel>) -> Unit) {
+        db.collection("Users").document(auth.uid!!).addSnapshotListener {snapshot,error->
+            val idList=snapshot?.get("message_roooms_id") as? ArrayList<String>
+            if(idList!=null){
+                val list=ArrayList<MessageRoomModel>()
+                for (id in idList) {
+                    db.collection("chats").document(id).addSnapshotListener{snapshot,errror->
+                        if (snapshot!=null){
+                            val data=MessageRoomModel(
+                                snapshot?.get("chat_id") as String?,
+                                snapshot?.get("chat_name") as String?,
+                                snapshot?.get("chat_photo") as String?,
+                                System.currentTimeMillis().toString()
+                            )
+
+
+                            data?.let { list.add(it) }
+                        }
+                        callback(list)
+                    }
+                }
+                if (idList.size==0){
+                    callback(ArrayList())
+                }
+            }else{
+                callback(ArrayList())
+            }
+        }
     }
 
 

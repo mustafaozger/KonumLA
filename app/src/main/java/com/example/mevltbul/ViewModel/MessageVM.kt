@@ -37,7 +37,6 @@ class MessageVM @Inject constructor(var provideMessagePageDaoRepo:MessagePageDao
     fun getMessageRooms(uid:String){
 
         provideMessagePageDaoRepo.getMessageRooms(uid) { messageRooms ->
-            Log.d("hatamRoomVM",messageRooms.toString())
             _messageRoomLiveData.postValue(messageRooms)
         }
     }

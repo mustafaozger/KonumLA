@@ -59,7 +59,7 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
     }
 
 
-    fun getMessageRooms(idList: ArrayList<String>){
+    fun getMessageRooms3(idList: ArrayList<String>){
         detailPageDaoRepo.getChatListWithID(idList){
             _messageRoomLiveData.postValue(it)
         }
@@ -87,6 +87,12 @@ class DetailVM @Inject constructor(var detailPageDaoRepo: DetailPageDaoRepo): Vi
 
     fun deleteSavedEvent(markerId:String) {
         detailPageDaoRepo.deleteSavedEvent(markerId)
+    }
+    fun getMessageRooms(): LiveData<ArrayList<MessageRoomModel>> {
+        detailPageDaoRepo.getChatListWithID2(){
+            _messageRoomLiveData.postValue(it)
+        }
+        return _messageRoomLiveData
     }
 
 
