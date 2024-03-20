@@ -44,9 +44,9 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
         binding.txtMainpageExploreRyclerDate.text=markerList[position].event_date
         binding.txtMainpageExploreRyclerEventType.text=markerList[position].event_type
 
-        if (markerList[position].marker_detail!=null){
-            if (markerList[position].marker_detail!!.length>56){
-                binding.txtMainpageExploreRyclerEventName.text=markerList[position].marker_name!!.substring(0,56)+"..."
+        if (markerList[position].marker_name!=null){
+            if (markerList[position].marker_name!!.length>18){
+                binding.txtMainpageExploreRyclerEventName.text=markerList[position].marker_name!!.substring(0,15)+"..."
 
             }else{
                 binding.txtMainpageExploreRyclerEventName.text=markerList[position].marker_name
@@ -119,6 +119,16 @@ class MainPageExploreRcylerAdapter(val context: Context,val markerList:List<Mark
             goMessage(marker,it)
         }
 
+
+        if(marker.marker_detail!=null){
+            if(marker.marker_detail!!.length>50){
+                binding.txtMainpageExploreRyclerEventDetail.text=marker.marker_detail!!.substring(0,47)+"..."
+            }else{
+                binding.txtMainpageExploreRyclerEventDetail.text=marker.marker_detail
+            }
+        }else{
+            binding.txtMainpageExploreRyclerEventDetail.text=""
+        }
 
 
 

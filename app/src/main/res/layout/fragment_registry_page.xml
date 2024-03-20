@@ -131,16 +131,18 @@
             android:text="Kayıt ol"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txt_goto_login_page"
+            app:layout_constraintBottom_toTopOf="@+id/txt_go_sign_page"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLayout" />
 
         <TextView
-            android:id="@+id/txt_goto_login_page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/txt_go_sign_page"
+            android:layout_width="210dp"
+            android:layout_height="32dp"
+            android:clickable="true"
+            android:fontFamily="@font/alata"
             android:text="Zaten Üye misiniz? , Giriş Yap !"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"

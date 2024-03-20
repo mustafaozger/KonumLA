@@ -8,14 +8,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="end"
-        android:gravity="end">
+        android:layout_marginLeft="100dp"
+        android:gravity="right"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="5dp"
             android:background="@drawable/design_send_message"
             android:padding="15dp">
 
@@ -29,7 +30,7 @@
                 android:fontFamily="@font/alata"
                 android:text="test Sürümü "
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
 
         </LinearLayout>

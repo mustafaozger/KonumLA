@@ -83,7 +83,7 @@ class DetailPageDaoRepo{
                         .addOnSuccessListener {
                             val data= hashMapOf(
                                 "chat_id" to marker_id,
-                                "chat_name" to marker_detail,
+                                "chat_name" to marker_name,
                                 "chat_photo" to imageUrl
                             )
                             db.collection("chats").document(marker_id!!).set(data).addOnSuccessListener{
