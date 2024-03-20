@@ -22,3 +22,4 @@ https://github.com/mustafaozger/KonumLA/assets/104151458/bb5b1107-db90-4ad4-ad9f
 * Kotlin Coroutines
 * Live Data
 * Flow
+* Firebase
