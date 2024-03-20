@@ -3,6 +3,8 @@
 
 Bu platform, kullanıcıların bulundukları bölgedeki eğlenceli etkinliklerini, partiler, iş toplantıları, eğitici seminerler veya heyecan verici spor müsabakaları gibi etkinlikleri paylaşabilecekleri ve bu özel etkinliklere özgü sohbet odalarında bir araya gelip, yeni insanlarla tanışabilecekleri, fikir alışverişinde bulunabilecekleri ve unutulmaz anılar yaratabilecekleri bir sosyal ağdır. Burada, etkinliklerinizi daha da renklendirecek sohbetler ve etkileşimler sizi bekliyor. Etkinlik konumunuzu paylaşın ve benzersiz sohbet odalarımızda yerinizi alarak, eğlencenin ve bağlantının keyfini çıkarın!
 
+Uygulama : https://raw.githubusercontent.com/mustafaozger/KonumLA/master/app-debug.apk
+
 
 
 
