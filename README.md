@@ -1,6 +1,7 @@
 
-# KonumLa
+#         KonumLa
 -EN
+
 This platform is a social network where users can share fun events in their local area, such as parties, business meetings, educational seminars or exciting sporting events, and meet new people, exchange ideas and create unforgettable memories in chat rooms dedicated to these special events. Conversations and interactions are waiting for you here to spice up your events. Share your event location and take your place in our unique chat rooms and enjoy the fun and connection!
 
 
@@ -28,7 +29,6 @@ TR
 
 Bu platform, kullanıcıların bulundukları bölgedeki eğlenceli etkinliklerini, partiler, iş toplantıları, eğitici seminerler veya heyecan verici spor müsabakaları gibi etkinlikleri paylaşabilecekleri ve bu özel etkinliklere özgü sohbet odalarında bir araya gelip, yeni insanlarla tanışabilecekleri, fikir alışverişinde bulunabilecekleri ve unutulmaz anılar yaratabilecekleri bir sosyal ağdır. Burada, etkinliklerinizi daha da renklendirecek sohbetler ve etkileşimler sizi bekliyor. Etkinlik konumunuzu paylaşın ve benzersiz sohbet odalarımızda yerinizi alarak, eğlencenin ve bağlantının keyfini çıkarın!
 
-APK : https://raw.githubusercontent.com/mustafaozger/KonumLA/master/app-debug.apk
 
 
 # Özellikler
