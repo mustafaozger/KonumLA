@@ -13,7 +13,7 @@ This platform is a social network where users can share fun events in their loca
 
 https://github.com/mustafaozger/KonumLA/assets/104151458/bb5b1107-db90-4ad4-ad9f-b49f45c98ed9
 
-# Used Teklonogies
+# Used Techlonogies
 * MVVM
 * Dagger Hilt
 * Kotlin Coroutines
@@ -25,7 +25,7 @@ https://github.com/mustafaozger/KonumLA/assets/104151458/bb5b1107-db90-4ad4-ad9f
 APK : https://raw.githubusercontent.com/mustafaozger/KonumLA/master/app-debug.apk
 
 
-TR
+- TR
 
 Bu platform, kullanıcıların bulundukları bölgedeki eğlenceli etkinliklerini, partiler, iş toplantıları, eğitici seminerler veya heyecan verici spor müsabakaları gibi etkinlikleri paylaşabilecekleri ve bu özel etkinliklere özgü sohbet odalarında bir araya gelip, yeni insanlarla tanışabilecekleri, fikir alışverişinde bulunabilecekleri ve unutulmaz anılar yaratabilecekleri bir sosyal ağdır. Burada, etkinliklerinizi daha da renklendirecek sohbetler ve etkileşimler sizi bekliyor. Etkinlik konumunuzu paylaşın ve benzersiz sohbet odalarımızda yerinizi alarak, eğlencenin ve bağlantının keyfini çıkarın!
 
