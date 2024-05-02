@@ -1,5 +1,7 @@
 package com.example.mevltbul.Utils
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,13 +15,16 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.mevltbul.Classes.Marker
 import com.example.mevltbul.R
@@ -27,6 +32,7 @@ import com.example.mevltbul.ViewModel.DetailVM
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.squareup.picasso.Picasso
 
 class Utils  {
     companion object{
@@ -132,6 +138,18 @@ class Utils  {
              }else{
                  txt_detail_event_name?.text=""
              }
+             imageSlider?.setItemClickListener(object :ItemClickListener{
+                 override fun doubleClick(position: Int) {
+                 }
+
+                 @SuppressLint("SuspiciousIndentation")
+                 override fun onItemSelected(position: Int) {
+                   val image=imageList.get(position).imageUrl
+                     Log.d("hatamUtils","img :  $image!!")
+                     zoomPhoto(context,image!!)
+                 }
+
+             })
 
 
 
@@ -160,7 +178,27 @@ class Utils  {
             }
 
 
+        private fun zoomPhoto(context: Context,photo_link:String){
+            val dialog= Dialog(context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.design_zoom_image_slider)
+            val btn_close_image:ImageView=dialog.findViewById(R.id.btn_image_close)
+            val image_zoomed_photo:ImageView=dialog.findViewById(R.id.img_zoom)
 
+            Picasso.get().load(photo_link)
+                .centerCrop().resize(900,1300)
+                .into(image_zoomed_photo)
+
+            btn_close_image.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialog.show()
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setWindowAnimations(R.style.DialogAnimation)
+            dialog.window?.setGravity(Gravity.CENTER)
+        }
     }
 
 
